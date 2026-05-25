@@ -1,7 +1,7 @@
 import pygame
 import sys
 import math
-
+from Prices import *
 def amount_sum(amount):
     if amount < 1000:
         return str(amount)
@@ -142,10 +142,6 @@ while running:
                 if distance <= Button_radius:
                     clicks += 1
 
-                    clicks *= 1000
-
-                    print(clicks)
-
     #Menu System (Functions)
 
         Upgrade1_menu = pygame.Rect(110, 340, 420, 50)
@@ -156,11 +152,18 @@ while running:
         Upgrade6_menu = pygame.Rect(710, 780, 420, 50)
 
     if Menu == 1:
+        CU1_Cost = CU1_CostAmount(CU1)
+        CU2_Cost = CU2_CostAmount(CU2)
+        CU3_Cost = CU3_CostAmount(CU3)
+        CU4_Cost = CU4_CostAmount(CU4)
+        CU5_Cost = CU5_CostAmount(CU5)
+
         CU1_multipler = CU1 * CU1Mult
         CU2_multipler = CU2 * CU2Mult
         CU3_multipler = CU3 * CU3Mult
         CU4_multipler = CU4 * CU4Mult
         CU5_multipler = CU5 * CU5Mult
+
         menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost), True, (0, 0, 0))
         menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n X" + str(CU2_multipler) + " \n  Cost: " + str(CU2_Cost), True, (0, 0, 0))
         menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler) + " \n  Cost: " + str(CU3_Cost), True, (0, 0, 0))
