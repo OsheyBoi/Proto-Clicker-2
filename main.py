@@ -2,16 +2,26 @@ import pygame
 import sys
 import math
 from Prices import *
+from Prices import amount_sum
+
+
 def amount_sum(amount):
     if amount < 1000:
-        return str(amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No"]
+        if amount >= 0:
+            rounded_amount = round(amount, 2)
+        if amount >= 10:
+            rounded_amount = round(amount, 1)
+        elif amount >= 100:
+            rounded_amount = round(amount, 0)
+        return str(rounded_amount)
+    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
     suffix_index = 0
 
     while amount >= 1000:
         amount /= 1000
         suffix_index += 1
-    if amount >= 1 and amount <= 9:
+    rounded_amount = 1
+    if amount >= 0 and amount <= 9:
         rounded_amount = round(amount, 2)
     if amount >= 10 and amount <= 99:
         rounded_amount = round(amount, 1)
@@ -19,6 +29,29 @@ def amount_sum(amount):
         rounded_amount = round(amount, 0)
     Summed_Amount = str(rounded_amount) + suffixes[suffix_index]
     return str(Summed_Amount)
+
+
+class Upgrade:
+    def __init__(self, menu_rect, current_level, max_level, cost_function):
+        self.rect = menu_rect
+        self.level = current_level
+        self.max_level = max_level
+        self.cost_fn = cost_function  # Passes the function used to calculate cost
+
+    def try_buy(self, mouse_pos, current_menu, clicks):
+        # 1. Check menu and click collision
+        if current_menu != 1:
+            return clicks, False  # Return original clicks, no purchase made
+
+        if self.rect.collidepoint(mouse_pos):
+            cost = self.cost_fn(self.level, "True Price")
+            print(self.level)
+            if clicks >= cost and self.level < self.max_level:
+                clicks -= cost
+                self.level += 1
+                return clicks, True  # Return new clicks, purchase successful
+
+        return clicks, False
 
 pygame.init()
 screen = pygame.display.set_mode((1300, 900))
@@ -74,6 +107,7 @@ CU5M = 25
 CU5Mult = 1.1
 CU5_Cost = 1
 
+
 shop_menu = pygame.Rect(460, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 100, 100)
 background = pygame.Rect(0, 0, 1300, 900)
@@ -106,6 +140,18 @@ menu_text6 = font.render("", True, (0, 0, 0))
 
 
 running = True
+CU1_multipler = (CU1 * CU1Mult)
+CU2_multipler = (CU2 * CU2Mult)
+CU3_multipler = (CU3Mult ** CU3)
+CU4_multipler = (CU4Mult ** CU4)
+CU5_multipler = (CU5Mult ** CU5)
+
+#-----------------
+upgrades = [
+    Upgrade(Upgrade1_menu,  0, CU1M, CU1_CostAmount),
+    Upgrade(Upgrade2_menu, 0, CU2M, CU2_CostAmount)
+]
+#----------------
 while running:
     screen.fill((0, 0, 0))
     mouse_pos = pygame.mouse.get_pos()
@@ -115,6 +161,20 @@ while running:
     Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
     Rebirth_AR = font.render("Rebirths: " + str(rebirths), True, (0, 0, 0))
     # Event Handling Loop
+    # -----------------
+    upgrades = [
+        Upgrade(Upgrade1_menu, CU1, CU1M, CU1_CostAmount),
+        Upgrade(Upgrade2_menu, CU2, CU2M, CU1_CostAmount),
+        Upgrade(Upgrade3_menu, CU3, CU3M, CU3_CostAmount),
+        Upgrade(Upgrade4_menu, CU4, CU4M, CU4_CostAmount),
+        Upgrade(Upgrade5_menu, CU5, CU5M, CU5_CostAmount)
+    ]
+    # ----------------
+    base_clicks = (1 + CU1)
+    clicks_mult = (CU3 ** CU3_multipler)
+    if clicks_mult == 0:
+        clicks_mult = 1
+    # ----------------
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -123,15 +183,38 @@ while running:
             if event.button == 1: # Left click down
                 print(mouse_pos)
                 if Rebirth_menu.collidepoint(mouse_pos):
-                    print("Rebirth")
-                if shop_menu.collidepoint(mouse_pos):
+                    #Open Rebirth menu
                     if Menu == 0:
-                        print("Shop")
+                        Menu = 11
+
+                elif shop_menu.collidepoint(mouse_pos):
+                    # Open Shop
+                    if Menu == 0:
                         Menu = 1
-                if close_menu.collidepoint(mouse_pos):
+
+                elif close_menu.collidepoint(mouse_pos):
                     if Menu >= 1:
+                        # Close Menu Button
                         print("Shop")
                         Menu = 0
+
+                elif Menu == 1:
+                    upgrades[0].level = CU1
+                    upgrades[1].level = CU2
+                    upgrades[2].level = CU3
+                    upgrades[3].level = CU4
+                    upgrades[4].level = CU5
+                    for up in upgrades:
+                        clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
+                        if bought:
+                            break # Stop checking other upgrades if one was clicked
+                    CU1 = upgrades[0].level
+                    CU2 = upgrades[1].level
+                    CU3 = upgrades[2].level
+                    CU4 = upgrades[3].level
+                    CU5 = upgrades[4].level
+
+
 
                 X1 = mouse_pos[1]
                 Y1 = mouse_pos[0]
@@ -140,7 +223,7 @@ while running:
 
 
                 if distance <= Button_radius:
-                    clicks += 1
+                    clicks += base_clicks * clicks_mult
 
     #Menu System (Functions)
 
@@ -152,23 +235,28 @@ while running:
         Upgrade6_menu = pygame.Rect(710, 780, 420, 50)
 
     if Menu == 1:
-        CU1_Cost = CU1_CostAmount(CU1)
-        CU2_Cost = CU2_CostAmount(CU2)
-        CU3_Cost = CU3_CostAmount(CU3)
-        CU4_Cost = CU4_CostAmount(CU4)
-        CU5_Cost = CU5_CostAmount(CU5)
+        CU1_Cost_Show = CU1_CostAmount(CU1,"Suffix")
+        CU2_Cost_Show = CU2_CostAmount(CU2, "Suffix")
+        CU3_Cost_Show = CU3_CostAmount(CU3, "Suffix")
+        CU4_Cost_Show = CU4_CostAmount(CU4, "Suffix")
+        CU5_Cost_Show = CU5_CostAmount(CU5, "Suffix")
 
-        CU1_multipler = CU1 * CU1Mult
-        CU2_multipler = CU2 * CU2Mult
-        CU3_multipler = CU3 * CU3Mult
-        CU4_multipler = CU4 * CU4Mult
-        CU5_multipler = CU5 * CU5Mult
+        CU1_multipler = (CU1 * CU1Mult)
+        CU2_multipler = (CU2 * CU2Mult)
+        CU3_multipler = (CU3Mult ** CU3)
+        CU4_multipler = (CU4Mult ** CU4)
+        CU5_multipler = (CU5Mult ** CU5)
 
-        menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost), True, (0, 0, 0))
-        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n X" + str(CU2_multipler) + " \n  Cost: " + str(CU2_Cost), True, (0, 0, 0))
-        menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler) + " \n  Cost: " + str(CU3_Cost), True, (0, 0, 0))
-        menu_text4 = font.render("More Rebirths (" + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler) + " \n  Cost: " + str(CU4_Cost), True, (0, 0, 0))
-        menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler) + " \n  Cost: " + str(CU5_Cost), True, (0, 0, 0))
+        CU2_multipler_s = amount_sum(CU2_multipler)
+        CU3_multipler_s = amount_sum(CU3_multipler)
+        CU4_multipler_s = amount_sum(CU4_multipler)
+        CU5_multipler_s = amount_sum(CU5_multipler)
+
+        menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n X" + str(CU2_multipler) + " \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
+        menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
+        menu_text4 = font.render("More Rebirths (" + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n  Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
+        menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
         menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
 
