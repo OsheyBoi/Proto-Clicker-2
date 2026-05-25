@@ -20,13 +20,37 @@ black = (0, 0, 0)
 orange = (255, 165, 0)
 purple = (128, 0, 128)
 
-font = pygame.font.SysFont("Arial", 50)
+font = pygame.font.SysFont("Arial", 40)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
 clicks = 0
 rebirths = 0
 Menu = 0
+
+
+#Clicks Upgrade
+# Notes:
+#  (y) U(x) = (Currency) Upgrade (x = Number)
+#  (y)U(x)M = (Currency) Upgrade (Number) Max Amount
+#  (y)U(x)Mult = CU(x) = (Currency) (Number) Multipler
+# Y = Currency  (C = Clicks) (R = Rebirths
+
+CU1 = 1
+CU1M = 25
+CU1Mult = 1
+CU2 = 1
+CU2M = 10
+CU2Mult = 0.1
+CU3 = 1
+CU3M = 5
+CU3Mult = 1.25
+CU4 = 1
+CU4M = 10
+CU4Mult = 1.3
+CU5 = 1
+CU5M = 25
+CU5Mult = 1.1
 
 shop_menu = pygame.Rect(460, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 100, 100)
@@ -41,7 +65,22 @@ RebirthIcon =  pygame.image.load("Rebirth.png")
 Rebirthicon_Resize = pygame.transform.scale(RebirthIcon, (70, 60))
 text1 = font.render("Shop", True, (0, 0, 0))
 
-Menu_Box = pygame.Rect(50, 150, 1200, 700)
+#Menu Stuff (Render place and size)
+Menu_Box = pygame.Rect(20, 150, 1250, 710)
+close_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade1_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade2_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade3_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade4_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade5_menu = pygame.Rect(1170, 200, 50, 50)
+Upgrade6_menu = pygame.Rect(1170, 200, 50, 50)
+#Menu Text
+menu_text1 = font.render("", True, (0, 0, 0))
+menu_text2 = font.render("", True, (0, 0, 0))
+menu_text3 = font.render("", True, (0, 0, 0))
+menu_text4 = font.render("", True, (0, 0, 0))
+menu_text5 = font.render("", True, (0, 0, 0))
+menu_text6 = font.render("", True, (0, 0, 0))
 
 
 running = True
@@ -62,8 +101,19 @@ while running:
                 if Rebirth_menu.collidepoint(mouse_pos):
                     print("Rebirth")
                 if shop_menu.collidepoint(mouse_pos):
-                    print("Shop")
-                    Menu = 1
+                    if Menu == 0:
+                        print("Shop")
+                        Menu = 1
+                if close_menu.collidepoint(mouse_pos):
+                    if Menu >= 1:
+                        print("Shop")
+                        Menu = 0
+
+                X1 = mouse_pos[1]
+                Y1 = mouse_pos[0]
+
+
+
 
                 if distance <= Button_radius:
                     clicks += 1
@@ -71,8 +121,20 @@ while running:
 
     #Menu System (Functions)
 
+        Upgrade1_menu = pygame.Rect(120, 320, 380, 20)
+        Upgrade2_menu = pygame.Rect(120, 540, 380, 20)
+        Upgrade3_menu = pygame.Rect(120, 760, 380, 20)
+        Upgrade4_menu = pygame.Rect(720, 320, 380, 20)
+        Upgrade5_menu = pygame.Rect(720, 540, 380, 20)
+        Upgrade6_menu = pygame.Rect(720, 760, 380, 20)
 
-
+    if Menu == 1:
+        menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ")", True, (0, 0, 0))
+        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")", True, (0, 0, 0))
+        menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")", True, (0, 0, 0))
+        menu_text4 = font.render("More Xp (" + str(CU4) + "/" + str(CU4M) + ")", True, (0, 0, 0))
+        menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")", True, (0, 0, 0))
+        menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
 
     # Drawing Systems
@@ -97,6 +159,15 @@ while running:
     CurrencyBox2 = Rebirth_AR.get_rect()
     Text1 = text1.get_rect() #"Shop" Text
 
+    CurrencyBox1 = Clicks_AR.get_rect()
+
+    Menu_text1 = menu_text1.get_rect()
+    Menu_text2 = menu_text2.get_rect()
+    Menu_text3 = menu_text3.get_rect()
+    Menu_text4 = menu_text4.get_rect()
+    Menu_text5 = menu_text5.get_rect()
+    Menu_text6 = menu_text6.get_rect()
+
     CurrencyBox1.center = (380, 75)
     CurrencyBox2.center = (950, 75)
     Text1.center = (651, 794)
@@ -106,11 +177,38 @@ while running:
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
     screen.blit(text1, Text1)
+    screen.blit(menu_text1, Menu_text1)
 
     # Menu System (Drawing)
     if Menu != 0:
-        pygame.draw.rect(screen, green, Menu_Box, width=0, border_radius=50)
+        pygame.draw.rect(screen, green, Menu_Box, width=0, border_radius=50) #Menu Screen
         pygame.draw.rect(screen, black, Menu_Box, width=5, border_radius=50)
+
+        pygame.draw.rect(screen, red, close_menu, width=0, border_radius=50) # Close Button
+        pygame.draw.rect(screen, black, close_menu, width=5, border_radius=50)
+
+        if Menu <= 9:
+            pygame.draw.rect(screen, blue, Upgrade1_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, blue, Upgrade2_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, blue, Upgrade3_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, blue, Upgrade4_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, blue, Upgrade5_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, blue, Upgrade6_menu, width=0, border_radius=50)
+    if Menu >= 1:
+        if Menu <= 9:
+            Menu_text1.center = (280, 290)
+            Menu_text2.center = (280, 510)
+            Menu_text3.center = (280, 730)
+            Menu_text4.center = (860, 290)
+            Menu_text5.center = (860, 510)
+            Menu_text6.center = (860, 730)
+            screen.blit(menu_text1, Menu_text1)
+            screen.blit(menu_text2, Menu_text2)
+            screen.blit(menu_text3, Menu_text3)
+            screen.blit(menu_text4, Menu_text4)
+            screen.blit(menu_text5, Menu_text5)
+            screen.blit(menu_text6, Menu_text6)
+
 
     pygame.display.flip()
     clock.tick(60)
