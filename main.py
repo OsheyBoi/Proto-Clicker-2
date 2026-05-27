@@ -110,6 +110,7 @@ CU5_Cost = 1
 
 shop_menu = pygame.Rect(460, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 100, 100)
+Teir_menu = pygame.Rect(24, 427, 100, 100)
 background = pygame.Rect(0, 0, 1300, 900)
 Clicks_Amount_Box = pygame.Rect(250, 20, 350, 100)
 Rebirth_Amount_Box = pygame.Rect(800, 20, 350, 100)
@@ -119,6 +120,7 @@ Button_radius = 200
 
 RebirthIcon =  pygame.image.load("Rebirth.png")
 Rebirthicon_Resize = pygame.transform.scale(RebirthIcon, (70, 60))
+TierIcon =  pygame.image.load("Tier.png")
 text1 = font.render("Shop", True, (0, 0, 0))
 
 #Menu Stuff (Render place and size)
@@ -160,6 +162,13 @@ while running:
     Clicks_Shown = amount_sum(clicks)
     Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
     Rebirth_AR = font.render("Rebirths: " + str(rebirths), True, (0, 0, 0))
+
+    #Gain Amount
+    CPC = (1 + CU1) * (CU2Mult ** CU2)  #Click per Click
+    CPC_Show = amount_sum(CPC)   # Click per Click
+
+    Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4)
+    Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     # Event Handling Loop
     # -----------------
     upgrades = [
@@ -186,6 +195,11 @@ while running:
                     #Open Rebirth menu
                     if Menu == 0:
                         Menu = 11
+
+                if Teir_menu.collidepoint(mouse_pos):
+                    #Open Rebirth menu
+                    if Menu == 0:
+                        Menu = 12
 
                 elif shop_menu.collidepoint(mouse_pos):
                     # Open Shop
@@ -223,8 +237,7 @@ while running:
 
 
                 if distance <= Button_radius:
-                    clicks += base_clicks * clicks_mult
-
+                    clicks += CPC
     #Menu System (Functions)
 
         Upgrade1_menu = pygame.Rect(110, 340, 420, 50)
@@ -253,9 +266,9 @@ while running:
         CU5_multipler_s = amount_sum(CU5_multipler)
 
         menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n X" + str(CU2_multipler) + " \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
         menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
-        menu_text4 = font.render("More Rebirths (" + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n  Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
+        menu_text4 = font.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
         menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
         menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
@@ -265,9 +278,11 @@ while running:
 
     pygame.draw.rect(screen, red, Rebirth_menu)
     pygame.draw.rect(screen, cyan, shop_menu)
+    pygame.draw.rect(screen, yellow, Teir_menu)
 
     pygame.draw.rect(screen, black, Rebirth_menu,width=5)
     pygame.draw.rect(screen, black, shop_menu,width=5)
+    pygame.draw.rect(screen, black, Teir_menu, width=5)
 
     pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(screen, red, Rebirth_Amount_Box, width=0, border_radius=30)
@@ -297,13 +312,22 @@ while running:
 
 
     screen.blit(Rebirthicon_Resize, (40, 247))
+    screen.blit(TierIcon, (25, 427))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
     screen.blit(text1, Text1)
 
     # Menu System (Drawing)
     if Menu != 0:
-        pygame.draw.rect(screen, green, Menu_Box, width=0, border_radius=50) #Menu Screen
+        if Menu == 1:
+            pygame.draw.rect(screen, green, Menu_Box, width=0, border_radius=50) #Menu Screen
+        if Menu == 6:
+            pygame.draw.rect(screen, red, Menu_Box, width=0, border_radius=50)
+        if Menu == 11:
+            pygame.draw.rect(screen, orange, Menu_Box, width=0, border_radius=50)
+        if Menu == 12:
+            pygame.draw.rect(screen, yellow, Menu_Box, width=0, border_radius=50)
+
         pygame.draw.rect(screen, black, Menu_Box, width=5, border_radius=50)
 
         pygame.draw.rect(screen, red, close_menu, width=0, border_radius=50) # Close Button
