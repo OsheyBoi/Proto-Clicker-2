@@ -54,7 +54,28 @@ class Upgrade:
                 return clicks, True  # Return new clicks, purchase successful
 
         return clicks, False
+class Upgrade2:
+    def __init__(self, menu_rect, current_level, max_level, cost_function):
+        self.rect = menu_rect
+        self.level = current_level
+        self.max_level = max_level
+        self.cost_fn = cost_function  # Passes the function used to calculate cost
 
+    def try_buy(self, mouse_pos, current_menu, rebirths):
+        # 1. Check menu and click collision
+        if current_menu != 6:
+            print("h")
+            return rebirths, False  # Return original clicks, no purchase made
+        print("try buy pass menu 6 check")
+        if self.rect.collidepoint(mouse_pos):
+            cost = self.cost_fn(self.level, "True Price")
+            print(self.level)
+            if rebirths >= cost and self.level < self.max_level:
+                rebirths -= cost
+                self.level += 1
+                return rebirths, True  # Return new clicks, purchase successful
+
+        return rebirths, False
 
 ################################################################################
 #    Set up
@@ -81,8 +102,8 @@ font = pygame.font.SysFont("Arial", 40)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
-clicks = 1000 * 100
-rebirths = 0
+clicks = 1000
+rebirths = 1000
 Menu = 0
 Current_Tier = 0
 
@@ -183,7 +204,16 @@ upgrades = [
     Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
     Upgrade(menu_ui_3, 0, CU3M, CU3_CostAmount),
     Upgrade(menu_ui_4, 0, CU4M, CU4_CostAmount),
-    Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount)
+    Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount),
+
+]
+
+upgrades2 = [
+    Upgrade2(menu_ui_1, 0, RU2M, RU1_CostAmount),
+    Upgrade2(menu_ui_2, 0, RU2M, RU2_CostAmount),
+    Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
+
+
 ]
 #----------------
 ################################################################################
@@ -195,8 +225,9 @@ while running:
     distance = math.hypot(mouse_pos[0] - Button_center[0], mouse_pos[1] - Button_center[1])
 
     Clicks_Shown = amount_sum(clicks)
+    Rebirths_Shown = amount_sum(rebirths)
     Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
-    Rebirth_AR = font.render("Rebirths: " + str(rebirths), True, (0, 0, 0))
+    Rebirth_AR = font.render("Rebirths: " + str(Rebirths_Shown), True, (0, 0, 0))
 
     #Gain Amount
     CPC = (1 + CU1) * (CU2Mult ** CU2)  #Click per Click
@@ -204,26 +235,30 @@ while running:
 
     Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4)
     Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
-    # Event Handling Loop
+
     # -----------------
     upgrades = [
-        Upgrade(menu_ui_1, CU1, CU1M, CU1_CostAmount),
-        Upgrade(menu_ui_2, CU2, CU2M, CU1_CostAmount),
-        Upgrade(menu_ui_3, CU3, CU3M, CU3_CostAmount),
-        Upgrade(menu_ui_4, CU4, CU4M, CU4_CostAmount),
-        Upgrade(menu_ui_5, CU5, CU5M, CU5_CostAmount),
-        # Rebirths Upgrade
-        Upgrade(menu_ui_1, RU1, RU1M, RU1_CostAmount), #5
-        Upgrade(menu_ui_2, RU2, RU2M, RU2_CostAmount), #6
-        Upgrade(menu_ui_3, RU3, RU3M, RU3_CostAmount), #7
+        Upgrade(menu_ui_1, 0, CU1M, CU1_CostAmount),
+        Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
+        Upgrade(menu_ui_3, 0, CU3M, CU3_CostAmount),
+        Upgrade(menu_ui_4, 0, CU4M, CU4_CostAmount),
+        Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount),
 
     ]
+
+    upgrades2 = [
+        Upgrade2(menu_ui_1, 0, RU2M, RU1_CostAmount),
+        Upgrade2(menu_ui_2, 0, RU2M, RU2_CostAmount),
+        Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
+
+    ]
+    # ----------------
     ################################################################################
     #    Currency Amount Gain
     ################################################################################
     # ----------------
     base_clicks = (1 + CU1)
-    clicks_mult = (CU3_multipler ** CU3) * (RU1_multipler ** RU1)
+    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1)
     if clicks_mult == 0:
         clicks_mult = 1
     # ----------------
@@ -253,6 +288,7 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: # Left click down
                 print(mouse_pos)
+                print(Menu)
                 if Rebirth_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
                     if Menu == 0:
@@ -310,17 +346,17 @@ while running:
                     CU5 = upgrades[4].level
 
                 elif Menu == 6:
-                    upgrades[5].level = RU1
-                    upgrades[6].level = RU2
-                    upgrades[7].level = RU3
+                    upgrades2[0].level = RU1
+                    upgrades2[1].level = RU2
+                    upgrades2[2].level = RU3
 
-                    for up in upgrades:
-                        clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
+                    for up in upgrades2:
+                        rebirths, bought = up.try_buy(mouse_pos, Menu, rebirths)
                         if bought:
                             break # Stop checking other upgrades if one was clicked
-                    RU1 = upgrades[5].level
-                    RU2 = upgrades[6].level
-                    RU3 = upgrades[7].level
+                    RU1 = upgrades2[0].level
+                    RU2 = upgrades2[1].level
+                    RU3 = upgrades2[2].level
 
 
 
@@ -393,7 +429,7 @@ while running:
         RU3_Cost_Show = RU3_CostAmount(RU3, "Suffix")
 
         RU1_multipler = (RU1Mult ** RU1)
-        RU2_multipler = (CU2Mult ** RU2)
+        RU2_multipler = (RU2Mult ** RU2)
         RU3_multipler = (RU3Mult ** RU3)
 
         RU1_multipler_s = amount_sum(RU1_multipler)
@@ -401,8 +437,8 @@ while running:
         RU3_multipler_s = amount_sum(RU3_multipler)
 
 
-        menu_text1 = font.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n +" + str(RU1_multipler) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n -" + str(RU2_multipler) + " Cd \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
+        menu_text1 = font.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
         menu_text3 = font.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
         menu_text4 = font.render("Coming Later", True, (0, 0, 0))
         menu_text5 = font.render("Coming Later ", True, (0, 0, 0))
@@ -447,8 +483,8 @@ while running:
     Menu_text5 = menu_text5.get_rect()
     Menu_text6 = menu_text6.get_rect()
 
-    CurrencyBox1.center = (380, 85)
-    CurrencyBox2.center = (950, 85)
+    CurrencyBox1.center = (400, 75)
+    CurrencyBox2.center = (950, 75)
     Text1.center = (651, 794)
 
 
