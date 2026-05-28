@@ -98,7 +98,8 @@ black = (0, 0, 0)
 orange = (255, 165, 0)
 purple = (128, 0, 128)
 
-font = pygame.font.SysFont("Arial", 40)
+font = pygame.font.SysFont("Arial", 40) #(Small)
+font2 = pygame.font.SysFont("Arial", 80) #(Big)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
@@ -315,6 +316,13 @@ while running:
                         Tier_cost_Shown = tier_cost(Current_Tier, "Suffix")
                         if clicks >= Tier_cost:
                             clicks = 0
+                            CU1 = 0
+                            CU2 = 0
+                            CU3 = 0
+                            CU4 = 0
+                            RU1 = 0
+                            RU2 = 0
+                            RU3 = 0
                             Current_Tier += 1
                             print("Tier up")
                         else:
@@ -322,6 +330,15 @@ while running:
                 elif menu_ui_6.collidepoint(mouse_pos):
                     if Menu == 1:
                         Menu = 6
+
+                elif menu_ui_1.collidepoint(mouse_pos):
+                        if Menu == 11:
+                            if clicks >= 1000:
+                                clicks = 0
+                                CU1 = 0
+                                CU2 = 0
+                                CU3 = 0
+                                rebirths += Rebirth_Gain
 
 
 
@@ -368,8 +385,9 @@ while running:
 
 
 
-                if distance <= Button_radius:
+                if distance <= Button_radius and Menu == 0:
                     clicks += CPC
+
 
 ################################################################################
 #    Drawing Ui Elements
@@ -388,8 +406,8 @@ while running:
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
         # Rebirth Menu
         if Menu == 11:
-            Tier_upgrade_box = pygame.Rect(710, 560, 420, 50)
-            Tier_buy_button = pygame.Rect(710, 780, 420, 50)
+            menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
+            menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
     if Menu == 1:
         CU1_Cost_Show = CU1_CostAmount(CU1,"Suffix")
         CU2_Cost_Show = CU2_CostAmount(CU2, "Suffix")
@@ -449,7 +467,9 @@ while running:
         test = tier_cost(Current_Tier,"Suffix")
         menu_text1 = font.render((tier_info(Current_Tier)), True,  (0, 0, 0))
         menu_text2 = font.render("Buy (Cost - " + str(test) + ")", True, (0, 0, 0))
-
+    if Menu == 11:
+        menu_text1 = font2.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
+        menu_text2 = font.render("Rebirth", True, (0, 0, 0))
     # Drawing Systems
     pygame.draw.rect(screen, gray, background)
     if Menu == 0:
@@ -518,8 +538,8 @@ while running:
             pygame.draw.rect(screen, cyan, menu_ui_5, width=0, border_radius=50)
             pygame.draw.rect(screen, cyan, menu_ui_6, width=0, border_radius=50)
         if Menu ==  11:
-           pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
-           pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
+           pygame.draw.rect(screen, red, menu_ui_1, width=0, border_radius=50)
+           pygame.draw.rect(screen, red, menu_ui_2, width=0, border_radius=50)
         if Menu == 12:
             pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
             pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
@@ -541,6 +561,12 @@ while running:
         if Menu == 12:
             Menu_text2.center = (600, 752)
             Menu_text1.center = (630, 382)
+            screen.blit(menu_text1, Menu_text1)
+            screen.blit(menu_text2, Menu_text2)
+
+        if Menu == 11:
+            Menu_text2.center = (600, 752)
+            Menu_text1.center = (650, 452)
             screen.blit(menu_text1, Menu_text1)
             screen.blit(menu_text2, Menu_text2)
 
