@@ -2,6 +2,7 @@ import pygame
 import sys
 import math
 from Prices import *
+from Tier import *
 from Prices import amount_sum
 
 
@@ -77,6 +78,7 @@ pygame.display.set_caption('Proto Clicker 2')
 clicks = 0
 rebirths = 0
 Menu = 0
+Current_Tier = 0
 
 
 #Clicks Upgrade
@@ -285,8 +287,8 @@ while running:
         menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
     if Menu == 12:
-        menu_text1 = font.render("")
-        menu_text2 = font.render("")
+        menu_text1 = font.render((tier_info(Current_Tier)), True,  (0, 0, 0))
+        menu_text2 = font.render("Buy",True, (0, 0, 0))
 
     # Drawing Systems
     pygame.draw.rect(screen, gray, background)
@@ -376,6 +378,11 @@ while running:
             screen.blit(menu_text4, Menu_text4)
             screen.blit(menu_text5, Menu_text5)
             screen.blit(menu_text6, Menu_text6)
+        if Menu == 12:
+            Menu_text2.center = (529, 752)
+            Menu_text1.center = (630, 292)
+            screen.blit(menu_text1, Menu_text1)
+            screen.blit(menu_text2, Menu_text2)
 
 
     pygame.display.flip()
