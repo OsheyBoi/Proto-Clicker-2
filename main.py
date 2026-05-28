@@ -4,6 +4,7 @@ import math
 from Prices import *
 from Tier import *
 from Prices import amount_sum
+from Tier import tier_cost
 
 
 def amount_sum(amount):
@@ -54,6 +55,11 @@ class Upgrade:
 
         return clicks, False
 
+
+################################################################################
+#    Set up
+################################################################################
+
 pygame.init()
 screen = pygame.display.set_mode((1300, 900))
 clock = pygame.time.Clock()
@@ -75,19 +81,21 @@ font = pygame.font.SysFont("Arial", 40)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
-clicks = 0
+clicks = 1000 * 100
 rebirths = 0
 Menu = 0
 Current_Tier = 0
 
-
-#Clicks Upgrade
+################################################################################
+#    Upgrades
+################################################################################
 # Notes:
 #  (y) U(x) = (Currency) Upgrade (x = Number) - Current Amount of the upgrade you have
 #  (y)U(x)M = (Currency) Upgrade (Number) Max Amount
 #  (y)U(x)Mult = CU(x) = (Currency) (Number) Multipler
 # Y = Currency  (C = Clicks) (R = Rebirths
 
+#Clicks
 CU1 = 0
 CU1M = 25
 CU1Mult = 1
@@ -109,7 +117,23 @@ CU5M = 25
 CU5Mult = 1.1
 CU5_Cost = 1
 
+#Rebirths
+RU1 = 0
+RU1M = 20
+RU1Mult = 1.5
+RU1_Cost = 1
+RU2 = 0
+RU2M = 15
+RU2Mult = 1.25
+RU2_Cost = 1
+RU3 = 0
+RU3M = 25
+RU3Mult = 1.1
+RU3_Cost = 1
 
+################################################################################
+#    Ui Set up
+################################################################################
 shop_menu = pygame.Rect(460, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 100, 100)
 Teir_menu = pygame.Rect(24, 427, 100, 100)
@@ -142,6 +166,9 @@ menu_text4 = font.render("", True, (0, 0, 0))
 menu_text5 = font.render("", True, (0, 0, 0))
 menu_text6 = font.render("", True, (0, 0, 0))
 
+################################################################################
+#    Multipler and Upgrade Set up
+################################################################################
 
 running = True
 CU1_multipler = (CU1 * CU1Mult)
@@ -152,13 +179,16 @@ CU5_multipler = (CU5Mult ** CU5)
 
 #-----------------
 upgrades = [
-    Upgrade(menu_ui_1,  0, CU1M, CU1_CostAmount),
+    Upgrade(menu_ui_1, 0, CU1M, CU1_CostAmount),
     Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
     Upgrade(menu_ui_3, 0, CU3M, CU3_CostAmount),
     Upgrade(menu_ui_4, 0, CU4M, CU4_CostAmount),
     Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount)
 ]
 #----------------
+################################################################################
+#    Start Application
+################################################################################
 while running:
     screen.fill((0, 0, 0))
     mouse_pos = pygame.mouse.get_pos()
@@ -181,14 +211,41 @@ while running:
         Upgrade(menu_ui_2, CU2, CU2M, CU1_CostAmount),
         Upgrade(menu_ui_3, CU3, CU3M, CU3_CostAmount),
         Upgrade(menu_ui_4, CU4, CU4M, CU4_CostAmount),
-        Upgrade(menu_ui_5, CU5, CU5M, CU5_CostAmount)
+        Upgrade(menu_ui_5, CU5, CU5M, CU5_CostAmount),
+        # Rebirths Upgrade
+        Upgrade(menu_ui_1, RU1, RU1M, RU1_CostAmount), #5
+        Upgrade(menu_ui_2, RU2, RU2M, RU2_CostAmount), #6
+        Upgrade(menu_ui_3, RU3, RU3M, RU3_CostAmount), #7
+
     ]
+    ################################################################################
+    #    Currency Amount Gain
+    ################################################################################
     # ----------------
     base_clicks = (1 + CU1)
-    clicks_mult = (CU3 ** CU3_multipler)
+    clicks_mult = (CU3_multipler ** CU3) * (RU1_multipler ** RU1)
     if clicks_mult == 0:
         clicks_mult = 1
     # ----------------
+
+    #Gain Amount
+    CPC = base_clicks * clicks_mult  #Click per Click
+    CPC_Show = amount_sum(CPC)   # Click per Click
+
+    Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4) * (RU2Mult ** RU2)
+    Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
+
+    ################################################################################
+    #    Upgrade Changes
+    ################################################################################
+
+    if Current_Tier >= 5:
+        CU3 = 15
+        CU3Mult = 1.3
+
+    ################################################################################
+    #    Pygame Mouse  collidepoint checker
+    ################################################################################
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -217,6 +274,25 @@ while running:
                         print("Shop")
                         Menu = 0
 
+                elif menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
+                        Tier_cost = tier_cost(Current_Tier, "None")
+                        Tier_cost_Shown = tier_cost(Current_Tier, "Suffix")
+                        if clicks >= Tier_cost:
+                            clicks = 0
+                            Current_Tier += 1
+                            print("Tier up")
+                        else:
+                            print("no")
+                elif menu_ui_6.collidepoint(mouse_pos):
+                    if Menu == 1:
+                        Menu = 6
+
+
+
+################################################################################
+#    Upgrade Menu stuff
+################################################################################
+
                 elif Menu == 1:
                     upgrades[0].level = CU1
                     upgrades[1].level = CU2
@@ -233,6 +309,21 @@ while running:
                     CU4 = upgrades[3].level
                     CU5 = upgrades[4].level
 
+                elif Menu == 6:
+                    upgrades[5].level = RU1
+                    upgrades[6].level = RU2
+                    upgrades[7].level = RU3
+
+                    for up in upgrades:
+                        clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
+                        if bought:
+                            break # Stop checking other upgrades if one was clicked
+                    RU1 = upgrades[5].level
+                    RU2 = upgrades[6].level
+                    RU3 = upgrades[7].level
+
+
+
 
 
                 X1 = mouse_pos[1]
@@ -243,8 +334,10 @@ while running:
 
                 if distance <= Button_radius:
                     clicks += CPC
-    #Menu System (Functions)
 
+################################################################################
+#    Drawing Ui Elements
+################################################################################
         #Upgrade  Menu
         if 1 >= Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 420, 50)
@@ -282,20 +375,51 @@ while running:
         menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
         menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
         menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
-        menu_text4 = font.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
-        menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
+
+        if Current_Tier >= 2:
+            menu_text4 = font.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
+        else:
+            menu_text4 = font.render("Unlock At Tier 2 ", True, (0, 0, 0))
+        if Current_Tier >= 4:
+            menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
+        else:
+            menu_text5 = font.render("Unlock At Tier 4 ", True, (0, 0, 0))
+
+        menu_text6 = font.render("Rebirth Upgrades", True, (0, 0, 0))
+
+    if Menu == 6:
+        RU1_Cost_Show = RU1_CostAmount(RU1, "Suffix")
+        RU2_Cost_Show = RU2_CostAmount(RU2, "Suffix")
+        RU3_Cost_Show = RU3_CostAmount(RU3, "Suffix")
+
+        RU1_multipler = (RU1Mult ** RU1)
+        RU2_multipler = (CU2Mult ** RU2)
+        RU3_multipler = (RU3Mult ** RU3)
+
+        RU1_multipler_s = amount_sum(RU1_multipler)
+        RU2_multipler_s = amount_sum(RU2_multipler)
+        RU3_multipler_s = amount_sum(RU3_multipler)
+
+
+        menu_text1 = font.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n +" + str(RU1_multipler) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n -" + str(RU2_multipler) + " Cd \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
+        menu_text3 = font.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
+        menu_text4 = font.render("Coming Later", True, (0, 0, 0))
+        menu_text5 = font.render("Coming Later ", True, (0, 0, 0))
         menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
+
     if Menu == 12:
+        test = tier_cost(Current_Tier,"Suffix")
         menu_text1 = font.render((tier_info(Current_Tier)), True,  (0, 0, 0))
-        menu_text2 = font.render("Buy",True, (0, 0, 0))
+        menu_text2 = font.render("Buy (Cost - " + str(test) + ")", True, (0, 0, 0))
 
     # Drawing Systems
     pygame.draw.rect(screen, gray, background)
-
-    pygame.draw.rect(screen, red, Rebirth_menu)
-    pygame.draw.rect(screen, cyan, shop_menu)
-    pygame.draw.rect(screen, yellow, Teir_menu)
+    if Menu == 0:
+        pygame.draw.rect(screen, red, Rebirth_menu)
+        pygame.draw.rect(screen, cyan, shop_menu)
+        pygame.draw.rect(screen, yellow, Teir_menu)
 
     pygame.draw.rect(screen, black, Rebirth_menu,width=5)
     pygame.draw.rect(screen, black, shop_menu,width=5)
@@ -323,8 +447,8 @@ while running:
     Menu_text5 = menu_text5.get_rect()
     Menu_text6 = menu_text6.get_rect()
 
-    CurrencyBox1.center = (380, 75)
-    CurrencyBox2.center = (950, 75)
+    CurrencyBox1.center = (380, 85)
+    CurrencyBox2.center = (950, 85)
     Text1.center = (651, 794)
 
 
@@ -379,8 +503,8 @@ while running:
             screen.blit(menu_text5, Menu_text5)
             screen.blit(menu_text6, Menu_text6)
         if Menu == 12:
-            Menu_text2.center = (529, 752)
-            Menu_text1.center = (630, 292)
+            Menu_text2.center = (600, 752)
+            Menu_text1.center = (630, 382)
             screen.blit(menu_text1, Menu_text1)
             screen.blit(menu_text2, Menu_text2)
 
