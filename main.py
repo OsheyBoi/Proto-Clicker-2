@@ -126,12 +126,12 @@ text1 = font.render("Shop", True, (0, 0, 0))
 #Menu Stuff (Render place and size)
 Menu_Box = pygame.Rect(20, 150, 1250, 710)
 close_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade1_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade2_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade3_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade4_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade5_menu = pygame.Rect(1170, 200, 50, 50)
-Upgrade6_menu = pygame.Rect(1170, 200, 50, 50)
+menu_ui_1 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_2 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_3 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_4 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_5 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_6 = pygame.Rect(1170, 200, 50, 50)
 #Menu Text
 menu_text1 = font.render("", True, (0, 0, 0))
 menu_text2 = font.render("", True, (0, 0, 0))
@@ -150,8 +150,11 @@ CU5_multipler = (CU5Mult ** CU5)
 
 #-----------------
 upgrades = [
-    Upgrade(Upgrade1_menu,  0, CU1M, CU1_CostAmount),
-    Upgrade(Upgrade2_menu, 0, CU2M, CU2_CostAmount)
+    Upgrade(menu_ui_1,  0, CU1M, CU1_CostAmount),
+    Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
+    Upgrade(menu_ui_3, 0, CU3M, CU3_CostAmount),
+    Upgrade(menu_ui_4, 0, CU4M, CU4_CostAmount),
+    Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount)
 ]
 #----------------
 while running:
@@ -172,11 +175,11 @@ while running:
     # Event Handling Loop
     # -----------------
     upgrades = [
-        Upgrade(Upgrade1_menu, CU1, CU1M, CU1_CostAmount),
-        Upgrade(Upgrade2_menu, CU2, CU2M, CU1_CostAmount),
-        Upgrade(Upgrade3_menu, CU3, CU3M, CU3_CostAmount),
-        Upgrade(Upgrade4_menu, CU4, CU4M, CU4_CostAmount),
-        Upgrade(Upgrade5_menu, CU5, CU5M, CU5_CostAmount)
+        Upgrade(menu_ui_1, CU1, CU1M, CU1_CostAmount),
+        Upgrade(menu_ui_2, CU2, CU2M, CU1_CostAmount),
+        Upgrade(menu_ui_3, CU3, CU3M, CU3_CostAmount),
+        Upgrade(menu_ui_4, CU4, CU4M, CU4_CostAmount),
+        Upgrade(menu_ui_5, CU5, CU5M, CU5_CostAmount)
     ]
     # ----------------
     base_clicks = (1 + CU1)
@@ -240,13 +243,22 @@ while running:
                     clicks += CPC
     #Menu System (Functions)
 
-        Upgrade1_menu = pygame.Rect(110, 340, 420, 50)
-        Upgrade2_menu = pygame.Rect(110, 560, 420, 50)
-        Upgrade3_menu = pygame.Rect(110, 780, 420, 50)
-        Upgrade4_menu = pygame.Rect(710, 340, 420, 50)
-        Upgrade5_menu = pygame.Rect(710, 560, 420, 50)
-        Upgrade6_menu = pygame.Rect(710, 780, 420, 50)
-
+        #Upgrade  Menu
+        if 1 >= Menu <= 10:
+            menu_ui_1 = pygame.Rect(110, 340, 420, 50)
+            menu_ui_2 = pygame.Rect(110, 560, 420, 50)
+            menu_ui_3 = pygame.Rect(110, 780, 420, 50)
+            menu_ui_4 = pygame.Rect(710, 340, 420, 50)
+            menu_ui_5 = pygame.Rect(710, 560, 420, 50)
+            menu_ui_6 = pygame.Rect(710, 780, 420, 50)
+        # Teir Menu
+        if Menu == 12:
+            menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
+            menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
+        # Rebirth Menu
+        if Menu == 11:
+            Tier_upgrade_box = pygame.Rect(710, 560, 420, 50)
+            Tier_buy_button = pygame.Rect(710, 780, 420, 50)
     if Menu == 1:
         CU1_Cost_Show = CU1_CostAmount(CU1,"Suffix")
         CU2_Cost_Show = CU2_CostAmount(CU2, "Suffix")
@@ -272,6 +284,9 @@ while running:
         menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
         menu_text6 = font.render("Coming Later", True, (0, 0, 0))
 
+    if Menu == 12:
+        menu_text1 = font.render("")
+        menu_text2 = font.render("")
 
     # Drawing Systems
     pygame.draw.rect(screen, gray, background)
@@ -334,12 +349,19 @@ while running:
         pygame.draw.rect(screen, black, close_menu, width=5, border_radius=50)
 
         if Menu <= 9:
-            pygame.draw.rect(screen, cyan, Upgrade1_menu, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, Upgrade2_menu, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, Upgrade3_menu, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, Upgrade4_menu, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, Upgrade5_menu, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, Upgrade6_menu, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_3, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_4, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_5, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_6, width=0, border_radius=50)
+        if Menu ==  11:
+           pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
+           pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
+        if Menu == 12:
+            pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
+            pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
+            pygame.draw.rect(screen, black, menu_ui_2, width=7, border_radius=50)
     if Menu >= 1:
         if Menu <= 9:
             Menu_text1.center = (300, 320)

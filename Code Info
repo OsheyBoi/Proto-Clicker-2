@@ -15,11 +15,26 @@ Shop Menus
 8 = Rebirth Shop Menu Page 3
 9 = Rebirth Shop Menu Page 4
 10 = Rebirth Shop Menu Page 5
+
+Menu Ui 1 - Upgrade 1 Buy Button
+Menu Ui 2 - Upgrade 2 Buy Button
+Menu Ui 3 - Upgrade 3 Buy Button
+Menu Ui 4 - Upgrade 4 Buy Button
+Menu Ui 5 - Upgrade 5 Buy Button
+Menu Ui 6 - Upgrade 6 Buy Button
 ------------------------------
 Other Menus
 ------------------------------
 11 = Rebirth Menu
+
+Menu Ui 1 - Rebirth Button
+Menu Ui 2 - ???
+
 12 = Tiers Menu
+
+Menu Ui 1 - Tier Buy Button
+Menu Ui 2 - Tier Upgrade Background
+
 13 = Sacrifice Menu
 14 = Recreation Menu
 15 = ???
