@@ -113,6 +113,7 @@ rebirths = 0
 Current_Tier = 0
 Menu = 0
 total_time_played = 0
+Xp = 0
 CU1 = 0
 CU2 = 0
 CU3 = 0
@@ -121,12 +122,15 @@ CU5 = 0
 RU1 = 0
 RU2 = 0
 RU3 = 0
-
+levels = 1
+Xp_Current_Level = 0
+Xp_needed = 0
 default_game_state = {
     "clicks": clicks,
     "rebirths": rebirths,
     "current_tier": Current_Tier,
     "total_time_played": total_time_played,
+    "xp": Xp,
     "CU1": CU1,
     "CU2": CU2,
     "CU3": CU3,
@@ -143,6 +147,7 @@ current_state = {
     "rebirths": rebirths,
     "current_tier": Current_Tier,
     "total_time_played": total_time_played,
+    "xp": Xp,
     "CU1": CU1,
     "CU2": CU2,
     "CU3": CU3,
@@ -176,14 +181,6 @@ def load_game():
         return default_game_state.copy()
 
 
-CU1 = 0
-CU2 = 0
-CU3 = 0
-CU4 = 0
-CU5 = 0
-RU1 = 0
-RU2 = 0
-RU3 = 0
 ################################################################################
 #    Upgrades
 ################################################################################
@@ -236,8 +233,9 @@ shop_menu = pygame.Rect(460, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 100, 100)
 Teir_menu = pygame.Rect(24, 427, 100, 100)
 background = pygame.Rect(0, 0, 1300, 900)
-Clicks_Amount_Box = pygame.Rect(250, 20, 350, 100)
-Rebirth_Amount_Box = pygame.Rect(800, 20, 350, 100)
+Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
+Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
+Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
 RebirthIcon = pygame.Rect(800, 20, 350, 100)
 Button_center = (675, 400)
 Button_radius = 200
@@ -355,7 +353,27 @@ while running:
     Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
     Rebirth_AR = font.render("Rebirths: " + str(Rebirths_Shown), True, (0, 0, 0))
 
-    #Gain Amount
+################################################################################
+#    Xp system
+################################################################################
+
+    Xp_needed =  int(10* (1.3 ** levels ))
+
+    total_xp_for_past_levels = 0
+    for lvl in range(1, levels):
+        total_xp_for_past_levels += int(8 * (1.3 ** lvl) + 3)
+
+    Xp_Current_Level = Xp - total_xp_for_past_levels
+    if Xp_Current_Level >= Xp_needed:
+        print("test")
+        levels += 1
+        Xp_Current_Level = 0
+
+    Xp_AR = font.render("Level: " + str(levels) + " (" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
+
+################################################################################
+#Gain Amount
+################################################################################
     CPC = (1 + CU1) * (CU2Mult ** CU2)  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
 
@@ -424,6 +442,7 @@ while running:
                 "rebirths": rebirths,
                 "current_tier": Current_Tier,
                 "total_time_played": total_time_played,
+                "xp": Xp,
                 "CU1": CU1,
                 "CU2": CU2,
                 "CU3": CU3,
@@ -444,6 +463,7 @@ while running:
                 "rebirths": rebirths,
                 "current_tier": Current_Tier,
                 "total_time_played": total_time_played,
+                "xp": Xp,
                 "CU1": CU1,
                 "CU2": CU2,
                 "CU3": CU3,
@@ -558,6 +578,7 @@ while running:
 
                 if distance <= Button_radius and Menu == 0:
                     clicks += CPC
+                    Xp += 1
 
 
 ################################################################################
@@ -654,18 +675,20 @@ while running:
 
     pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(screen, red, Rebirth_Amount_Box, width=0, border_radius=30)
+    pygame.draw.rect(screen, yellow, Xp_Amount_Box, width=0, border_radius=30)
 
     pygame.draw.rect(screen, black, Clicks_Amount_Box, width=5, border_radius=30)
     pygame.draw.rect(screen, black, Rebirth_Amount_Box, width=5, border_radius=30)
+    pygame.draw.rect(screen, black, Xp_Amount_Box, width=5, border_radius=30)
 
     pygame.draw.circle(screen, blue, Button_center, Button_radius)
     pygame.draw.circle(screen, black, Button_center, Button_radius, width=5)
 
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
+    CurrencyBox3 = Clicks_AR.get_rect()
     Text1 = text1.get_rect() #"Shop" Text
 
-    CurrencyBox1 = Clicks_AR.get_rect()
 
     Menu_text1 = menu_text1.get_rect()
     Menu_text2 = menu_text2.get_rect()
@@ -674,8 +697,9 @@ while running:
     Menu_text5 = menu_text5.get_rect()
     Menu_text6 = menu_text6.get_rect()
 
-    CurrencyBox1.center = (400, 75)
-    CurrencyBox2.center = (950, 75)
+    CurrencyBox1.center = (230, 75)
+    CurrencyBox2.center = (630, 75)
+    CurrencyBox3.center = (1030, 75)
     Text1.center = (651, 794)
 
 
@@ -683,6 +707,7 @@ while running:
     screen.blit(TierIcon, (25, 427))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
+    screen.blit(Xp_AR, CurrencyBox3)
     screen.blit(text1, Text1)
 
     # Menu System (Drawing)
