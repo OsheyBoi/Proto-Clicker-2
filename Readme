@@ -4,10 +4,17 @@ Proto Clicker 2
 V1.0 Releases June 19th
 
 V1:
+    Currently Completed:
     - Clicks and Clicks Shop
     - Rebirths and Rebirth Shop
-    - XP
+    - Save System
     - Tiers 1 -> 5
+
+    Still Working on:
+    - Xp
+    - Playtime Boost
+    - Testing the game
+
 
 
 -------------
@@ -29,7 +36,7 @@ V5:
 
 *Note 1: that none of this is guaranteed to be added or even be worked on. Depends if i continue to work on it after V1.0
 
-*Note 2: While this game is meant to be a Sequel to Proto Clicker 1 it will only have basic ui and sprite as I am using this to learn
+*Note 2: This game is meant to be a Sequel to Proto Clicker 1  and Improve on the concept but not the look will be basic as this is ment for me to learn on python works better
 
 
 Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383

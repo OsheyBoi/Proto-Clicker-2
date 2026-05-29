@@ -1,10 +1,15 @@
 import pygame
 import sys
 import math
+import json
+import os
+
 from Prices import *
 from Tier import *
 from Prices import amount_sum
 from Tier import tier_cost
+
+SAVE_FILE = "save_data.json"
 
 
 def amount_sum(amount):
@@ -103,11 +108,82 @@ font2 = pygame.font.SysFont("Arial", 80) #(Big)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
-clicks = 1000
-rebirths = 1000
-Menu = 0
+clicks = 0
+rebirths = 0
 Current_Tier = 0
+Menu = 0
+total_time_played = 0
+CU1 = 0
+CU2 = 0
+CU3 = 0
+CU4 = 0
+CU5 = 0
+RU1 = 0
+RU2 = 0
+RU3 = 0
 
+default_game_state = {
+    "clicks": clicks,
+    "rebirths": rebirths,
+    "current_tier": Current_Tier,
+    "total_time_played": total_time_played,
+    "CU1": CU1,
+    "CU2": CU2,
+    "CU3": CU3,
+    "CU4": CU4,
+    "CU5": CU5,
+    "RU1": RU1,
+    "RU2": RU2,
+    "RU3": RU3
+}
+
+
+current_state = {
+    "clicks": clicks,
+    "rebirths": rebirths,
+    "current_tier": Current_Tier,
+    "total_time_played": total_time_played,
+    "CU1": CU1,
+    "CU2": CU2,
+    "CU3": CU3,
+    "CU4": CU4,
+    "CU5": CU5,
+    "RU1": RU1,
+    "RU2": RU2,
+    "RU3": RU3
+}
+
+
+def save_game(game_state):
+    """Writes the current game state dictionary to a JSON file."""
+    try:
+        with open(SAVE_FILE, "w") as f:
+            json.dump(game_state, f, indent=4)
+        print("Game saved successfully!")
+    except IOError:
+        print("Error: Could not write save file.")
+
+
+def load_game():
+    """Loads game data or returns defaults if no file exists."""
+    if not os.path.exists(SAVE_FILE):
+        return default_game_state.copy()  # Return copy of defaults
+
+    try:
+        with open(SAVE_FILE, "r") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return default_game_state.copy()
+
+
+CU1 = 0
+CU2 = 0
+CU3 = 0
+CU4 = 0
+CU5 = 0
+RU1 = 0
+RU2 = 0
+RU3 = 0
 ################################################################################
 #    Upgrades
 ################################################################################
@@ -118,37 +194,37 @@ Current_Tier = 0
 # Y = Currency  (C = Clicks) (R = Rebirths
 
 #Clicks
-CU1 = 0
+
 CU1M = 25
 CU1Mult = 1
 CU1_Cost = 1
-CU2 = 0
+
 CU2M = 10
 CU2Mult = 0.1
 CU2_Cost = 1
-CU3 = 0
+
 CU3M = 5
 CU3Mult = 1.25
 CU3_Cost = 1
-CU4 = 0
+
 CU4M = 10
 CU4Mult = 1.3
 CU4_Cost = 1
-CU5 = 0
+
 CU5M = 25
 CU5Mult = 1.1
 CU5_Cost = 1
 
 #Rebirths
-RU1 = 0
+
 RU1M = 20
 RU1Mult = 1.5
 RU1_Cost = 1
-RU2 = 0
+
 RU2M = 15
 RU2Mult = 1.25
 RU2_Cost = 1
-RU3 = 0
+
 RU3M = 25
 RU3Mult = 1.1
 RU3_Cost = 1
@@ -193,6 +269,48 @@ menu_text6 = font.render("", True, (0, 0, 0))
 ################################################################################
 
 running = True
+last_time_check = pygame.time.get_ticks()
+
+try:
+    with open(SAVE_FILE, "r") as f:
+        loaded_data = json.load(f)
+
+        # Core game progress variables
+        clicks = loaded_data.get("clicks", 0)
+        rebirths = loaded_data.get("rebirths", 0)
+        current_tier = loaded_data.get("current_tier", 1)
+        total_time_played = loaded_data.get("total_time_played", 0)
+
+        # Click Upgrades
+        CU1 = loaded_data.get("CU1", 0)
+        CU2 = loaded_data.get("CU2", 0)
+        CU3 = loaded_data.get("CU3", 0)
+        CU4 = loaded_data.get("CU4", 0)
+        CU5 = loaded_data.get("CU5", 0)
+
+        # Rebirth Upgrades
+        RU1 = loaded_data.get("RU1", 0)
+        RU2 = loaded_data.get("RU2", 0)
+        RU3 = loaded_data.get("RU3", 0)
+
+except (FileNotFoundError, json.JSONDecodeError):
+    # Default variables if no save file exists
+    clicks = 0
+    rebirths = 0
+    current_tier = 1
+    total_time_played = 0
+
+    CU1 = 0
+    CU2 = 0
+    CU3 = 0
+    CU4 = 0
+    CU5 = 0
+
+    RU1 = 0
+    RU2 = 0
+    RU3 = 0
+
+
 CU1_multipler = (CU1 * CU1Mult)
 CU2_multipler = (CU2 * CU2Mult)
 CU3_multipler = (CU3Mult ** CU3)
@@ -217,6 +335,13 @@ upgrades2 = [
 
 ]
 #----------------
+# 1. Create a custom event ID for your autosave
+AUTOSAVE_EVENT = pygame.USEREVENT + 1
+
+# 2. Set the timer to trigger that event every 10,000 milliseconds (10 seconds)
+pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
+
+
 ################################################################################
 #    Start Application
 ################################################################################
@@ -236,6 +361,14 @@ while running:
 
     Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4)
     Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
+
+
+    current_time = pygame.time.get_ticks()
+    time_passed = current_time - last_time_check
+    total_time_played += time_passed / 1000.0
+
+    # 4. Update our checkpoint for the next frame
+    last_time_check = current_time
 
     # -----------------
     upgrades = [
@@ -279,12 +412,50 @@ while running:
         CU3 = 15
         CU3Mult = 1.3
 
+
     ################################################################################
     #    Pygame Mouse  collidepoint checker
     ################################################################################
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            current_state = {
+                "clicks": clicks,
+                "rebirths": rebirths,
+                "current_tier": Current_Tier,
+                "total_time_played": total_time_played,
+                "CU1": CU1,
+                "CU2": CU2,
+                "CU3": CU3,
+                "CU4": CU4,
+                "CU5": CU5,
+                "RU1": RU1,
+                "RU2": RU2,
+                "RU3": RU3
+            }
+            save_game(current_state)
+            pygame.quit()
+            sys.exit()
+
+        # 3. Catch the 10-second timer event here
+        if event.type == AUTOSAVE_EVENT:
+            current_state = {
+                "clicks": clicks,
+                "rebirths": rebirths,
+                "current_tier": Current_Tier,
+                "total_time_played": total_time_played,
+                "CU1": CU1,
+                "CU2": CU2,
+                "CU3": CU3,
+                "CU4": CU4,
+                "CU5": CU5,
+                "RU1": RU1,
+                "RU2": RU2,
+                "RU3": RU3
+            }
+            save_game(current_state)
+            print("Autosaved at 10-second interval!")
+
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: # Left click down
