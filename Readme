@@ -20,6 +20,7 @@ Other Planed Update Features*:
 --------
 V2:
  - Tiers 6 -> 10
+ - Design Overhaul (Improve the look of the with custom sprites)
 V3:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
@@ -30,11 +31,24 @@ V4:
 V5:
 - Recreation Tiers 1 -> 3
 
+-------------
+More Planed Updates (if i do Continue to work on this):
+--------
+V6:
+- Recreation Tiers 4 + 5
+- 1 New Reset Currency (For after Rebirths)
 
+V7:
+Recreation Tiers 6 -> 8
+1 New Feature
+
+V8:
+Recreation Tiers 9 + 10
+1 Final Reset
 
 *Note 1: that none of this is guaranteed to be added or even be worked on. Depends if i continue to work on it after V1.0
 
-*Note 2: This game is meant to be a Sequel to Proto Clicker 1  and Improve on the concept but not the look will be basic as this is ment for me to learn on python works better
+*Note 2: This game is meant to be a Sequel to Proto Clicker 1  and to Improve on the gameplay it had with more Balancing and QOL changes
 
 
 Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
