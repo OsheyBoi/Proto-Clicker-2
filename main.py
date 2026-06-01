@@ -121,10 +121,20 @@ CU4 = 0
 CU5 = 0
 RU1 = 0
 RU2 = 0
+CPS = 0
+Tier_Cm = 1
+Tier_Rm = 1
 RU3 = 0
 levels = 1
 Xp_Current_Level = 0
 Xp_needed = 0
+
+time_passed_Since_Last_Click = 0
+total_time_played_Click = 1
+last_time_check_for_Auto_click = 0
+Click_Xp_Mult = 1
+
+
 default_game_state = {
     "clicks": clicks,
     "rebirths": rebirths,
@@ -179,6 +189,7 @@ def load_game():
             return json.load(f)
     except (json.JSONDecodeError, IOError):
         return default_game_state.copy()
+
 
 
 ################################################################################
@@ -277,6 +288,7 @@ try:
         clicks = loaded_data.get("clicks", 0)
         rebirths = loaded_data.get("rebirths", 0)
         current_tier = loaded_data.get("current_tier", 1)
+        Xp = loaded_data.get("xp", 1)
         total_time_played = loaded_data.get("total_time_played", 0)
 
         # Click Upgrades
@@ -333,12 +345,15 @@ upgrades2 = [
 
 ]
 #----------------
-# 1. Create a custom event ID for your autosave
 AUTOSAVE_EVENT = pygame.USEREVENT + 1
-
-# 2. Set the timer to trigger that event every 10,000 milliseconds (10 seconds)
 pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
 
+
+AUTOClick_EVENT = pygame.USEREVENT + 2
+pygame.time.set_timer(AUTOClick_EVENT, 1000)
+
+AUTORebirth_EVENT = pygame.USEREVENT + 3
+pygame.time.set_timer(AUTORebirth_EVENT, 1000)
 
 ################################################################################
 #    Start Application
@@ -351,7 +366,10 @@ while running:
     Clicks_Shown = amount_sum(clicks)
     Rebirths_Shown = amount_sum(rebirths)
     Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
-    Rebirth_AR = font.render("Rebirths: " + str(Rebirths_Shown), True, (0, 0, 0))
+    if current_tier >= 1:
+        Rebirth_AR = font.render("Rebirths: " + str(Rebirths_Shown), True, (0, 0, 0))
+    else:
+        Rebirth_AR = font.render("Unlock at T1", True, (0, 0, 0))
 
 ################################################################################
 #    Xp system
@@ -368,25 +386,46 @@ while running:
         print("test")
         levels += 1
         Xp_Current_Level = 0
+    if current_tier >= 3:
+        Xp_AR = font.render("Level: " + str(levels) + " (" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
+    if current_tier <= 2:
+        Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
 
-    Xp_AR = font.render("Level: " + str(levels) + " (" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
-
+    Click_Xp_Mult = 1.1 ** levels
+################################################################################
+#    Tier Upgrade Multiplers
+################################################################################
+    if current_tier ==  1:
+        Tier_Cm = 1.5
+        Tier_Rm = 1
+    if current_tier == 2:
+        Tier_Cm = 3
+        Tier_Rm = 1.5
+        Tier_Click_Speed = 1.5
+    if current_tier ==  3:
+        Tier_Cm = 6
+        Tier_Rm = 2.25
+        Auto_Click_Speed = 1
+    if current_tier ==  4:
+        Tier_Cm = 18
+        Tier_Rm = 4.5
+        Tier_Click_Speed = 1.875
+    if current_tier == 5:
+        Tier_Cm = 36
+        Tier_Rm = 9
+        Auto_Rebirth_Speed = 1
 ################################################################################
 #Gain Amount
 ################################################################################
-    CPC = (1 + CU1) * (CU2Mult ** CU2)  #Click per Click
-    CPC_Show = amount_sum(CPC)   # Click per Click
-
-    Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4)
-    Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
-
-
     current_time = pygame.time.get_ticks()
     time_passed = current_time - last_time_check
     total_time_played += time_passed / 1000.0
+    if current_tier == 5:
+        total_time_played_Click = total_time_played ** 0.1
+    else:
+        total_time_played_Click = 1
 
-    # 4. Update our checkpoint for the next frame
-    last_time_check = current_time
+
 
     # -----------------
     upgrades = [
@@ -410,7 +449,7 @@ while running:
     ################################################################################
     # ----------------
     base_clicks = (1 + CU1)
-    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1)
+    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult
     if clicks_mult == 0:
         clicks_mult = 1
     # ----------------
@@ -419,7 +458,8 @@ while running:
     CPC = base_clicks * clicks_mult  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
 
-    Rebirth_Gain = (clicks ** 0.2) * (CU4Mult ** CU4) * (RU2Mult ** RU2)
+
+    Rebirth_Gain = (clicks ** 0.1) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm
     Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
 
     ################################################################################
@@ -427,7 +467,7 @@ while running:
     ################################################################################
 
     if Current_Tier >= 5:
-        CU3 = 15
+        CU3M = 15
         CU3Mult = 1.3
 
 
@@ -435,6 +475,17 @@ while running:
     #    Pygame Mouse  collidepoint checker
     ################################################################################
     for event in pygame.event.get():
+
+        if event.type == AUTOClick_EVENT:
+            if Current_Tier == 3:
+                clicks += CPC
+                Xp += 0.25
+
+        if event.type == AUTOClick_EVENT:
+            if Current_Tier == 5:
+                rebirths += Rebirth_Gain / 100
+
+
         if event.type == pygame.QUIT:
             running = False
             current_state = {
@@ -484,7 +535,8 @@ while running:
                 if Rebirth_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
                     if Menu == 0:
-                        Menu = 11
+                        if current_tier >= 1:
+                            Menu = 11
 
                 if Teir_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
@@ -578,7 +630,8 @@ while running:
 
                 if distance <= Button_radius and Menu == 0:
                     clicks += CPC
-                    Xp += 1
+                    if current_tier >= 3:
+                        Xp += 1
 
 
 ################################################################################
@@ -665,13 +718,15 @@ while running:
     # Drawing Systems
     pygame.draw.rect(screen, gray, background)
     if Menu == 0:
-        pygame.draw.rect(screen, red, Rebirth_menu)
         pygame.draw.rect(screen, cyan, shop_menu)
         pygame.draw.rect(screen, yellow, Teir_menu)
+        pygame.draw.rect(screen, black, shop_menu,width=5)
+        pygame.draw.rect(screen, black, Teir_menu, width=5)
 
-    pygame.draw.rect(screen, black, Rebirth_menu,width=5)
-    pygame.draw.rect(screen, black, shop_menu,width=5)
-    pygame.draw.rect(screen, black, Teir_menu, width=5)
+        if Current_Tier >= 1:
+            pygame.draw.rect(screen, black, Rebirth_menu,width=5)
+            pygame.draw.rect(screen, red, Rebirth_menu)
+
 
     pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(screen, red, Rebirth_Amount_Box, width=0, border_radius=30)
@@ -702,8 +757,8 @@ while running:
     CurrencyBox3.center = (1030, 75)
     Text1.center = (651, 794)
 
-
-    screen.blit(Rebirthicon_Resize, (40, 247))
+    if Current_Tier >= 1:
+        screen.blit(Rebirthicon_Resize, (40, 247))
     screen.blit(TierIcon, (25, 427))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
