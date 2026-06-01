@@ -731,8 +731,9 @@ while running:
         pygame.draw.rect(screen, black, Teir_menu, width=5)
 
         if Current_Tier >= 1:
-            pygame.draw.rect(screen, black, Rebirth_menu,width=5)
             pygame.draw.rect(screen, red, Rebirth_menu)
+            pygame.draw.rect(screen, black, Rebirth_menu,width=5)
+
 
 
     pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
