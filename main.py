@@ -128,11 +128,13 @@ RU3 = 0
 levels = 1
 Xp_Current_Level = 0
 Xp_needed = 0
-
+current_Cooldown = 0
 time_passed_Since_Last_Click = 0
 total_time_played_Click = 1
 last_time_check_for_Auto_click = 0
 Click_Xp_Mult = 1
+CooldownLength = 0
+Tier_Click_Speed = 1
 
 
 default_game_state = {
@@ -207,7 +209,7 @@ CU1M = 25
 CU1Mult = 1
 CU1_Cost = 1
 
-CU2M = 10
+CU2M = 7
 CU2Mult = 0.1
 CU2_Cost = 1
 
@@ -287,8 +289,8 @@ try:
         # Core game progress variables
         clicks = loaded_data.get("clicks", 0)
         rebirths = loaded_data.get("rebirths", 0)
-        current_tier = loaded_data.get("current_tier", 1)
-        Xp = loaded_data.get("xp", 1)
+        current_tier = loaded_data.get("current_tier", 0)
+        Xp = loaded_data.get("xp", 0)
         total_time_played = loaded_data.get("total_time_played", 0)
 
         # Click Upgrades
@@ -307,7 +309,7 @@ except (FileNotFoundError, json.JSONDecodeError):
     # Default variables if no save file exists
     clicks = 0
     rebirths = 0
-    current_tier = 1
+    current_tier = 0
     total_time_played = 0
 
     CU1 = 0
@@ -390,8 +392,8 @@ while running:
         Xp_AR = font.render("Level: " + str(levels) + " (" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
     if current_tier <= 2:
         Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
-
-    Click_Xp_Mult = 1.1 ** levels
+    if current_tier >= 3:
+        Click_Xp_Mult = 1.1 ** levels
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
@@ -420,7 +422,7 @@ while running:
     current_time = pygame.time.get_ticks()
     time_passed = current_time - last_time_check
     total_time_played += time_passed / 1000.0
-    if current_tier == 5:
+    if current_tier >= 5:
         total_time_played_Click = total_time_played ** 0.1
     else:
         total_time_played_Click = 1
@@ -458,6 +460,7 @@ while running:
     CPC = base_clicks * clicks_mult  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
 
+    CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     Rebirth_Gain = (clicks ** 0.1) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm
     Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
@@ -574,13 +577,14 @@ while running:
                     if Menu == 1:
                         Menu = 6
 
-                elif menu_ui_1.collidepoint(mouse_pos):
+                elif menu_ui_1.collidepoint(mouse_pos)  and Menu == 11:
                         if Menu == 11:
                             if clicks >= 1000:
                                 clicks = 0
                                 CU1 = 0
                                 CU2 = 0
                                 CU3 = 0
+                                CU4 = 0
                                 rebirths += Rebirth_Gain
 
 
@@ -628,10 +632,13 @@ while running:
 
 
 
+
                 if distance <= Button_radius and Menu == 0:
-                    clicks += CPC
-                    if current_tier >= 3:
-                        Xp += 1
+                    if current_Cooldown <= current_time:
+                        clicks += CPC
+                        current_Cooldown = current_time + CooldownLength
+                        if current_tier >= 3:
+                            Xp += 1
 
 
 ################################################################################
@@ -672,7 +679,7 @@ while running:
         CU5_multipler_s = amount_sum(CU5_multipler)
 
         menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
         menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
 
         if Current_Tier >= 2:
