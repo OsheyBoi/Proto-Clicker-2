@@ -135,7 +135,7 @@ last_time_check_for_Auto_click = 0
 Click_Xp_Mult = 1
 CooldownLength = 0
 Tier_Click_Speed = 1
-
+last_time_check = 0
 
 default_game_state = {
     "clicks": clicks,
@@ -181,16 +181,6 @@ def save_game(game_state):
         print("Error: Could not write save file.")
 
 
-def load_game():
-    """Loads game data or returns defaults if no file exists."""
-    if not os.path.exists(SAVE_FILE):
-        return default_game_state.copy()  # Return copy of defaults
-
-    try:
-        with open(SAVE_FILE, "r") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return default_game_state.copy()
 
 
 
@@ -280,7 +270,6 @@ menu_text6 = font.render("", True, (0, 0, 0))
 ################################################################################
 
 running = True
-last_time_check = pygame.time.get_ticks()
 
 try:
     with open(SAVE_FILE, "r") as f:
@@ -422,6 +411,8 @@ while running:
     current_time = pygame.time.get_ticks()
     time_passed = current_time - last_time_check
     total_time_played += time_passed / 1000.0
+    last_time_check = current_time
+
     if current_tier >= 5:
         total_time_played_Click = total_time_played ** 0.1
     else:
@@ -623,14 +614,8 @@ while running:
                     RU3 = upgrades2[2].level
 
 
-
-
-
                 X1 = mouse_pos[1]
                 Y1 = mouse_pos[0]
-
-
-
 
 
                 if distance <= Button_radius and Menu == 0:
