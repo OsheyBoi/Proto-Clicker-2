@@ -25,7 +25,7 @@ def CU1_CostAmount(upgrade,Type):
     if upgrade == 0:
         cost = 10
     else:
-        cost = (10 + int(upgrade * 3)) ** 1.03
+        cost = (10 + int(upgrade * 4)) ** 1.05
         if Type != "Suffix":
             return cost
         else:
@@ -35,7 +35,7 @@ def CU2_CostAmount(upgrade,Type):
     if upgrade == 0:
         cost = 25
     else:
-        cost = (25 + int(upgrade * 25)) ** 1.3
+        cost = (25 + int(upgrade * 30)) ** 1.35
         if Type != "Suffix":
             return cost
         else:
@@ -45,7 +45,7 @@ def CU3_CostAmount(upgrade,Type):
     if upgrade == 0:
         cost = 100
     else:
-        cost = (100 + int(upgrade * 25)) ** 1.8
+        cost = (100 * 2 ** upgrade)
         if Type != "Suffix":
             return cost
         else:

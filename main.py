@@ -110,7 +110,7 @@ pygame.display.set_caption('Proto Clicker 2')
 #Base Veriables
 clicks = 0
 rebirths = 0
-Current_Tier = 0
+current_tier = 0
 Menu = 0
 total_time_played = 0
 Xp = 0
@@ -140,7 +140,7 @@ last_time_check = 0
 default_game_state = {
     "clicks": clicks,
     "rebirths": rebirths,
-    "current_tier": Current_Tier,
+    "current_tier": current_tier,
     "total_time_played": total_time_played,
     "xp": Xp,
     "CU1": CU1,
@@ -157,7 +157,7 @@ default_game_state = {
 current_state = {
     "clicks": clicks,
     "rebirths": rebirths,
-    "current_tier": Current_Tier,
+    "current_tier": current_tier,
     "total_time_played": total_time_played,
     "xp": Xp,
     "CU1": CU1,
@@ -460,7 +460,7 @@ while running:
     #    Upgrade Changes
     ################################################################################
 
-    if Current_Tier >= 5:
+    if current_tier >= 5:
         CU3M = 15
         CU3Mult = 1.3
 
@@ -471,12 +471,12 @@ while running:
     for event in pygame.event.get():
 
         if event.type == AUTOClick_EVENT:
-            if Current_Tier == 3:
+            if current_tier == 3:
                 clicks += CPC
                 Xp += 0.25
 
         if event.type == AUTOClick_EVENT:
-            if Current_Tier == 5:
+            if current_tier == 5:
                 rebirths += Rebirth_Gain / 100
 
 
@@ -485,7 +485,7 @@ while running:
             current_state = {
                 "clicks": clicks,
                 "rebirths": rebirths,
-                "current_tier": Current_Tier,
+                "current_tier": current_tier,
                 "total_time_played": total_time_played,
                 "xp": Xp,
                 "CU1": CU1,
@@ -506,7 +506,7 @@ while running:
             current_state = {
                 "clicks": clicks,
                 "rebirths": rebirths,
-                "current_tier": Current_Tier,
+                "current_tier": current_tier,
                 "total_time_played": total_time_played,
                 "xp": Xp,
                 "CU1": CU1,
@@ -549,8 +549,8 @@ while running:
                         Menu = 0
 
                 elif menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
-                        Tier_cost = tier_cost(Current_Tier, "None")
-                        Tier_cost_Shown = tier_cost(Current_Tier, "Suffix")
+                        Tier_cost = tier_cost(current_tier, "None")
+                        Tier_cost_Shown = tier_cost(current_tier, "Suffix")
                         if clicks >= Tier_cost:
                             clicks = 0
                             CU1 = 0
@@ -560,7 +560,7 @@ while running:
                             RU1 = 0
                             RU2 = 0
                             RU3 = 0
-                            Current_Tier += 1
+                            current_tier += 1
                             print("Tier up")
                         else:
                             print("no")
@@ -667,11 +667,11 @@ while running:
         menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
         menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
 
-        if Current_Tier >= 2:
+        if current_tier >= 2:
             menu_text4 = font.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
         else:
             menu_text4 = font.render("Unlock At Tier 2 ", True, (0, 0, 0))
-        if Current_Tier >= 4:
+        if current_tier >= 4:
             menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
         else:
             menu_text5 = font.render("Unlock At Tier 4 ", True, (0, 0, 0))
@@ -701,8 +701,8 @@ while running:
 
 
     if Menu == 12:
-        test = tier_cost(Current_Tier,"Suffix")
-        menu_text1 = font.render((tier_info(Current_Tier)), True,  (0, 0, 0))
+        test = tier_cost(current_tier,"Suffix")
+        menu_text1 = font.render((tier_info(current_tier)), True,  (0, 0, 0))
         menu_text2 = font.render("Buy (Cost - " + str(test) + ")", True, (0, 0, 0))
     if Menu == 11:
         menu_text1 = font2.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
@@ -715,7 +715,7 @@ while running:
         pygame.draw.rect(screen, black, shop_menu,width=5)
         pygame.draw.rect(screen, black, Teir_menu, width=5)
 
-        if Current_Tier >= 1:
+        if current_tier >= 1:
             pygame.draw.rect(screen, red, Rebirth_menu)
             pygame.draw.rect(screen, black, Rebirth_menu,width=5)
 
@@ -750,7 +750,7 @@ while running:
     CurrencyBox3.center = (1030, 75)
     Text1.center = (651, 794)
 
-    if Current_Tier >= 1:
+    if current_tier >= 1:
         screen.blit(Rebirthicon_Resize, (40, 247))
     screen.blit(TierIcon, (25, 427))
     screen.blit(Clicks_AR, CurrencyBox1)
