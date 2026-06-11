@@ -458,7 +458,7 @@ while running:
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
-        Rebirth_Gain_Show = 0
+        Rebirth_Gain_Show = str(0)
 
 
     ################################################################################
