@@ -90,7 +90,7 @@ pygame.init()
 screen = pygame.display.set_mode((1300, 900))
 clock = pygame.time.Clock()
 
-red = (255, 0, 0)
+red = (255, 50, 50)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 yellow = (255, 255, 0)
@@ -454,7 +454,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks - 999) ** 0.1) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks - 999) ** 0.2) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -584,7 +584,6 @@ while running:
                                 rebirths += Rebirth_Gain
 
 
-
 ################################################################################
 #    Upgrade Menu stuff
 ################################################################################
@@ -629,7 +628,6 @@ while running:
                         current_Cooldown = current_time + CooldownLength
                         if current_tier >= 3:
                             Xp += 1
-
 
 ################################################################################
 #    Drawing Ui Elements
