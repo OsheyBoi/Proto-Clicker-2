@@ -453,8 +453,13 @@ while running:
 
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
-    Rebirth_Gain = (clicks ** 0.1) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm
-    Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
+    if clicks >= 1000:
+        Rebirth_Gain = int(((clicks - 999) ** 0.1) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
+    else:
+        Rebirth_Gain = 0
+        Rebirth_Gain_Show = 0
+
 
     ################################################################################
     #    Upgrade Changes
