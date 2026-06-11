@@ -387,22 +387,22 @@ while running:
 #    Tier Upgrade Multiplers
 ################################################################################
     if current_tier ==  1:
-        Tier_Cm = 1.5
+        Tier_Cm = 2
         Tier_Rm = 1
     if current_tier == 2:
-        Tier_Cm = 3
+        Tier_Cm = 4
         Tier_Rm = 1.5
         Tier_Click_Speed = 1.5
     if current_tier ==  3:
-        Tier_Cm = 6
+        Tier_Cm = 8
         Tier_Rm = 2.25
         Auto_Click_Speed = 1
     if current_tier ==  4:
-        Tier_Cm = 18
+        Tier_Cm = 24
         Tier_Rm = 4.5
         Tier_Click_Speed = 1.875
     if current_tier == 5:
-        Tier_Cm = 36
+        Tier_Cm = 48
         Tier_Rm = 9
         Auto_Rebirth_Speed = 1
 ################################################################################
