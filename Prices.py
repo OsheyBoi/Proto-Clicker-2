@@ -86,7 +86,7 @@ def RU1_CostAmount(upgrade,Type):
     if upgrade == 0:
         cost = 1
     else:
-        cost = (1 + (upgrade * 2) ** 1.2)
+        cost = (1 + (upgrade * 2) ** 1.1)
         if Type != "Suffix":
             return cost
         else:
