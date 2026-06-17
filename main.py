@@ -366,11 +366,11 @@ while running:
 #    Xp system
 ################################################################################
 
-    Xp_needed =  int(10* (1.3 ** levels ))
+    Xp_needed =  int(15* (1.4 ** levels ))
 
     total_xp_for_past_levels = 0
     for lvl in range(1, levels):
-        total_xp_for_past_levels += int(8 * (1.3 ** lvl) + 3)
+        total_xp_for_past_levels += int(15 * (1.4 ** lvl) + 3)
 
     Xp_Current_Level = Xp - total_xp_for_past_levels
     if Xp_Current_Level >= Xp_needed:
@@ -382,7 +382,7 @@ while running:
     if current_tier <= 2:
         Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
     if current_tier >= 3:
-        Click_Xp_Mult = 1.1 ** levels
+        Click_Xp_Mult = 1.2 ** levels
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
@@ -454,7 +454,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks - 999) ** 0.2) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks - 999) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
