@@ -233,20 +233,21 @@ RU3_Cost = 1
 #    Ui Set up
 ################################################################################
 shop_menu = pygame.Rect(460, 720, 440, 140)
-Rebirth_menu = pygame.Rect(24, 227, 100, 100)
-Teir_menu = pygame.Rect(24, 427, 100, 100)
-background = pygame.Rect(0, 0, 1300, 900)
+Rebirth_menu = pygame.Rect(24, 227, 110, 110)
+Tier_menu = pygame.Rect(24, 427, 110, 110)
+
 Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
 Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
 Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
-RebirthIcon = pygame.Rect(800, 20, 350, 100)
 Button_center = (675, 400)
 Button_radius = 200
 
-RebirthIcon =  pygame.image.load("Rebirth.png")
-Rebirthicon_Resize = pygame.transform.scale(RebirthIcon, (70, 60))
-TierIcon =  pygame.image.load("Tier.png")
-text1 = font.render("Shop", True, (0, 0, 0))
+
+background =  pygame.image.load("Background.png")
+Rebirth_Menu_Button = pygame.image.load("Rebirth_Button.png")
+Tier_Menu_Button =  pygame.image.load("Tier_Button.png")
+Shop_Menu_Button = pygame.image.load("Shop_Button.png")
+Click_Button = pygame.image.load("Click_Button.png")
 
 #Menu Stuff (Render place and size)
 Menu_Box = pygame.Rect(20, 150, 1250, 710)
@@ -537,7 +538,7 @@ while running:
                         if current_tier >= 1:
                             Menu = 11
 
-                if Teir_menu.collidepoint(mouse_pos):
+                if Tier_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
                     if Menu == 0:
                         Menu = 12
@@ -640,7 +641,7 @@ while running:
             menu_ui_4 = pygame.Rect(710, 340, 420, 50)
             menu_ui_5 = pygame.Rect(710, 560, 420, 50)
             menu_ui_6 = pygame.Rect(710, 780, 420, 50)
-        # Teir Menu
+        # Tier Menu
         if Menu == 12:
             menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
@@ -711,16 +712,10 @@ while running:
         menu_text1 = font2.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
         menu_text2 = font.render("Rebirth", True, (0, 0, 0))
     # Drawing Systems
-    pygame.draw.rect(screen, gray, background)
+    screen.blit(background, (0, 0))
     if Menu == 0:
-        pygame.draw.rect(screen, cyan, shop_menu)
-        pygame.draw.rect(screen, yellow, Teir_menu)
-        pygame.draw.rect(screen, black, shop_menu,width=5)
-        pygame.draw.rect(screen, black, Teir_menu, width=5)
+        screen.blit(Shop_Menu_Button, (460, 720))
 
-        if current_tier >= 1:
-            pygame.draw.rect(screen, red, Rebirth_menu)
-            pygame.draw.rect(screen, black, Rebirth_menu,width=5)
 
 
 
@@ -732,13 +727,12 @@ while running:
     pygame.draw.rect(screen, black, Rebirth_Amount_Box, width=5, border_radius=30)
     pygame.draw.rect(screen, black, Xp_Amount_Box, width=5, border_radius=30)
 
-    pygame.draw.circle(screen, blue, Button_center, Button_radius)
-    pygame.draw.circle(screen, black, Button_center, Button_radius, width=5)
+    screen.blit(Click_Button, (470, 200))
 
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
     CurrencyBox3 = Clicks_AR.get_rect()
-    Text1 = text1.get_rect() #"Shop" Text
+
 
 
     Menu_text1 = menu_text1.get_rect()
@@ -751,15 +745,16 @@ while running:
     CurrencyBox1.center = (230, 75)
     CurrencyBox2.center = (630, 75)
     CurrencyBox3.center = (1030, 75)
-    Text1.center = (651, 794)
+
+
 
     if current_tier >= 1:
-        screen.blit(Rebirthicon_Resize, (40, 247))
-    screen.blit(TierIcon, (25, 427))
+        screen.blit(Rebirth_Menu_Button, (25, 227))
+    screen.blit(Tier_Menu_Button, (25, 427))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
     screen.blit(Xp_AR, CurrencyBox3)
-    screen.blit(text1, Text1)
+
 
     # Menu System (Drawing)
     if Menu != 0:
