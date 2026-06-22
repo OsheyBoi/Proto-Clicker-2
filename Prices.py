@@ -59,7 +59,7 @@ def CU4_CostAmount(upgrade,Type):
         else:
             cost = amount_sum(cost)
     else:
-        cost = (10000 + int(upgrade ** 1.25 * ((upgrade /3) ** 1.2) * 1000 ) ** 1.25)
+        cost = (10000 + int(upgrade ** 1.3 * ((upgrade /2) ** 1.25) * 1000 ) ** 1.25)
         if Type != "Suffix":
             return cost
         else:

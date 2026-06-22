@@ -218,7 +218,7 @@ CU5_Cost = 1
 #Rebirths
 
 RU1M = 15
-RU1Mult = 1.75
+RU1Mult = 1.6
 RU1_Cost = 1
 
 RU2M = 15
@@ -370,7 +370,6 @@ while running:
 ################################################################################
 #    Xp system
 ################################################################################
-
     Xp_needed =  int(15* (1.4 ** levels ))
 
     total_xp_for_past_levels = 0
@@ -387,13 +386,14 @@ while running:
     if current_tier <= 2:
         Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
     if current_tier >= 3:
-        Click_Xp_Mult = 1.2 ** levels
+        Click_Xp_Mult = 1.1 ** levels
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
     if current_tier ==  1:
         Tier_Cm = 2
         Tier_Rm = 1
+        Tier_Click_Speed = 1
     if current_tier == 2:
         Tier_Cm = 4
         Tier_Rm = 1.5
@@ -402,13 +402,17 @@ while running:
         Tier_Cm = 8
         Tier_Rm = 2.25
         Auto_Click_Speed = 1
+        Tier_Click_Speed = 1.5
     if current_tier ==  4:
         Tier_Cm = 24
         Tier_Rm = 4.5
+        Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875
     if current_tier == 5:
         Tier_Cm = 48
         Tier_Rm = 9
+        Auto_Click_Speed = 1
+        Tier_Click_Speed = 1.875
         Auto_Rebirth_Speed = 1
 ################################################################################
 #Gain Amount
@@ -459,7 +463,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 100) ** 0.35) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks / 250) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -481,12 +485,12 @@ while running:
     for event in pygame.event.get():
 
         if event.type == AUTOClick_EVENT:
-            if current_tier == 3:
+            if current_tier >= 3:
                 clicks += CPC
                 Xp += 0.25
 
         if event.type == AUTOClick_EVENT:
-            if current_tier == 5:
+            if current_tier >= 5:
                 rebirths += Rebirth_Gain / 100
 
 
