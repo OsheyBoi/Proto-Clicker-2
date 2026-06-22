@@ -217,8 +217,8 @@ CU5_Cost = 1
 
 #Rebirths
 
-RU1M = 20
-RU1Mult = 1.5
+RU1M = 15
+RU1Mult = 1.75
 RU1_Cost = 1
 
 RU2M = 15
@@ -361,9 +361,9 @@ while running:
 
     Clicks_Shown = amount_sum(clicks)
     Rebirths_Shown = amount_sum(rebirths)
-    Clicks_AR = font.render("Clicks: " + str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
+    Clicks_AR = font.render(str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
     if current_tier >= 1:
-        Rebirth_AR = font.render("Rebirths: " + str(Rebirths_Shown), True, (0, 0, 0))
+        Rebirth_AR = font.render(str(Rebirths_Shown), True, (0, 0, 0))
     else:
         Rebirth_AR = font.render("Unlock at T1", True, (0, 0, 0))
 
@@ -459,7 +459,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks - 999) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks / 100) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -739,17 +739,13 @@ while running:
 
     screen.blit(Click_Button, (440, 190))
 
-    Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
-    Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
-    Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
-
-    screen.blit(click_amount, (340, 10))
-    screen.blit(rebirth_amount, (340, 190))
-    screen.blit(xp_amount, (340, 190))
+    screen.blit(click_amount, (95, 15))
+    screen.blit(rebirth_amount, (495, 15))
+    screen.blit(xp_amount, (895, 15))
 
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
-    CurrencyBox3 = Clicks_AR.get_rect()
+    CurrencyBox3 = Xp_AR.get_rect()
 
 
 
@@ -762,7 +758,7 @@ while running:
 
     CurrencyBox1.center = (230, 75)
     CurrencyBox2.center = (630, 75)
-    CurrencyBox3.center = (1030, 75)
+    CurrencyBox3.center = (1130, 75)
 
 
 
