@@ -383,7 +383,7 @@ while running:
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
-        Xp_AR = font.render("Level: " + str(levels) + " (" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
+        Xp_AR = font.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
     if current_tier <= 2:
         Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
     if current_tier >= 3:
@@ -459,7 +459,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 100) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks / 100) ** 0.35) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -563,6 +563,7 @@ while running:
                         Tier_cost_Shown = tier_cost(current_tier, "Suffix")
                         if clicks >= Tier_cost:
                             clicks = 0
+                            rebirths = 0
                             CU1 = 0
                             CU2 = 0
                             CU3 = 0
@@ -756,9 +757,9 @@ while running:
     Menu_text5 = menu_text5.get_rect()
     Menu_text6 = menu_text6.get_rect()
 
-    CurrencyBox1.center = (230, 75)
-    CurrencyBox2.center = (630, 75)
-    CurrencyBox3.center = (1130, 75)
+    CurrencyBox1.center = (250, 75)
+    CurrencyBox2.center = (660, 75)
+    CurrencyBox3.center = (1130, 70)
 
 
 
