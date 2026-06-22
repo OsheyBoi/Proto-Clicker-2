@@ -232,7 +232,7 @@ RU3_Cost = 1
 ################################################################################
 #    Ui Set up
 ################################################################################
-shop_menu = pygame.Rect(460, 720, 440, 140)
+shop_menu = pygame.Rect(420, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 110, 110)
 Tier_menu = pygame.Rect(24, 427, 110, 110)
 
@@ -248,6 +248,10 @@ Rebirth_Menu_Button = pygame.image.load("Rebirth_Button.png")
 Tier_Menu_Button =  pygame.image.load("Tier_Button.png")
 Shop_Menu_Button = pygame.image.load("Shop_Button.png")
 Click_Button = pygame.image.load("Click_Button.png")
+
+click_amount = pygame.image.load("click_amount.png")
+rebirth_amount = pygame.image.load("rebirth_amount.png")
+xp_amount = pygame.image.load("xp_amount.png")
 
 #Menu Stuff (Render place and size)
 Menu_Box = pygame.Rect(20, 150, 1250, 710)
@@ -634,6 +638,12 @@ while running:
 #    Drawing Ui Elements
 ################################################################################
         #Upgrade  Menu
+
+        if current_Cooldown <= current_time:
+            Click_Button = pygame.image.load("Click_Button_unclicked.png")
+        else:
+            Click_Button = pygame.image.load("Click_Button_clicked.png")
+
         if 1 >= Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 420, 50)
             menu_ui_2 = pygame.Rect(110, 560, 420, 50)
@@ -714,7 +724,7 @@ while running:
     # Drawing Systems
     screen.blit(background, (0, 0))
     if Menu == 0:
-        screen.blit(Shop_Menu_Button, (460, 720))
+        screen.blit(Shop_Menu_Button, (420, 720))
 
 
 
@@ -727,7 +737,15 @@ while running:
     pygame.draw.rect(screen, black, Rebirth_Amount_Box, width=5, border_radius=30)
     pygame.draw.rect(screen, black, Xp_Amount_Box, width=5, border_radius=30)
 
-    screen.blit(Click_Button, (470, 200))
+    screen.blit(Click_Button, (440, 190))
+
+    Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
+    Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
+    Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
+
+    screen.blit(click_amount, (340, 10))
+    screen.blit(rebirth_amount, (340, 190))
+    screen.blit(xp_amount, (340, 190))
 
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
