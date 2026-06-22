@@ -34,11 +34,18 @@ V8:
 Recreation Tiers 9 + 10
 1 Final Reset
 
-*Note 1: that none of this is guaranteed to be added or even be worked on. Depends if i continue to work on it after V1.0
 
-*Note 2: This game is meant to be a Sequel to Proto Clicker 1  and to Improve on the gameplay it had with more Balancing and QOL changes
-
+Note 2: This game is meant to be a Sequel to Proto Clicker 1 and to Improve on the gameplay it had with more Balancing and QOL changes
+--------------
+How to Play:
+--------------
+1st: Have Somthing to Run Python on (Like Pycharm or Visiual Studio)
+2nd: Make Sure to have the following installed
+  - Python
+  - Pygame
+  - Pygame Community
+3rd:
+ Press play and it should work
 
 Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
 
-*Pushed it back to original date

@@ -2,7 +2,6 @@ import pygame
 import sys
 import math
 import json
-import os
 
 from Prices import *
 from Tier import *
@@ -559,7 +558,6 @@ while running:
                 elif close_menu.collidepoint(mouse_pos):
                     if Menu >= 1:
                         # Close Menu Button
-                        print("Shop")
                         Menu = 0
 
                 elif menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
@@ -695,7 +693,7 @@ while running:
         else:
             menu_text5 = font.render("Unlock At Tier 4 ", True, (0, 0, 0))
 
-        menu_text6 = font.render("Rebirth Upgrades", True, (0, 0, 0))
+        menu_text6 = font.render("", True, (0, 0, 0))
 
     if Menu == 6:
         RU1_Cost_Show = RU1_CostAmount(RU1, "Suffix")
@@ -778,34 +776,16 @@ while running:
     # Menu System (Drawing)
     if Menu != 0:
         if Menu == 1:
-            pygame.draw.rect(screen, green, Menu_Box, width=0, border_radius=50) #Menu Screen
+            Shown_Menu = pygame.image.load("Click_Upgrades.png")
+            screen.blit(Shown_Menu, (0, 0))
         if Menu == 6:
-            pygame.draw.rect(screen, red, Menu_Box, width=0, border_radius=50)
+            Shown_Menu = pygame.image.load("Rebirth_Upgrades.png")
+            screen.blit(Shown_Menu, (0, 0))
         if Menu == 11:
             pygame.draw.rect(screen, orange, Menu_Box, width=0, border_radius=50)
         if Menu == 12:
             pygame.draw.rect(screen, yellow, Menu_Box, width=0, border_radius=50)
 
-        pygame.draw.rect(screen, black, Menu_Box, width=5, border_radius=50)
-
-        pygame.draw.rect(screen, red, close_menu, width=0, border_radius=50) # Close Button
-        pygame.draw.rect(screen, black, close_menu, width=5, border_radius=50)
-
-        if Menu <= 9:
-            pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_3, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_4, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_5, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_6, width=0, border_radius=50)
-        if Menu ==  11:
-           pygame.draw.rect(screen, red, menu_ui_1, width=0, border_radius=50)
-           pygame.draw.rect(screen, red, menu_ui_2, width=0, border_radius=50)
-        if Menu == 12:
-            pygame.draw.rect(screen, cyan, menu_ui_1, width=0, border_radius=50)
-            pygame.draw.rect(screen, cyan, menu_ui_2, width=0, border_radius=50)
-            pygame.draw.rect(screen, black, menu_ui_2, width=7, border_radius=50)
-    if Menu >= 1:
         if Menu <= 9:
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
