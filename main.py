@@ -720,10 +720,9 @@ while running:
     if Menu == 12:
         test = tier_cost(current_tier,"Suffix")
         menu_text1 = font.render((tier_info(current_tier)), True,  (0, 0, 0))
-        menu_text2 = font.render("Buy (Cost - " + str(test) + ")", True, (0, 0, 0))
+        menu_text2 = font.render("Cost: " + str(test) , True, (0, 0, 0))
     if Menu == 11:
         menu_text1 = font2.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
-        menu_text2 = font.render("Rebirth", True, (0, 0, 0))
     # Drawing Systems
     screen.blit(background, (0, 0))
     if Menu == 0:
@@ -782,9 +781,11 @@ while running:
             Shown_Menu = pygame.image.load("Rebirth_Upgrades.png")
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 11:
-            pygame.draw.rect(screen, orange, Menu_Box, width=0, border_radius=50)
+            Shown_Menu = pygame.image.load("Rebirth_Menu.png")
+            screen.blit(Shown_Menu, (0, 0))
         if Menu == 12:
-            pygame.draw.rect(screen, yellow, Menu_Box, width=0, border_radius=50)
+            Shown_Menu = pygame.image.load("Tier_Menu.png")
+            screen.blit(Shown_Menu, (0, 0))
 
         if Menu <= 9:
             Menu_text1.center = (300, 320)
@@ -800,16 +801,16 @@ while running:
             screen.blit(menu_text5, Menu_text5)
             screen.blit(menu_text6, Menu_text6)
         if Menu == 12:
-            Menu_text2.center = (600, 752)
-            Menu_text1.center = (630, 382)
+            Menu_text2.center = (600, 642)
+            Menu_text1.center = (530, 422)
             screen.blit(menu_text1, Menu_text1)
             screen.blit(menu_text2, Menu_text2)
 
         if Menu == 11:
-            Menu_text2.center = (600, 752)
-            Menu_text1.center = (650, 452)
+
+            Menu_text1.center = (600, 462)
             screen.blit(menu_text1, Menu_text1)
-            screen.blit(menu_text2, Menu_text2)
+
 
 
     pygame.display.flip()
