@@ -198,7 +198,7 @@ CU1M = 25
 CU1Mult = 1
 CU1_Cost = 1
 
-CU2M = 7
+CU2M = 8
 CU2Mult = 0.1
 CU2_Cost = 1
 
@@ -462,7 +462,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 250) ** 0.25) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
