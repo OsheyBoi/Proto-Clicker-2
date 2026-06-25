@@ -55,9 +55,9 @@ def CU3_CostAmount(upgrade,tier, Type):
     #If Tier = 5
     elif tier >= 5:
         if upgrade == 0:
-            cost = 10000
+            cost = 7500
         else:
-            cost = (5000 * 4 ** (upgrade ** 1.15))
+            cost = (7500 * 4 ** (upgrade ** 1.15))
             if Type != "Suffix":
                 return cost
             else:
