@@ -1,5 +1,5 @@
+![Alt text](https://github.com/OsheyBoi/Proto_Clicker_2/blob/main/Logo.png)
 
-Proto Clicker 2 V1.5
 
 V1.2:
  - Design Overhaul P2 (Menus)
