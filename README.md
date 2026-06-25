@@ -1,4 +1,4 @@
-![Alt text](https://github.com/OsheyBoi/Proto_Clicker_2/blob/main/Logo.png)
+![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/Logo.png)
 
 
 V1.2:
