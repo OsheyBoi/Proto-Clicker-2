@@ -36,7 +36,7 @@ def tier_info (Tier):
          text = " \n Tier 4: \n - Unlock Click Upgrade 5 \n - 3x Clicks \n  - 2x Rebirths \n - 1.25x Faster Button Cooldown"
          return text
     elif Tier == 4:
-         text = " \n Tier 5: \n - Unlock Rebirth Upgrade 4 \n - Auto Rebirth (1% RPS) \n - 2x Clicks/Rebirths \n - Powerfull Clicks Power +0.05 and Max +5  \n Playtime Boost Clicks"
+         text = " \n Tier 5: \n - Unlock Rebirth Upgrade 4 \n - Auto Rebirth (1% RPS) \n - 2x Clicks/Rebirths \n - Powerfull Clicks Power +0.05 and Max +10  \n Playtime Boost Clicks"
          return text
     elif Tier == 5:
          text = " \n You Have Reach Max Tier in V1.0 \n More Will Be add In V2.0 "
@@ -62,7 +62,7 @@ def tier_cost(tier, type):
         Cost = 25000000
 
     elif tier == 4:
-        Cost = 250000000
+        Cost = 500000000
 
 
     elif tier == 5:

@@ -50,7 +50,7 @@ class Upgrade:
             return clicks, False  # Return original clicks, no purchase made
 
         if self.rect.collidepoint(mouse_pos):
-            cost = self.cost_fn(self.level, "True Price")
+            cost = self.cost_fn(self.level, current_tier, "True Price")
             print(self.level)
             if clicks >= cost and self.level < self.max_level:
                 clicks -= cost
@@ -665,7 +665,7 @@ while running:
     if Menu == 1:
         CU1_Cost_Show = CU1_CostAmount(CU1,"Suffix")
         CU2_Cost_Show = CU2_CostAmount(CU2, "Suffix")
-        CU3_Cost_Show = CU3_CostAmount(CU3, "Suffix")
+        CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
         CU4_Cost_Show = CU4_CostAmount(CU4, "Suffix")
         CU5_Cost_Show = CU5_CostAmount(CU5, "Suffix")
 
