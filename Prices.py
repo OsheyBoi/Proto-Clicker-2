@@ -21,7 +21,7 @@ def amount_sum(amount):
     Summed_Amount = str(rounded_amount) + suffixes[suffix_index]
     return str(Summed_Amount)
 
-def CU1_CostAmount(upgrade,Type):
+def CU1_CostAmount(upgrade,tier,Type):
     if upgrade == 0:
         cost = 10
     else:
@@ -31,7 +31,7 @@ def CU1_CostAmount(upgrade,Type):
         else:
             cost = amount_sum(cost)
     return cost
-def CU2_CostAmount(upgrade,Type):
+def CU2_CostAmount(upgrade,tier,Type):
     if upgrade == 0:
         cost = 25
     else:
@@ -65,7 +65,7 @@ def CU3_CostAmount(upgrade,tier, Type):
         return cost
 
 
-def CU4_CostAmount(upgrade,Type):
+def CU4_CostAmount(upgrade,tier,Type):
     if upgrade == 0:
         cost = 10000
         if Type != "Suffix":
@@ -79,7 +79,7 @@ def CU4_CostAmount(upgrade,Type):
         else:
             cost = amount_sum(cost)
     return cost
-def CU5_CostAmount(upgrade,Type):
+def CU5_CostAmount(upgrade,tier,Type):
 
     if upgrade == 0:
         cost = 1000 ** 3
@@ -95,7 +95,7 @@ def CU5_CostAmount(upgrade,Type):
             cost = amount_sum(cost)
     return cost
 
-def RU1_CostAmount(upgrade,Type):
+def RU1_CostAmount(upgrade,tier,Type):
 
     if upgrade == 0:
         cost = 1
@@ -107,7 +107,7 @@ def RU1_CostAmount(upgrade,Type):
             cost = amount_sum(cost)
     return cost
 
-def RU2_CostAmount(upgrade,Type):
+def RU2_CostAmount(upgrade,tier,Type):
 
     if upgrade == 0:
         cost = 5
@@ -119,7 +119,7 @@ def RU2_CostAmount(upgrade,Type):
             cost = amount_sum(cost)
     return cost
 
-def RU3_CostAmount(upgrade,Type):
+def RU3_CostAmount(upgrade,tier,Type):
 
     if upgrade == 0:
         cost = 1000

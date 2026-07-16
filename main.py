@@ -662,12 +662,11 @@ while running:
         if Menu == 11:
             menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
-    if Menu == 1:
-        CU1_Cost_Show = CU1_CostAmount(CU1,"Suffix")
-        CU2_Cost_Show = CU2_CostAmount(CU2, "Suffix")
+        CU1_Cost_Show = CU1_CostAmount(CU1, current_tier,"Suffix")
+        CU2_Cost_Show = CU2_CostAmount(CU2, current_tier, "Suffix")
         CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
-        CU4_Cost_Show = CU4_CostAmount(CU4, "Suffix")
-        CU5_Cost_Show = CU5_CostAmount(CU5, "Suffix")
+        CU4_Cost_Show = CU4_CostAmount(CU4, current_tier, "Suffix")
+        CU5_Cost_Show = CU5_CostAmount(CU5, current_tier,"Suffix")
 
         CU1_multipler = (CU1 * CU1Mult)
         CU2_multipler = (CU2 * CU2Mult)
@@ -696,9 +695,9 @@ while running:
         menu_text6 = font.render("", True, (0, 0, 0))
 
     if Menu == 6:
-        RU1_Cost_Show = RU1_CostAmount(RU1, "Suffix")
-        RU2_Cost_Show = RU2_CostAmount(RU2, "Suffix")
-        RU3_Cost_Show = RU3_CostAmount(RU3, "Suffix")
+        RU1_Cost_Show = RU1_CostAmount(RU1, current_tier, "Suffix")
+        RU2_Cost_Show = RU2_CostAmount(RU2, current_tier, "Suffix")
+        RU3_Cost_Show = RU3_CostAmount(RU3, current_tier, "Suffix")
 
         RU1_multipler = (RU1Mult ** RU1)
         RU2_multipler = (RU2Mult ** RU2)
