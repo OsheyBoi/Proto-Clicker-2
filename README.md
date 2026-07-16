@@ -5,6 +5,7 @@ V1.2:
  - Design Overhaul P2 (Menus)
  - More Balancing
 
+(Delayed for now)
  V2:
  - Tiers 6 -> 10
 
