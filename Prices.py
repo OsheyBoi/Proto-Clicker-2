@@ -22,15 +22,25 @@ def amount_sum(amount):
     return str(Summed_Amount)
 
 def CU1_CostAmount(upgrade,tier,Type):
-    if upgrade == 0:
-        cost = 10
-    else:
-        cost = (10 + int(upgrade ** 1.07 * 4)) ** 1.05
-        if Type != "Suffix":
-            return cost
+    if tier <= 8:
+        if upgrade == 0:
+            cost = 10
         else:
-            cost = amount_sum(cost)
+            cost = (10 + int(upgrade ** 1.07 * 4)) ** 1.05
+    elif tier >= 9:
+        if upgrade == 0:
+            cost = 100
+        else:
+            cost = (100 + int(upgrade ** 1.15 * 6)) ** 1.15
+
+    if Type != "Suffix":
+        return cost
+    else:
+        cost = amount_sum(cost)
     return cost
+
+
+
 def CU2_CostAmount(upgrade,tier,Type):
     if upgrade == 0:
         cost = 25
@@ -41,6 +51,7 @@ def CU2_CostAmount(upgrade,tier,Type):
         else:
             cost = amount_sum(cost)
     return cost
+
 def CU3_CostAmount(upgrade,tier, Type):
     if tier <= 4:
         if upgrade == 0:
@@ -50,15 +61,21 @@ def CU3_CostAmount(upgrade,tier, Type):
     #If Tier = 5 or 6
     elif 5 <= tier <= 6:
         if upgrade == 0:
-            cost = 7500
+            cost = 1000
         else:
-            cost = (7500 * 4 ** (upgrade ** 1.15))
-    #If Tier = 6,7
+            cost = (1000 * 2.25 ** (upgrade ** 1.1))
+    #If Tier = 7 - 9
     elif 7 <= tier <= 9:
         if upgrade == 0:
-            cost = 7500
+            cost = 1000
         else:
-            cost = (7500 * 4 ** (upgrade ** 1.15))
+            cost = (1000 * 2.4 ** (upgrade ** 1.15))
+    #If Tier = 10
+    elif tier >= 10:
+        if upgrade == 0:
+            cost = 1000
+        else:
+            cost = (1000 * 2.7 ** (upgrade ** 1.25))
 
 
 

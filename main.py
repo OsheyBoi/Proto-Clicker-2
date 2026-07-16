@@ -519,7 +519,7 @@ while running:
     #    Upgrade Changes
     ################################################################################
     #Clcik  upgrade 1
-    if current_tier >= 6:
+    if current_tier >= 9:
             CU1M = 100
             CU1Mult = 2
 
