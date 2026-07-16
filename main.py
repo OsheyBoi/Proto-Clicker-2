@@ -198,7 +198,7 @@ CU1M = 25
 CU1Mult = 1
 CU1_Cost = 1
 
-CU2M = 8
+CU2M = 10
 CU2Mult = 0.1
 CU2_Cost = 1
 
@@ -390,28 +390,73 @@ while running:
 #    Tier Upgrade Multiplers
 ################################################################################
     if current_tier ==  1:
+        Tier_Xp = 1
         Tier_Cm = 2
         Tier_Rm = 1
         Tier_Click_Speed = 1
+
     if current_tier == 2:
+        Tier_Xp = 1
         Tier_Cm = 4
         Tier_Rm = 1.5
         Tier_Click_Speed = 1.5
+
     if current_tier ==  3:
+        Tier_Xp = 1
         Tier_Cm = 8
         Tier_Rm = 2.25
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.5
+
     if current_tier ==  4:
+        Tier_Xp = 1
         Tier_Cm = 24
         Tier_Rm = 4.5
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875
-    if current_tier == 5:
+
+    if current_tier == 5 or 6:
+        Tier_Xp = 1
         Tier_Cm = 48
         Tier_Rm = 9
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 7:
+        Tier_Xp = 1
+        Tier_Cm = 48
+        Tier_Rm = 9
+        Auto_Click_Speed = 1
+        Tier_Click_Speed = 2.35
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 8:
+        Tier_Xp = 4
+        Tier_Cm = 48
+        #Clicks Power
+        Tier_Cp = 1.01
+        Tier_Rm = 9
+        Auto_Click_Speed = 2
+        Tier_Click_Speed = 2.35
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 9:
+        Tier_Xp = 4
+        Tier_Cm = 48
+        Tier_Cp = 1.02
+        Tier_Rm = 9
+        Auto_Click_Speed = 2
+        Tier_Click_Speed = 2.35
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 10:
+        Tier_Xp = 4
+        Tier_Cm = 48
+        Tier_Cp = 1.03
+        Tier_Rm = 9
+        Auto_Click_Speed = 2
+        Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 ################################################################################
 #Gain Amount
@@ -450,7 +495,8 @@ while running:
     ################################################################################
     # ----------------
     base_clicks = (1 + CU1)
-    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult
+    Rebirth_x_clicks = rebirths ** 0.1
+    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult * Rebirth_x_clicks
     if clicks_mult == 0:
         clicks_mult = 1
     # ----------------
@@ -472,11 +518,28 @@ while running:
     ################################################################################
     #    Upgrade Changes
     ################################################################################
+    #Clcik  upgrade 1
+    if current_tier >= 6:
+            CU1M = 100
+            CU1Mult = 2
 
+    #CLick upgrade 3
     if current_tier >= 5:
-        CU3M = 15
-        CU3Mult = 1.3
+        if current_tier >= 7:
+            if current_tier >= 10:
+                CU3M = 25
+                CU3Mult = 1.75
+            else:
+                CU3M = 20
+                CU3Mult = 1.5
+        else:
+            CU3M = 15
+            CU3Mult = 1.3
 
+    #Rebirth upgrade 1
+    if current_tier >= 6:
+            RU1M = 20
+            RU1Mult = 1.5
 
     ################################################################################
     #    Pygame Mouse  collidepoint checker

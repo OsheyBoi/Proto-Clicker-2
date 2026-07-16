@@ -36,22 +36,22 @@ def tier_info (Tier):
          text = " \n Tier 4: \n - Unlock Click Upgrade 5 \n - 3x Clicks \n  - 2x Rebirths \n - 1.25x Faster Button Cooldown"
          return text
     elif Tier == 4:
-         text = " \n Tier 5: \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (1% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Power +0.05 and Max +10  \n Playtime Boost Clicks"
+         text = " \n Tier 5: \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (1% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Power +0.05 and Max +5  \n Playtime Boost Clicks"
          return text
     elif Tier == 5:
-         text = " \n Tier 6: \n Rebirths Boost Clicks \n Rebirths Boost themself \n Clicks Power 2 +15 Max / +0.05x \n (+ Price Increase) "
+         text = " \n Tier 6: \n Rebirths Boost Clicks \n Rebirths Boost themself \n Clicks Power 2 +10 Max / +0.05x \n (+ Price Increase) "
          return text
     elif Tier == 6:
          text = " \n  Tier 7: \n Powerful Clicks +0.2x / + 5 Max \n (+ Price Increase) \n x1.25 Faster Button Cooldown"
          return text
     elif Tier == 7:
-         text = " \n  Tier 8: \n 4x Xp \n 1.01^ Clicks \n 25% Faster Autoclicker. "
+         text = " \n  Tier 8: \n 4x Xp \n 1.01^ Clicks \n 2x Faster Autoclicker. "
          return text
     elif Tier == 8:
          text = " \n  Tier 9: Base Power +1 -> +2 / 4x Cap \n (+ Price Increase) \n 1.01^ - 1.02^ Clicks"
          return text
     elif Tier == 9:
-         text = " \n  Tier 10: Powerful Clicks +0.5x Mult \n 1.02^ - 1.03^ Clicks \n Unlock Ascension (V3)"
+         text = " \n  Tier 10: Powerful Clicks +0.25x Mult \n 1.02^ - 1.03^ Clicks \n Unlock Ascension (V3)"
          return text
     elif Tier == 10:
          text = " \n You Have Reach Max Tier in V2.0 \n More Will Be added Soon "
