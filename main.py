@@ -449,7 +449,7 @@ while running:
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875
 
-    if current_tier == 5 or 6:
+    if current_tier == 5 or current_tier == 6:
         Tier_Xp = 1
         Tier_Cm = 48
         Tier_Rm = 9
@@ -529,7 +529,10 @@ while running:
     ################################################################################
     # ----------------
     base_clicks = (1 + CU1)
-    Rebirth_x_clicks = rebirths ** 0.1
+    if current_tier <= 5:
+        Rebirth_x_clicks = 1
+    if current_tier >= 6:
+        Rebirth_x_clicks = 1 + (rebirths ** 0.085)
     clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult * Rebirth_x_clicks
     if clicks_mult == 0:
         clicks_mult = 1
