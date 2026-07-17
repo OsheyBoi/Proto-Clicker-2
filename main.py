@@ -531,8 +531,10 @@ while running:
     base_clicks = (1 + CU1)
     if current_tier <= 5:
         Rebirth_x_clicks = 1
+        rebirths_x_self = 1
     if current_tier >= 6:
         Rebirth_x_clicks = 1 + (rebirths ** 0.085)
+        rebirth_x_self = 1 + (rebirths ** 0.065)
     clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult * Rebirth_x_clicks
     if clicks_mult == 0:
         clicks_mult = 1
@@ -545,7 +547,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm)
+        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirths_x_self)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
