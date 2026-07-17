@@ -1,13 +1,12 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/Logo+Version.png)
 
 
-V1.2:
- - Design Overhaul P2 (Menus)
- - More Balancing
-
-(Delayed for now)
+ V2 Comes out 21st July
  V2:
  - Tiers 6 -> 10
+ - Visual Change P3
+ - Huge Bug Fixes and Changes
+ - Settings
 
 
  -------------
