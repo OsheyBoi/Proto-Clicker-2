@@ -72,7 +72,7 @@ class Upgrade2:
             return rebirths, False  # Return original clicks, no purchase made
         print("try buy pass menu 6 check")
         if self.rect.collidepoint(mouse_pos):
-            cost = self.cost_fn(self.level, "True Price")
+            cost = self.cost_fn(self.level, current_tier, "True Price")
             print(self.level)
             if rebirths >= cost and self.level < self.max_level:
                 rebirths -= cost

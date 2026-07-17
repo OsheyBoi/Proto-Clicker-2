@@ -63,19 +63,19 @@ def CU3_CostAmount(upgrade,tier, Type):
         if upgrade == 0:
             cost = 1000
         else:
-            cost = (1000 * 2.25 ** (upgrade ** 1.1))
+            cost = (1000 * 2.25 ** (upgrade ** 1.15))
     #If Tier = 7 - 9
     elif 7 <= tier <= 9:
         if upgrade == 0:
             cost = 1000
         else:
-            cost = (1000 * 2.4 ** (upgrade ** 1.15))
+            cost = (1000 * 2.4 ** (upgrade ** 1.2))
     #If Tier = 10
     elif tier >= 10:
         if upgrade == 0:
             cost = 1000
         else:
-            cost = (1000 * 2.7 ** (upgrade ** 1.25))
+            cost = (1000 * 2.7 ** (upgrade ** 1.3))
 
 
 
