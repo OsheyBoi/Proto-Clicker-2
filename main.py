@@ -9,7 +9,7 @@ from Prices import amount_sum
 from Tier import tier_cost
 
 SAVE_FILE = "save_data.json"
-
+SAVE_FILE_BACKUP = "save_data_backup.json"
 
 def amount_sum(amount):
     if amount < 1000:
@@ -179,7 +179,14 @@ def save_game(game_state):
     except IOError:
         print("Error: Could not write save file.")
 
-
+def save_game_backup(game_state):
+    """Writes the current game state dictionary to a JSON file."""
+    try:
+        with open(SAVE_FILE_BACKUP, "w") as f:
+            json.dump(game_state, f, indent=4)
+        print("Game saved successfully!")
+    except IOError:
+        print("Error: Could not write save file.")
 
 
 
@@ -299,21 +306,46 @@ try:
         RU3 = loaded_data.get("RU3", 0)
 
 except (FileNotFoundError, json.JSONDecodeError):
-    # Default variables if no save file exists
-    clicks = 0
-    rebirths = 0
-    current_tier = 0
-    total_time_played = 0
+    try:
+        with open(SAVE_FILE_BACKUP, "r") as f:
+            loaded_data = json.load(f)
 
-    CU1 = 0
-    CU2 = 0
-    CU3 = 0
-    CU4 = 0
-    CU5 = 0
+            # Core game progress variables
+            clicks = loaded_data.get("clicks", 0)
+            rebirths = loaded_data.get("rebirths", 0)
+            current_tier = loaded_data.get("current_tier", 0)
+            Xp = loaded_data.get("xp", 0)
+            total_time_played = loaded_data.get("total_time_played", 0)
 
-    RU1 = 0
-    RU2 = 0
-    RU3 = 0
+            # Click Upgrades
+            CU1 = loaded_data.get("CU1", 0)
+            CU2 = loaded_data.get("CU2", 0)
+            CU3 = loaded_data.get("CU3", 0)
+            CU4 = loaded_data.get("CU4", 0)
+            CU5 = loaded_data.get("CU5", 0)
+
+            # Rebirth Upgrades
+            RU1 = loaded_data.get("RU1", 0)
+            RU2 = loaded_data.get("RU2", 0)
+            RU3 = loaded_data.get("RU3", 0)
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default variables if no save file exists
+        clicks = 0
+        rebirths = 0
+        current_tier = 0
+        xp = 0
+        total_time_played = 0
+
+        CU1 = 0
+        CU2 = 0
+        CU3 = 0
+        CU4 = 0
+        CU5 = 0
+
+        RU1 = 0
+        RU2 = 0
+        RU3 = 0
 
 
 CU1_multipler = (CU1 * CU1Mult)
@@ -343,6 +375,8 @@ upgrades2 = [
 AUTOSAVE_EVENT = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
 
+AUTOSAVE_EVENT2 = pygame.USEREVENT + 1
+pygame.time.set_timer(AUTOSAVE_EVENT, 60000)
 
 AUTOClick_EVENT = pygame.USEREVENT + 2
 pygame.time.set_timer(AUTOClick_EVENT, 1000)
@@ -597,8 +631,27 @@ while running:
             save_game(current_state)
             print("Autosaved at 10-second interval!")
 
+        if event.type == AUTOSAVE_EVENT2:
+            current_state = {
+                "clicks": clicks,
+                "rebirths": rebirths,
+                "current_tier": current_tier,
+                "total_time_played": total_time_played,
+                "xp": Xp,
+                "CU1": CU1,
+                "CU2": CU2,
+                "CU3": CU3,
+                "CU4": CU4,
+                "CU5": CU5,
+                "RU1": RU1,
+                "RU2": RU2,
+                "RU3": RU3
+            }
+            save_game(current_state)
+            print("Autosaved at 1 Minute interval!")
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            print(Click_Xp_Mult)
             if event.button == 1: # Left click down
                 print(mouse_pos)
                 print(Menu)
