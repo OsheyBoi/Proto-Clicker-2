@@ -241,6 +241,7 @@ RU3_Cost = 1
 shop_menu = pygame.Rect(420, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 227, 110, 110)
 Tier_menu = pygame.Rect(24, 427, 110, 110)
+setting_menu = pygame.Rect(10, 10, 70, 70)
 
 Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
 Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
@@ -254,6 +255,7 @@ Rebirth_Menu_Button = pygame.image.load("Rebirth_Button.png")
 Tier_Menu_Button =  pygame.image.load("Tier_Button.png")
 Shop_Menu_Button = pygame.image.load("Shop_Button.png")
 Click_Button = pygame.image.load("Click_Button.png")
+settings_Button = pygame.image.load("Setting_Button.png")
 
 click_amount = pygame.image.load("click_amount.png")
 rebirth_amount = pygame.image.load("rebirth_amount.png")
@@ -671,6 +673,11 @@ while running:
                     if Menu == 0:
                         Menu = 12
 
+                if setting_menu.collidepoint(mouse_pos):
+                    #Open Rebirth menu
+                    if Menu == 0:
+                        Menu = 52
+
                 elif shop_menu.collidepoint(mouse_pos):
                     # Open Shop
                     if Menu == 0:
@@ -887,6 +894,7 @@ while running:
     if current_tier >= 1:
         screen.blit(Rebirth_Menu_Button, (25, 227))
     screen.blit(Tier_Menu_Button, (25, 427))
+    screen.blit(settings_Button, (-10, -10))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
     screen.blit(Xp_AR, CurrencyBox3)
@@ -905,6 +913,9 @@ while running:
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 12:
             Shown_Menu = pygame.image.load("Tier_Menu.png")
+            screen.blit(Shown_Menu, (0, 0))
+        if Menu == 52:
+            Shown_Menu = pygame.image.load("Settings_Menu.png")
             screen.blit(Shown_Menu, (0, 0))
 
         if Menu <= 9:

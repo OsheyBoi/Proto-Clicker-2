@@ -6,7 +6,7 @@
  - Tiers 6 -> 10
  - Visual Change P3
  - Huge Bug Fixes and Changes
- - Settings
+
 
 
  -------------
@@ -16,6 +16,7 @@ V3:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12
+- Settings
 V4:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
