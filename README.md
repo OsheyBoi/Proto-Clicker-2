@@ -1,7 +1,7 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/Logo+Version.png)
 
 
- V2 Comes out 21st July
+ V2 Comes Out Once it Lets me log in
  V2:
  - Tiers 6 -> 10
  - Visual Change P3
