@@ -1,22 +1,15 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/Logo+Version.png)
 
 
- V2 Comes Out Once it Lets me log in
- V2:
- - Tiers 6 -> 10
- - Visual Change P3
- - Huge Bug Fixes and Changes
-
-
-
- -------------
-Other Planed Update Features*:
---------
+V3.0 Coming Soon
 V3:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12
 - Settings
+--------------
+Other Planed Update Features*:
+--------------
 V4:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
