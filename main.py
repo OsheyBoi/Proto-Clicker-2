@@ -11,6 +11,11 @@ from Prices import amount_sum
 from Tier import tier_cost
 
 # Save File
+save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
+save_path = os.path.join(save_dir, "save_Data.json")
+save_path_backup = os.path.join(save_dir, "save_data_Backup.json")
+
+#Old Local File Saves
 SAVE_FILE = "save_data.json"
 SAVE_FILE_BACKUP = "save_data_backup.json"
 
@@ -148,6 +153,10 @@ last_time_check = 0
 current_ascension = 0
 ascension_tokens = 0
 ascension_stage = 0
+ascension_stage_2 = 0
+Keep_Click_Upgrades = 1
+Keep_Rebirth_Upgrades = 1
+ascension_Auto_Click_Speed = 1
 
 default_game_state = {
     # V1.0
@@ -167,7 +176,8 @@ default_game_state = {
     # V3.0
     "current_ascension"  : current_ascension,
     "ascension_tokens" : ascension_tokens,
-    "ascension_stage" : ascension_stage
+    "ascension_stage" : ascension_stage,
+    "ascension_stage_2": ascension_stage_2
 }
 
 current_state = {
@@ -188,14 +198,15 @@ current_state = {
     # V3.0
     "current_ascension": current_ascension,
     "ascension_tokens": ascension_tokens,
-    "ascension_stage": ascension_stage
+    "ascension_stage": ascension_stage,
+    "ascension_stage_2": ascension_stage_2
 }
 
 
 def save_game(game_state):
     """Writes the current game state dictionary to a JSON file."""
     try:
-        with open(SAVE_FILE, "w") as f:
+        with open(save_path, "w") as f:
             json.dump(game_state, f, indent=4)
         print("Game saved successfully!")
     except IOError:
@@ -204,7 +215,7 @@ def save_game(game_state):
 def save_game_backup(game_state):
     """Writes the current game state dictionary to a JSON file."""
     try:
-        with open(SAVE_FILE_BACKUP, "w") as f:
+        with open(save_path_backup, "w") as f:
             json.dump(game_state, f, indent=4)
         print("Game saved successfully!")
     except IOError:
@@ -307,7 +318,7 @@ menu_text6 = font.render("", True, (0, 0, 0))
 running = True
 
 try:
-    with open(SAVE_FILE, "r") as f:
+    with open(save_path, "r") as f:
         loaded_data = json.load(f)
 
         # Core game progress variables
@@ -337,7 +348,7 @@ try:
 
 except (FileNotFoundError, json.JSONDecodeError):
     try:
-        with open(SAVE_FILE_BACKUP, "r") as f:
+        with open(save_path_backup, "r") as f:
             loaded_data = json.load(f)
 
             # Core game progress variables
@@ -363,29 +374,56 @@ except (FileNotFoundError, json.JSONDecodeError):
             current_ascension = loaded_data.get("current_ascension", 0)
             ascension_tokens = loaded_data.get("ascension_tokens", 0)
             ascension_stage = loaded_data.get("ascension_stage", 0)
-
     except (FileNotFoundError, json.JSONDecodeError):
-        # Default variables if no save file exists
-        clicks = 0
-        rebirths = 0
-        current_tier = 0
-        xp = 0
-        total_time_played = 0
+        try:
+            with open(SAVE_FILE, "r") as f:
+                loaded_data = json.load(f)
 
-        CU1 = 0
-        CU2 = 0
-        CU3 = 0
-        CU4 = 0
-        CU5 = 0
+                # Core game progress variables
+                clicks = loaded_data.get("clicks", 0)
+                rebirths = loaded_data.get("rebirths", 0)
+                current_tier = loaded_data.get("current_tier", 0)
+                Xp = loaded_data.get("xp", 0)
+                total_time_played = loaded_data.get("total_time_played", 0)
 
-        RU1 = 0
-        RU2 = 0
-        RU3 = 0
+                # Click Upgrades
+                CU1 = loaded_data.get("CU1", 0)
+                CU2 = loaded_data.get("CU2", 0)
+                CU3 = loaded_data.get("CU3", 0)
+                CU4 = loaded_data.get("CU4", 0)
+                CU5 = loaded_data.get("CU5", 0)
 
-        # V3.0 Ascensions
-        current_ascension = 0
-        ascension_tokens = 0
-        ascension_stage = 0
+                # Rebirth Upgrades
+                RU1 = loaded_data.get("RU1", 0)
+                RU2 = loaded_data.get("RU2", 0)
+                RU3 = loaded_data.get("RU3", 0)
+
+                # V3.0 Ascensions
+                current_ascension = loaded_data.get("current_ascension", 0)
+                ascension_tokens = loaded_data.get("ascension_tokens", 0)
+                ascension_stage = loaded_data.get("ascension_stage", 0)
+        except (FileNotFoundError, json.JSONDecodeError):
+            # Default variables if no save file exists
+            clicks = 0
+            rebirths = 0
+            current_tier = 0
+            xp = 0
+            total_time_played = 0
+
+            CU1 = 0
+            CU2 = 0
+            CU3 = 0
+            CU4 = 0
+            CU5 = 0
+
+            RU1 = 0
+            RU2 = 0
+            RU3 = 0
+
+            # V3.0 Ascensions
+            current_ascension = 0
+            ascension_tokens = 0
+            ascension_stage = 0
 
 
 CU1_multipler = (CU1 * CU1Mult)
@@ -532,6 +570,60 @@ while running:
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
+
+################################################################################
+#    Ascension Upgrade Tree
+################################################################################
+# Main PATH PART 1
+    if ascension_stage == 0:
+        Extra_Tiers = 0
+        Ascension_QOL_Clicks = 1
+
+    if ascension_stage_2 <= 1:
+        Ascension_Click_Mult = 1
+
+    if ascension_stage == 1:
+        Extra_Tiers = 2
+        Ascension_QOL_Clicks = 1
+
+# QOL PATH PART 1
+    if ascension_stage == 2:
+        Extra_Tiers = 2
+        Keep_Click_Upgrades = 1
+        Ascension_QOL_Clicks = 2.5
+
+    if ascension_stage == 3:
+        Extra_Tiers = 2
+        Keep_Click_Upgrades = 1
+        Keep_Rebirth_Upgrades = 1
+        ascension_Auto_Click_Speed = 1
+        Ascension_QOL_Clicks = 6.25
+
+
+# Boost PATH PART 1
+    if ascension_stage_2 == 2:
+        Ascension_Click_Mult = 10
+        Ascension_Rebirth_Mult = 5
+        Ascension_XP_Mult = 2
+
+    if ascension_stage_2 == 3:
+        Ascension_Click_Mult = 50
+        Ascension_Rebirth_Mult = 15
+        Ascension_XP_Mult = 6
+
+# Main Path Part 2
+
+    if ascension_stage == 4:
+        Extra_Tiers = 5
+        Keep_Click_Upgrades = 1
+        Keep_Rebirth_Upgrades = 1
+        ascension_Auto_Click_Speed = 1
+        Ascension_QOL_Clicks = 6.25
+
+    if ascension_stage_2 == 4:
+        Ascension_Click_Mult = 100
+        Ascension_Rebirth_Mult = 30
+        Ascension_XP_Mult = 12
 ################################################################################
 #Gain Amount
 ################################################################################

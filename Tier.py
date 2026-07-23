@@ -102,7 +102,7 @@ def tier_cost(tier, type):
 
     elif tier == 9:
         # 1 sextillion
-        Cost = (1000 ** 5) * 750
+        Cost = (1000 ** 7)
 
     elif tier == 10:
         Cost =  10000**10
