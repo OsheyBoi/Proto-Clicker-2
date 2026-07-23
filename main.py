@@ -107,6 +107,7 @@ font2 = pygame.font.SysFont("Arial", 80) #(Big)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
+# V1.0
 clicks = 0
 rebirths = 0
 current_tier = 0
@@ -135,8 +136,13 @@ Click_Xp_Mult = 1
 CooldownLength = 0
 Tier_Click_Speed = 1
 last_time_check = 0
+# V3.0
+current_ascension = 0
+ascension_tokens = 0
+ascension_stage = 0
 
 default_game_state = {
+    # V1.0
     "clicks": clicks,
     "rebirths": rebirths,
     "current_tier": current_tier,
@@ -149,11 +155,15 @@ default_game_state = {
     "CU5": CU5,
     "RU1": RU1,
     "RU2": RU2,
-    "RU3": RU3
+    "RU3": RU3,
+    # V3.0
+    "current_ascension"  : current_ascension,
+    "ascension_tokens" : ascension_tokens,
+    "ascension_stage" : ascension_stage
 }
 
-
 current_state = {
+    # V1.0
     "clicks": clicks,
     "rebirths": rebirths,
     "current_tier": current_tier,
@@ -166,7 +176,11 @@ current_state = {
     "CU5": CU5,
     "RU1": RU1,
     "RU2": RU2,
-    "RU3": RU3
+    "RU3": RU3,
+    # V3.0
+    "current_ascension": current_ascension,
+    "ascension_tokens": ascension_tokens,
+    "ascension_stage": ascension_stage
 }
 
 
@@ -307,6 +321,12 @@ try:
         RU2 = loaded_data.get("RU2", 0)
         RU3 = loaded_data.get("RU3", 0)
 
+        # V3.0 Ascensions
+        current_ascension = loaded_data.get("current_ascension", 0)
+        ascension_tokens = loaded_data.get("ascension_tokens", 0)
+        ascension_stage = loaded_data.get("ascension_stage", 0)
+
+
 except (FileNotFoundError, json.JSONDecodeError):
     try:
         with open(SAVE_FILE_BACKUP, "r") as f:
@@ -331,6 +351,11 @@ except (FileNotFoundError, json.JSONDecodeError):
             RU2 = loaded_data.get("RU2", 0)
             RU3 = loaded_data.get("RU3", 0)
 
+            # V3.0 Ascensions
+            current_ascension = loaded_data.get("current_ascension", 0)
+            ascension_tokens = loaded_data.get("ascension_tokens", 0)
+            ascension_stage = loaded_data.get("ascension_stage", 0)
+
     except (FileNotFoundError, json.JSONDecodeError):
         # Default variables if no save file exists
         clicks = 0
@@ -348,6 +373,11 @@ except (FileNotFoundError, json.JSONDecodeError):
         RU1 = 0
         RU2 = 0
         RU3 = 0
+
+        # V3.0 Ascensions
+        current_ascension = 0
+        ascension_tokens = 0
+        ascension_stage = 0
 
 
 CU1_multipler = (CU1 * CU1Mult)
