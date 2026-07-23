@@ -2,6 +2,7 @@
 
 
 V3.0 Coming Soon
+
 V3 So Far:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
@@ -11,9 +12,11 @@ V3 So Far:
 - Image Directory
 - An Updated Save System (For Easier version switching)
 - Bug Fixes 
+
 --------------
 Other Planed Update Features*:
 --------------
+
 V4:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
@@ -23,6 +26,7 @@ V5:
 -------------
 More Planed Updates (if i do Continue to work on this):
 --------
+
 V6:
 - Recreation Tiers 4 + 5
 - 1 New Reset Currency (For after Rebirths)
@@ -37,14 +41,18 @@ Recreation Tiers 9 + 10
 
 
 Note 2: This game is meant to be a Sequel to Proto Clicker 1 and to Improve on the gameplay it had with more Balancing and QOL changes
+
 --------------
 How to Play:
 --------------
+
 1st: Have Somthing to Run Python on (Like Pycharm or Visual Studio)
+
 2nd: Make Sure to have the following installed
   - Python
   - Pygame
   - Pygame Community
+  - 
 3rd:
  Press play and it should work
 
