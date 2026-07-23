@@ -2,14 +2,22 @@ import pygame
 import sys
 import math
 import json
+import os
 
 from Prices import *
 from Tier import *
+from ascension  import *
 from Prices import amount_sum
 from Tier import tier_cost
 
+# Save File
 SAVE_FILE = "save_data.json"
 SAVE_FILE_BACKUP = "save_data_backup.json"
+
+
+# Image Locations
+base_dir = os.path.dirname(__file__)
+img_dir = os.path.join(base_dir, 'images')
 
 def amount_sum(amount):
     if amount < 1000:
@@ -264,16 +272,16 @@ Button_center = (675, 400)
 Button_radius = 200
 
 
-background =  pygame.image.load("Background.png")
-Rebirth_Menu_Button = pygame.image.load("Rebirth_Button.png")
-Tier_Menu_Button =  pygame.image.load("Tier_Button.png")
-Shop_Menu_Button = pygame.image.load("Shop_Button.png")
-Click_Button = pygame.image.load("Click_Button.png")
-settings_Button = pygame.image.load("Setting_Button.png")
+background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png'))
+Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
+Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
+Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
+#Click_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Click_Button.png"))
+settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
 
-click_amount = pygame.image.load("click_amount.png")
-rebirth_amount = pygame.image.load("rebirth_amount.png")
-xp_amount = pygame.image.load("xp_amount.png")
+click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
+rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
+xp_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "xp_amount.png"))
 
 #Menu Stuff (Render place and size)
 Menu_Box = pygame.Rect(20, 150, 1250, 710)
@@ -579,7 +587,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirths_x_self)
+        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -801,9 +809,9 @@ while running:
         #Upgrade  Menu
 
         if current_Cooldown <= current_time:
-            Click_Button = pygame.image.load("Click_Button_unclicked.png")
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked.png"))
         else:
-            Click_Button = pygame.image.load("Click_Button_clicked.png")
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked.png"))
 
         if 1 >= Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 420, 50)
@@ -933,19 +941,19 @@ while running:
     # Menu System (Drawing)
     if Menu != 0:
         if Menu == 1:
-            Shown_Menu = pygame.image.load("Click_Upgrades.png")
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 6:
-            Shown_Menu = pygame.image.load("Rebirth_Upgrades.png")
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Upgrades.png"))
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 11:
-            Shown_Menu = pygame.image.load("Rebirth_Menu.png")
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Menu.png"))
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 12:
-            Shown_Menu = pygame.image.load("Tier_Menu.png")
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tier_Menu.png"))
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 52:
-            Shown_Menu = pygame.image.load("Settings_Menu.png")
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
             screen.blit(Shown_Menu, (0, 0))
 
         if Menu <= 9:
