@@ -2,11 +2,15 @@
 
 
 V3.0 Coming Soon
-V3:
+V3 So Far:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12
 - Settings
+- Rework/Design Of The Shop Menu
+- Image Directory
+- An Updated Save System (For Easier version switching)
+- Bug Fixes 
 --------------
 Other Planed Update Features*:
 --------------
