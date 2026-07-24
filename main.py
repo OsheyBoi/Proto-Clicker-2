@@ -667,13 +667,19 @@ while running:
     if current_tier >= 6:
         Rebirth_x_clicks = 1 + (rebirths ** 0.085)
         rebirth_x_self = 1 + (rebirths ** 0.065)
-    clicks_mult = (CU3Mult ** CU3) * (RU1Mult ** RU1) * Tier_Cm * total_time_played_Click * Click_Xp_Mult * Rebirth_x_clicks
-    if clicks_mult == 0:
-        clicks_mult = 1
+
+    CM_Upgrades = (CU3Mult ** CU3) * (RU1Mult ** RU1)
+    CM_Tiers = Tier_Cm * Click_Xp_Mult
+    CM_Sacrifices = Ascension_QOL_Clicks * Ascension_Click_Mult
+    CM_Other = total_time_played_Click * Rebirth_x_clicks
+
+    Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Sacrifices * CM_Other
+    if Total_clicks_mult == 0:
+        Total_clicks_mult = 1
     # ----------------
 
     #Gain Amount
-    CPC = base_clicks * clicks_mult  #Click per Click
+    CPC = base_clicks * Total_clicks_mult  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
 
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
