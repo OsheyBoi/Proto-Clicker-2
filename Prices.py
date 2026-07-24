@@ -141,7 +141,11 @@ def RU2_CostAmount(upgrade,tier,Type):
             cost = 10
         else:
             cost = (10 + (upgrade ** 1.5 * (upgrade ** 1.3))) ** 1.5
-
+    if tier >= 6:
+        if upgrade == 0:
+            cost = 20
+        else:
+            cost = (20 + (upgrade ** 1.75 * (upgrade ** 1.45))) ** 1.6
 
     if Type != "Suffix":
         return cost
