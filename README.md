@@ -9,8 +9,6 @@ V3 So Far:
 - Tiers 11 - 12
 - Settings
 - Rework/Design Of The Shop Menu
-- Image Directory
-- An Updated Save System (For Easier version switching)
 - Bug Fixes 
 
 --------------
