@@ -2,7 +2,14 @@ import pygame
 import sys
 import math
 import json
+import threading
 import os
+try:
+    import debugger
+    DEBUGGER_AVAILABLE = True
+except ImportError:
+    debugger = None
+    DEBUGGER_AVAILABLE = False
 
 from Prices import *
 from Tier import *
@@ -10,6 +17,14 @@ from ascension  import *
 from Prices import amount_sum
 from Tier import tier_cost
 
+console_input = ""
+input_ready = False
+def check_console():
+    global console_input, input_ready
+    while True:
+        user_text = input("Enter command: ")
+        console_input = user_text
+        input_ready = True
 # Save File
 save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
 save_path = os.path.join(save_dir, "save_Data.json")
@@ -302,7 +317,8 @@ menu_ui_2 = pygame.Rect(1170, 200, 50, 50)
 menu_ui_3 = pygame.Rect(1170, 200, 50, 50)
 menu_ui_4 = pygame.Rect(1170, 200, 50, 50)
 menu_ui_5 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_6 = pygame.Rect(1170, 200, 50, 50)
+menu_ui_6 = pygame.Rect(660, 780, 190, 80)
+menu_ui_7 = pygame.Rect(860, 780, 220, 80)
 #Menu Text
 menu_text1 = font.render("", True, (0, 0, 0))
 menu_text2 = font.render("", True, (0, 0, 0))
@@ -316,6 +332,9 @@ menu_text6 = font.render("", True, (0, 0, 0))
 ################################################################################
 
 running = True
+
+input_thread = threading.Thread(target=check_console, daemon=True)
+input_thread.start()
 
 try:
     with open(save_path, "r") as f:
@@ -489,7 +508,6 @@ while running:
 
     Xp_Current_Level = Xp - total_xp_for_past_levels
     if Xp_Current_Level >= Xp_needed:
-        print("test")
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
@@ -663,7 +681,7 @@ while running:
     base_clicks = (1 + CU1)
     if current_tier <= 5:
         Rebirth_x_clicks = 1
-        rebirths_x_self = 1
+        rebirth_x_self = 1
     if current_tier >= 6:
         Rebirth_x_clicks = 1 + (rebirths ** 0.085)
         rebirth_x_self = 1 + (rebirths ** 0.065)
@@ -792,6 +810,13 @@ while running:
             }
             save_game(current_state)
             print("Autosaved at 1 Minute interval!")
+    #-------------------------------------------------
+        elif event.type == pygame.KEYDOWN:
+        # Put the P key check directly inside your existing key controls
+            if event.key == pygame.K_p:
+                if DEBUGGER_AVAILABLE:
+                    debugger.debug_active = not debugger.debug_active
+        # ========================================================
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             print(Click_Xp_Mult)
@@ -814,17 +839,17 @@ while running:
                     if Menu == 0:
                         Menu = 52
 
-                elif shop_menu.collidepoint(mouse_pos):
+                if shop_menu.collidepoint(mouse_pos):
                     # Open Shop
                     if Menu == 0:
                         Menu = 1
 
-                elif close_menu.collidepoint(mouse_pos):
+                if close_menu.collidepoint(mouse_pos):
                     if Menu >= 1:
                         # Close Menu Button
                         Menu = 0
 
-                elif menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
+                if menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
                         Tier_cost = tier_cost(current_tier, "None")
                         Tier_cost_Shown = tier_cost(current_tier, "Suffix")
                         if clicks >= Tier_cost:
@@ -841,11 +866,20 @@ while running:
                             print("Tier up")
                         else:
                             print("no")
-                elif menu_ui_6.collidepoint(mouse_pos):
-                    if Menu == 1:
+
+                if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
+                    print("Test 6")
+                    if Menu == 19:
                         Menu = 6
 
-                elif menu_ui_1.collidepoint(mouse_pos)  and Menu == 11:
+                if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:
+                    print("Open Menu")
+                    if Menu == 19:
+                        Menu = 14
+
+
+
+                if menu_ui_1.collidepoint(mouse_pos)  and Menu == 11:
                         if Menu == 11:
                             if clicks >= 1000:
                                 clicks = 0
@@ -860,7 +894,7 @@ while running:
 #    Upgrade Menu stuff
 ################################################################################
 
-                elif Menu == 1:
+                if Menu == 1:
                     upgrades[0].level = CU1
                     upgrades[1].level = CU2
                     upgrades[2].level = CU3
@@ -876,7 +910,7 @@ while running:
                     CU4 = upgrades[3].level
                     CU5 = upgrades[4].level
 
-                elif Menu == 6:
+                if Menu == 6:
                     upgrades2[0].level = RU1
                     upgrades2[1].level = RU2
                     upgrades2[2].level = RU3
@@ -900,7 +934,37 @@ while running:
                         current_Cooldown = current_time + CooldownLength
                         if current_tier >= 3:
                             Xp += 1
+ ################################################################################
+#    Console/Debug
+################################################################################
+        if input_ready:
+            # 1. Split the string by spaces: ["set", "clicks", "100"]
+            parts = console_input.split()
 
+            # 2. Check if the command is valid
+            if len(parts) == 3 and parts[0] == "set":
+                target = parts[1]  # "clicks"
+                value_str = parts[2]  # "100"
+
+                try:
+                    # 3. Convert string to integer and apply it
+                    value = int(value_str)
+
+                    if target == "clicks":
+                        clicks = value
+                        print(f" Success: clicks is now {clicks}")
+                    elif target == "score":
+                        score = value
+                        print(f" Success: score is now {score}")
+                    else:
+                        print(f" Unknown variable: {target}")
+
+                except ValueError:
+                    print(" Error: The value must be a number!")
+            else:
+                print(" Invalid command format. Use: set [variable] [value]")
+
+            input_ready = False  # Reset flag for next input
 ################################################################################
 #    Drawing Ui Elements
 ################################################################################
@@ -917,12 +981,17 @@ while running:
             menu_ui_3 = pygame.Rect(110, 780, 420, 50)
             menu_ui_4 = pygame.Rect(710, 340, 420, 50)
             menu_ui_5 = pygame.Rect(710, 560, 420, 50)
-            menu_ui_6 = pygame.Rect(710, 780, 420, 50)
+            menu_ui_6 = pygame.Rect(660, 780, 200, 80)
+            menu_ui_7 = pygame.Rect(860, 780, 220, 80)
+
+            #menu_ui_6 = pygame.Rect(620, 760, 270, 120)
+
         # Tier Menu
         if Menu == 12:
             menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
         # Rebirth Menu
+
         if Menu == 11:
             menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
@@ -1025,8 +1094,6 @@ while running:
     CurrencyBox2.center = (660, 75)
     CurrencyBox3.center = (1130, 70)
 
-
-
     if current_tier >= 1:
         screen.blit(Rebirth_Menu_Button, (25, 227))
     screen.blit(Tier_Menu_Button, (25, 427))
@@ -1067,6 +1134,10 @@ while running:
             screen.blit(menu_text4, Menu_text4)
             screen.blit(menu_text5, Menu_text5)
             screen.blit(menu_text6, Menu_text6)
+
+
+
+
         if Menu == 12:
             Menu_text2.center = (600, 642)
             Menu_text1.center = (530, 422)
@@ -1078,8 +1149,28 @@ while running:
             Menu_text1.center = (600, 462)
             screen.blit(menu_text1, Menu_text1)
 
+    pygame.draw.rect(screen, cyan, menu_ui_6, width=0, border_radius=0)
+    #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
 
+    if DEBUGGER_AVAILABLE:
+        hitboxes = {
+            "menu_ui_1": menu_ui_1,
+            "menu_ui_2": menu_ui_2,
+            "menu_ui_3": menu_ui_3,
+            "menu_ui_4": menu_ui_4,
+            "menu_ui_5": menu_ui_5,
+            "menu_ui_6": menu_ui_6,
+            "menu_ui_7": menu_ui_7,
+            "settings_Button": settings_Button,
+            "Tier_Menu_Button": Tier_Menu_Button,
+            "Rebirth_Menu_Button": Rebirth_Menu_Button
+        }
+        debugger.run_debug(screen, hitboxes)
+
+    pygame.display.flip()
+
+    pygame.display.flip()
     pygame.display.flip()
     clock.tick(60)
 
