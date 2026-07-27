@@ -4,6 +4,7 @@ import math
 import json
 import threading
 import os
+
 try:
     import debugger
     DEBUGGER_AVAILABLE = True
@@ -11,20 +12,21 @@ except ImportError:
     debugger = None
     DEBUGGER_AVAILABLE = False
 
+try:
+    import game_console
+    CONSOLE_AVAILABLE = True
+    game_console.start() # Fire up the background thread immediately
+except ImportError:
+    game_console = None
+    CONSOLE_AVAILABLE = False
+
 from Prices import *
 from Tier import *
 from ascension  import *
 from Prices import amount_sum
 from Tier import tier_cost
 
-console_input = ""
-input_ready = False
-def check_console():
-    global console_input, input_ready
-    while True:
-        user_text = input("Enter command: ")
-        console_input = user_text
-        input_ready = True
+
 # Save File
 save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
 save_path = os.path.join(save_dir, "save_Data.json")
@@ -333,8 +335,9 @@ menu_text6 = font.render("", True, (0, 0, 0))
 
 running = True
 
-input_thread = threading.Thread(target=check_console, daemon=True)
-input_thread.start()
+game_vars = {
+    "clicks": 0,
+}
 
 try:
     with open(save_path, "r") as f:
@@ -737,6 +740,7 @@ while running:
             RU1Mult = 1.5
 
     ################################################################################
+    ################################################################################
     #    Pygame Mouse  collidepoint checker
     ################################################################################
     for event in pygame.event.get():
@@ -937,34 +941,9 @@ while running:
  ################################################################################
 #    Console/Debug
 ################################################################################
-        if input_ready:
-            # 1. Split the string by spaces: ["set", "clicks", "100"]
-            parts = console_input.split()
-
-            # 2. Check if the command is valid
-            if len(parts) == 3 and parts[0] == "set":
-                target = parts[1]  # "clicks"
-                value_str = parts[2]  # "100"
-
-                try:
-                    # 3. Convert string to integer and apply it
-                    value = int(value_str)
-
-                    if target == "clicks":
-                        clicks = value
-                        print(f" Success: clicks is now {clicks}")
-                    elif target == "score":
-                        score = value
-                        print(f" Success: score is now {score}")
-                    else:
-                        print(f" Unknown variable: {target}")
-
-                except ValueError:
-                    print(" Error: The value must be a number!")
-            else:
-                print(" Invalid command format. Use: set [variable] [value]")
-
-            input_ready = False  # Reset flag for next input
+        if CONSOLE_AVAILABLE:
+            # Pass your game variables in, get the updated variables back out
+            game_vars = game_console.check_commands(game_vars)
 ################################################################################
 #    Drawing Ui Elements
 ################################################################################
