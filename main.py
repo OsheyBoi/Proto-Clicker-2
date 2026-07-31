@@ -1014,15 +1014,11 @@ while running:
 
             #menu_ui_6 = pygame.Rect(620, 760, 270, 120)
 
-        # Tier Menu
+        # Tier, rebirth and ascension  Menu
         if Menu in menu_base_1:
-            menu_ui_1 = pygame.Rect(110, 730, 1100, 100)
-            menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
-        # Rebirth Menu
+            menu_ui_1 = pygame.Rect(200, 720, 870, 100)
+            menu_ui_2 = pygame.Rect(110, 250, 1100, 400)
 
-        if Menu == 11:
-            menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
-            menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
         CU1_Cost_Show = CU1_CostAmount(CU1, current_tier,"Suffix")
         CU2_Cost_Show = CU2_CostAmount(CU2, current_tier, "Suffix")
         CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
