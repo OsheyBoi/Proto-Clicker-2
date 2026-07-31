@@ -166,6 +166,9 @@ Click_Xp_Mult = 1
 CooldownLength = 0
 Tier_Click_Speed = 1
 last_time_check = 0
+dev_mult = 1.0
+ascension_Auto_Click_Speed = 0
+
 # V3.0
 current_ascension = 0
 ascension_tokens = 0
@@ -337,6 +340,8 @@ running = True
 
 game_vars = {
     "clicks": 0,
+    "rebirths": 0,
+    "current_tier" : 0
 }
 
 try:
@@ -600,6 +605,7 @@ while running:
         Extra_Tiers = 0
         Ascension_QOL_Clicks = 1
 
+
     if ascension_stage_2 <= 1:
         Ascension_Click_Mult = 1
 
@@ -844,6 +850,7 @@ while running:
                         Menu = 52
 
                 if shop_menu.collidepoint(mouse_pos):
+                    print(current_tier)
                     # Open Shop
                     if Menu == 0:
                         Menu = 1
@@ -941,10 +948,29 @@ while running:
  ################################################################################
 #    Console/Debug
 ################################################################################
+
         if CONSOLE_AVAILABLE:
-            # Pass your game variables in, get the updated variables back out
-            game_vars = game_console.check_commands(game_vars)
-################################################################################
+            if CONSOLE_AVAILABLE:
+                temp_state = {
+                    "clicks": clicks,
+                    "rebirths": rebirths,
+                    "current_tier": current_tier,
+                    "dev_mult": dev_mult
+                }
+
+                temp_state = game_console.check_commands(temp_state)
+
+                clicks = temp_state["clicks"]
+                rebirths = temp_state["rebirths"]
+                current_tier = temp_state["current_tier"]
+                dev_mult = temp_state["dev_mult"]
+
+        # ========================================================
+        # ========================================================
+
+        # ========================================================
+
+        ################################################################################
 #    Drawing Ui Elements
 ################################################################################
         #Upgrade  Menu
@@ -1128,7 +1154,7 @@ while running:
             Menu_text1.center = (600, 462)
             screen.blit(menu_text1, Menu_text1)
 
-    pygame.draw.rect(screen, cyan, menu_ui_6, width=0, border_radius=0)
+
     #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
 
