@@ -294,7 +294,7 @@ RU3_Cost = 1
 shop_menu = pygame.Rect(420, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 230, 110, 110)
 Tier_menu = pygame.Rect(24, 400, 110, 110)
-acension_menu = pygame.Rect(24, 570, 110, 110)
+ascension_menu = pygame.Rect(24, 570, 110, 110)
 setting_menu = pygame.Rect(10, 10, 70, 70)
 
 Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
@@ -841,19 +841,22 @@ while running:
                         if current_tier >= 1:
                             Menu = 11
 
+                if ascension_menu.collidepoint(mouse_pos):
+                    if Menu == 0:
+                        if current_tier >= 10 or current_ascension >= 1:
+                            Menu = 13
+
                 if Tier_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
                     if Menu == 0:
                         Menu = 12
 
                 if setting_menu.collidepoint(mouse_pos):
-                    #Open Rebirth menu
                     if Menu == 0:
                         Menu = 52
 
                 if shop_menu.collidepoint(mouse_pos):
                     print(current_tier)
-                    # Open Shop
                     if Menu == 0:
                         Menu = 1
 
@@ -882,12 +885,15 @@ while running:
 
                 if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
                     print("Test 6")
-                    if Menu == 19:
+                    if Menu == 1:
                         Menu = 6
+                    if Menu == 6:
+                        Menu = 1
+
 
                 if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:
                     print("Open Menu")
-                    if Menu == 19:
+                    if Menu == 1:
                         Menu = 14
 
 
@@ -1053,7 +1059,7 @@ while running:
         menu_text3 = font.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
         menu_text4 = font.render("Coming Later", True, (0, 0, 0))
         menu_text5 = font.render("Coming Later ", True, (0, 0, 0))
-        menu_text6 = font.render("Coming Later", True, (0, 0, 0))
+        menu_text6 = font.render("", True, (0, 0, 0))
 
 
     if Menu == 12:
@@ -1125,6 +1131,12 @@ while running:
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 12:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tier_Menu.png"))
+            screen.blit(Shown_Menu, (0, 0))
+        if Menu == 13:
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Ascension_Menu.png"))
+            screen.blit(Shown_Menu, (0, 0))
+        if Menu == 14:
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tree_Background.png"))
             screen.blit(Shown_Menu, (0, 0))
         if Menu == 52:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
