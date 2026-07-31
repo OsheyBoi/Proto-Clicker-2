@@ -827,8 +827,7 @@ while running:
         elif event.type == pygame.KEYDOWN:
         # Put the P key check directly inside your existing key controls
             if event.key == pygame.K_p:
-                if DEBUGGER_AVAILABLE:
-                    debugger.debug_active = not debugger.debug_active
+                DEBUGGER_AVAILABLE = not DEBUGGER_AVAILABLE
         # ========================================================
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -1017,7 +1016,7 @@ while running:
 
         # Tier Menu
         if Menu in menu_base_1:
-            menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
+            menu_ui_1 = pygame.Rect(110, 730, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
         # Rebirth Menu
 
@@ -1195,21 +1194,7 @@ while running:
 # Debugger -> Note: The Debuger is made by ai but is only used for testing)
 #######
     if DEBUGGER_AVAILABLE:
-        mouse_pos = pygame.mouse.get_pos()
-
-        hitboxes = {
-            name: value
-            for name, value in globals().items()
-            if name.startswith("menu_ui_")
-               or name.endswith("_Amount_Box")
-               or name.endswith("_menu")
-               or name.endswith("_Menu_Button")
-        }
-
-        for name, hitbox in hitboxes.items():
-            if isinstance(hitbox, pygame.Rect):
-                if hitbox.collidepoint(mouse_pos):
-                    pygame.draw.rect(screen, (0, 255, 0), hitbox, 3)
+        debugger.draw_hud(screen, globals())
 
     ########
     ########
