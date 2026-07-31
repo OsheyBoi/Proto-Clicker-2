@@ -241,6 +241,7 @@ def save_game_backup(game_state):
     except IOError:
         print("Error: Could not write save file.")
 
+menu_base_1 = [11,12,13]
 
 
 ################################################################################
@@ -908,6 +909,21 @@ while running:
                                 CU4 = 0
                                 rebirths += Rebirth_Gain
 
+                if menu_ui_1.collidepoint(mouse_pos)  and Menu == 13:
+                        if Menu == 11:
+                            if clicks >= ascension_cost(current_ascension, "NA"):
+                                clicks = 0
+                                CU1 = 0
+                                CU2 = 0
+                                CU3 = 0
+                                CU4 = 0
+                                RU1 = 0
+                                RU2 = 0
+                                RU3 = 0
+                                rebirths = 0
+                                current_tier = 0
+
+
 
 ################################################################################
 #    Upgrade Menu stuff
@@ -1000,7 +1016,7 @@ while running:
             #menu_ui_6 = pygame.Rect(620, 760, 270, 120)
 
         # Tier Menu
-        if Menu == 12:
+        if Menu in menu_base_1:
             menu_ui_1 = pygame.Rect(110, 700, 1100, 100)
             menu_ui_2 = pygame.Rect(110, 260, 1100, 400)
         # Rebirth Menu
@@ -1093,8 +1109,10 @@ while running:
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
     CurrencyBox3 = Xp_AR.get_rect()
-
-
+    if Menu != 14:
+        close_menu = pygame.Rect(1170, 200, 50, 50)
+    if Menu == 14:
+        close_menu = pygame.Rect(1170, 100, 50, 50)
 
     Menu_text1 = menu_text1.get_rect()
     Menu_text2 = menu_text2.get_rect()

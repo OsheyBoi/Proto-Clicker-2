@@ -24,10 +24,11 @@ def amount_sum(amount):
 
 def ascension_cost(ascension, type):
     if ascension == 0:
-        Base = (1000 ** 7)  * 100
+        Cost = (1000 ** 7)  * 100
     if ascension >= 1:
-        Base = (1000 ** 8)  * 100
-        Cost = Base * (100 ** ascension)
+        if ascension <= 5:
+            Base = (1000 ** 8)  * 100
+            Cost = Base * (100 ** ascension)
 
     if type == "Max ascension":
         return type
