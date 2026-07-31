@@ -292,8 +292,9 @@ RU3_Cost = 1
 #    Ui Set up
 ################################################################################
 shop_menu = pygame.Rect(420, 720, 440, 140)
-Rebirth_menu = pygame.Rect(24, 227, 110, 110)
-Tier_menu = pygame.Rect(24, 427, 110, 110)
+Rebirth_menu = pygame.Rect(24, 230, 110, 110)
+Tier_menu = pygame.Rect(24, 400, 110, 110)
+acension_menu = pygame.Rect(24, 570, 110, 110)
 setting_menu = pygame.Rect(10, 10, 70, 70)
 
 Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
@@ -309,6 +310,7 @@ Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Butt
 Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
 #Click_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Click_Button.png"))
 settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
+ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
 
 click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
 rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
@@ -1100,9 +1102,11 @@ while running:
     CurrencyBox3.center = (1130, 70)
 
     if current_tier >= 1:
-        screen.blit(Rebirth_Menu_Button, (25, 227))
-    screen.blit(Tier_Menu_Button, (25, 427))
+        screen.blit(Rebirth_Menu_Button, (25, 230))
+    screen.blit(Tier_Menu_Button, (25, 400))
     screen.blit(settings_Button, (-10, -10))
+    if current_tier >= 10 or current_ascension >= 1:
+        screen.blit(ascension_Button, (25, 570))
     screen.blit(Clicks_AR, CurrencyBox1)
     screen.blit(Rebirth_AR, CurrencyBox2)
     screen.blit(Xp_AR, CurrencyBox3)
@@ -1157,21 +1161,29 @@ while running:
 
     #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
-
+#######
+# Debugger -> Note: The Debuger is made by ai but is only used for testing)
+#######
     if DEBUGGER_AVAILABLE:
+        mouse_pos = pygame.mouse.get_pos()
+
         hitboxes = {
-            "menu_ui_1": menu_ui_1,
-            "menu_ui_2": menu_ui_2,
-            "menu_ui_3": menu_ui_3,
-            "menu_ui_4": menu_ui_4,
-            "menu_ui_5": menu_ui_5,
-            "menu_ui_6": menu_ui_6,
-            "menu_ui_7": menu_ui_7,
-            "settings_Button": settings_Button,
-            "Tier_Menu_Button": Tier_Menu_Button,
-            "Rebirth_Menu_Button": Rebirth_Menu_Button
+            name: value
+            for name, value in globals().items()
+            if name.startswith("menu_ui_")
+               or name.endswith("_Amount_Box")
+               or name.endswith("_menu")
+               or name.endswith("_Menu_Button")
         }
-        debugger.run_debug(screen, hitboxes)
+
+        for name, hitbox in hitboxes.items():
+            if isinstance(hitbox, pygame.Rect):
+                if hitbox.collidepoint(mouse_pos):
+                    pygame.draw.rect(screen, (0, 255, 0), hitbox, 3)
+
+    ########
+    ########
+
 
     pygame.display.flip()
 
