@@ -538,7 +538,7 @@ while running:
 #    Xp system
 ################################################################################
     Xp_needed =  int(15* (1.4 ** levels ))
-    Xp_needed_sum = amount_sum(Xp_Needed)
+    Xp_needed_sum = amount_sum(Xp_needed)
 
     total_xp_for_past_levels = 0
     for lvl in range(1, levels):

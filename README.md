@@ -14,7 +14,8 @@ Whats Coming up so Far:
 - Tiers 11 - 12
 - Settings
 - Rework/Design Of The Shop Menu
-
+- Small Qol Changes
+    - Made the Xp show at the top get summed first
 - Bug Fixes 
     - Xp multipler just not being a thing
     - Fix Auto Rebirth just not working as intended
