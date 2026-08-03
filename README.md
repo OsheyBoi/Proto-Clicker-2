@@ -26,6 +26,7 @@ Other Planed Update Features*:
 V4:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
+
 V5:
 - Recreation Tiers 1 -> 3
 
@@ -38,39 +39,40 @@ V6:
 - 1 New Reset Currency (For after Rebirths)
 
 V7:
-Recreation Tiers 6 -> 8
-1 New Feature
+- Recreation Tiers 6 -> 8
+- 1 New Feature
 
 V8:
-Recreation Tiers 9 + 10
-1 Final Reset
+- Recreation Tiers 9 + 10
+- 1 Final Reset
 
 
 --------------
 How to Play:
 --------------
 
-1st: Have Somthing to Run Python on (Like Pycharm or Visual Studio)
+1st:  Have Somthing to Run Python on (Like Pycharm or Visual Studio)
 
-2nd: Make Sure to have the following installed
-  - Python
-  - Pygame
-  - Pygame Community
-  - 
-3rd:
- Press play and it should work
+2nd:  Make Sure to have the following installed
+    - Python
+    - Pygame
+    - Pygame Community
 
-Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
+3rd:  Press play and it should work
 
+Link for Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
 
--Some additional notes from Oshey Boi:
+--------------
+Some additional notes from Oshey Boi:
+--------------
 
 Note 1: This game is a Sequel to Proto Clicker 1 and to Improve on the gameplay it had with (kinda) more Balancing and QOL changes
-
+--------------
 Note 2a: AI Was used to help me with understanding  how to code different things as I'm still fairly new to Python/Pygame
-
+--------------
 Note 2b: AI was also used for the Debugger and Console that only I (Oshey) have the scripts for
-
+--------------
 Note 3: This is only my 3rd Main Project in Python so i am still learning new tech
-
+--------------
 Note 4: There are bound to be things i forgot to do and code fully so let me know by making a issue on github
+--------------
