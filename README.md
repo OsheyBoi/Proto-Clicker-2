@@ -1,16 +1,21 @@
-![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/Logo+Version.png)
+![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/images/Logo/Logo.png)
+![Static Badge](https://img.shields.io/badge/build-2.0-brightgreen?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-3.0-blue?style=for-the-badge)
 
 
+--------------
 V3.0 Coming Soon
+--------------
+Whats Coming up so Far:
 
-V3 So Far:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12
 - Settings
 - Rework/Design Of The Shop Menu
+
 - Bug Fixes 
-    - Fix Xp multipler just not being a thing
+    - Xp multipler just not being a thing
     - Fix Auto Rebirth just not working as intended
 
 --------------
@@ -24,7 +29,7 @@ V5:
 - Recreation Tiers 1 -> 3
 
 -------------
-More Planed Updates (if i do Continue to work on this):
+More Planed Updates (if I Continue to Update the game):
 --------
 
 V6:
@@ -39,8 +44,6 @@ V8:
 Recreation Tiers 9 + 10
 1 Final Reset
 
-
-Note 2: This game is meant to be a Sequel to Proto Clicker 1 and to Improve on the gameplay it had with more Balancing and QOL changes
 
 --------------
 How to Play:
@@ -58,3 +61,15 @@ How to Play:
 
 Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
 
+
+-Some additional notes from Oshey Boi:
+
+Note 1: This game is a Sequel to Proto Clicker 1 and to Improve on the gameplay it had with (kinda) more Balancing and QOL changes
+
+Note 2a: AI Was used to help me with understanding  how to code different things as I'm still fairly new to Python/Pygame
+
+Note 2b: AI was also used for the Debugger and Console that only I (Oshey) have the scripts for
+
+Note 3: This is only my 3rd Main Project in Python so i am still learning new tech
+
+Note 4: There are bound to be things i forgot to do and code fully so let me know by making a issue on github
