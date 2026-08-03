@@ -56,6 +56,12 @@ def tier_info (Tier):
     elif Tier == 10:
          text = " \n You Have Reach Max Tier in V2.0 \n More Will Be added Soon "
          return text
+    elif Tier == 11:
+         text = " \n You Have Reach Max Tier in V2.0 \n More Will Be added Soon "
+         return text
+    elif Tier == 12:
+         text = " \n You Have Reach Max Tier in V4.0 \n Tiers 13 - 15 are Coming Soon "
+         return text
 
     else:
         text = "Error 1: \n Failed to load Tier Info"
@@ -105,7 +111,13 @@ def tier_cost(tier, type):
         Cost = (1000 ** 7)
 
     elif tier == 10:
-        Cost =  10000**10
+        Cost =  (1000 ** 8) * 250
+
+    elif tier == 11:
+        Cost =  (1000 ** 10) * 10
+
+    elif tier == 11:
+        Cost =  100000**10
         type = "Max Tier"
 
     if type == "Max Tier":
