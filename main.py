@@ -361,7 +361,10 @@ running = True
 game_vars = {
     "clicks": 0,
     "rebirths": 0,
-    "current_tier" : 0
+    "current_tier" : 0,
+    "current_ascension" : 0,
+    "ascension_tokens": 0,
+
 }
 
 try:
@@ -784,7 +787,7 @@ while running:
                 clicks += CPC
                 Xp += 0.25
 
-        if event.type == AUTOClick_EVENT:
+        if event.type == AUTORebirth_EVENT:
             if current_tier >= 5:
                 rebirths += Rebirth_Gain / 100
 
@@ -908,10 +911,12 @@ while running:
                         if clicks >= Tier_cost:
                             clicks = 0
                             rebirths = 0
+                        if ascension_stage <= 1:
                             CU1 = 0
                             CU2 = 0
                             CU3 = 0
                             CU4 = 0
+                        if ascension_stage <= 2:
                             RU1 = 0
                             RU2 = 0
                             RU3 = 0
@@ -1053,7 +1058,9 @@ while running:
                     "clicks": clicks,
                     "rebirths": rebirths,
                     "current_tier": current_tier,
-                    "dev_mult": dev_mult
+                    "dev_mult": dev_mult,
+                    "current_ascension": current_ascension,
+                    "ascension_tokens": ascension_tokens
                 }
 
                 temp_state = game_console.check_commands(temp_state)
@@ -1062,7 +1069,8 @@ while running:
                 rebirths = temp_state["rebirths"]
                 current_tier = temp_state["current_tier"]
                 dev_mult = temp_state["dev_mult"]
-
+                current_ascension = temp_state["current_ascension"]
+                ascension_tokens = temp_state["ascension_tokens"]
         # ========================================================
         # ========================================================
 

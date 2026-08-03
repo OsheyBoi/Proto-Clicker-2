@@ -10,6 +10,8 @@ V3 So Far:
 - Settings
 - Rework/Design Of The Shop Menu
 - Bug Fixes 
+    - Fix Xp multipler just not being a thing
+    - Fix Auto Rebirth just not working as intended
 
 --------------
 Other Planed Update Features*:
