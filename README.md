@@ -1,7 +1,7 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/images/Logo/Logo.png)
 
-![Static Badge](https://img.shields.io/badge/build-2.0-brightgreen?style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-3.0-blue?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Public%20build-V2.0-darkgreen?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.0-blue?style=for-the-badge)
 
 
 --------------
