@@ -289,6 +289,8 @@ RU3M = 25
 RU3Mult = 1.1
 RU3_Cost = 1
 
+ascension_stage = 0
+
 ################################################################################
 #    Ui Set up
 ################################################################################
@@ -304,6 +306,21 @@ Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
 Button_center = (675, 400)
 Button_radius = 200
 
+Show_Button_1_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_2_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_3_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_4_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_5_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_6_hitbox = pygame.Rect(0, 0, 0, 0)
+Show_Button_7_hitbox = pygame.Rect(0, 0, 0, 0)
+
+Show_Button_1 = pygame.Surface((0, 0))
+Show_Button_2 = pygame.Surface((0, 0))
+Show_Button_3 = pygame.Surface((0, 0))
+Show_Button_4 = pygame.Surface((0, 0))
+Show_Button_5 = pygame.Surface((0, 0))
+Show_Button_6 = pygame.Surface((0, 0))
+Show_Button_7 = pygame.Surface((0, 0))
 
 background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png'))
 Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
@@ -374,6 +391,7 @@ try:
         current_ascension = loaded_data.get("current_ascension", 0)
         ascension_tokens = loaded_data.get("ascension_tokens", 0)
         ascension_stage = loaded_data.get("ascension_stage", 0)
+        ascension_stage_2 = loaded_data.get("ascension_stage", 0)
 
 
 except (FileNotFoundError, json.JSONDecodeError):
@@ -404,6 +422,8 @@ except (FileNotFoundError, json.JSONDecodeError):
             current_ascension = loaded_data.get("current_ascension", 0)
             ascension_tokens = loaded_data.get("ascension_tokens", 0)
             ascension_stage = loaded_data.get("ascension_stage", 0)
+            ascension_stage_2 = loaded_data.get("ascension_stage", 0)
+
     except (FileNotFoundError, json.JSONDecodeError):
         try:
             with open(SAVE_FILE, "r") as f:
@@ -432,6 +452,8 @@ except (FileNotFoundError, json.JSONDecodeError):
                 current_ascension = loaded_data.get("current_ascension", 0)
                 ascension_tokens = loaded_data.get("ascension_tokens", 0)
                 ascension_stage = loaded_data.get("ascension_stage", 0)
+                ascension_stage_2 = loaded_data.get("ascension_stage", 0)
+
         except (FileNotFoundError, json.JSONDecodeError):
             # Default variables if no save file exists
             clicks = 0
@@ -454,6 +476,7 @@ except (FileNotFoundError, json.JSONDecodeError):
             current_ascension = 0
             ascension_tokens = 0
             ascension_stage = 0
+            ascension_stage_2 = 0
 
 
 CU1_multipler = (CU1 * CU1Mult)
@@ -779,7 +802,11 @@ while running:
                 "CU5": CU5,
                 "RU1": RU1,
                 "RU2": RU2,
-                "RU3": RU3
+                "RU3": RU3,
+                "current_ascension" : current_ascension,
+                "ascension_tokens" : ascension_tokens,
+                "ascension_stage" : ascension_stage,
+                "ascension_stage_2" : ascension_stage_2
             }
             save_game(current_state)
             pygame.quit()
@@ -800,7 +827,11 @@ while running:
                 "CU5": CU5,
                 "RU1": RU1,
                 "RU2": RU2,
-                "RU3": RU3
+                "RU3": RU3,
+                "current_ascension" : current_ascension,
+                "ascension_tokens" : ascension_tokens,
+                "ascension_stage" : ascension_stage,
+                "ascension_stage_2" : ascension_stage_2
             }
             save_game(current_state)
             print("Autosaved at 10-second interval!")
@@ -819,7 +850,11 @@ while running:
                 "CU5": CU5,
                 "RU1": RU1,
                 "RU2": RU2,
-                "RU3": RU3
+                "RU3": RU3,
+                "current_ascension" : current_ascension,
+                "ascension_tokens" : ascension_tokens,
+                "ascension_stage" : ascension_stage,
+                "ascension_stage_2" : ascension_stage_2
             }
             save_game(current_state)
             print("Autosaved at 1 Minute interval!")
@@ -895,6 +930,43 @@ while running:
                     print("Open Menu")
                     if Menu == 1:
                         Menu = 14
+
+
+
+                if Show_Button_1_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage == 0:
+                        ascension_stage = 1
+                        ascension_stage_2 = 1
+
+                if Show_Button_2_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage_2 == 1:
+                        if ascension_tokens >= 1:
+                            ascension_stage_2 = 2
+                            ascension_tokens -= 1
+
+                if Show_Button_3_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage_2 == 2:
+                        if ascension_tokens >= 1:
+                            ascension_stage_2 = 3
+                            ascension_tokens -= 1
+
+                if Show_Button_4_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage == 1:
+                        if ascension_tokens >= 1:
+                            ascension_stage = 2
+                            ascension_tokens -= 1
+
+                if Show_Button_5_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage == 2:
+                        if ascension_tokens >= 1:
+                            ascension_stage = 3
+                            ascension_tokens -= 1
+
+                if Show_Button_6_hitbox.collidepoint(mouse_pos) and Menu == 14:
+                    if ascension_stage == 3:
+                        if ascension_tokens >= 1:
+                            ascension_stage = 4
+                            ascension_tokens -= 1
 
 
 
@@ -993,7 +1065,7 @@ while running:
 
         # ========================================================
 
-        ################################################################################
+################################################################################
 #    Drawing Ui Elements
 ################################################################################
         #Upgrade  Menu
@@ -1072,7 +1144,9 @@ while running:
         menu_text5 = font.render("Coming Later ", True, (0, 0, 0))
         menu_text6 = font.render("", True, (0, 0, 0))
 
-
+    if Menu == 13:
+        test1 = ascension_cost(current_ascension,"Suffix")
+        menu_text1 = font2.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
     if Menu == 12:
         test = tier_cost(current_tier,"Suffix")
         menu_text1 = font.render((tier_info(current_tier)), True,  (0, 0, 0))
@@ -1183,6 +1257,81 @@ while running:
             Menu_text1.center = (600, 462)
             screen.blit(menu_text1, Menu_text1)
 
+        if Menu == 13:
+
+            Menu_text1.center = (600, 462)
+            screen.blit(menu_text1, Menu_text1)
+
+
+
+        if Menu == 14:
+            if ascension_stage == 0:
+                Show_Button_1 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#1_V1.png"))
+
+
+            if ascension_stage_2 == 1:
+                Show_Button_2 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#2_V1.png"))
+
+
+            if ascension_stage_2 == 2:
+                Show_Button_3 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#3_V1.png"))
+
+            if ascension_stage == 1:
+                Show_Button_4 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#4_V1.png"))
+
+            if ascension_stage == 2:
+                Show_Button_5 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#5_V1.png"))
+
+            if ascension_stage == 3:
+                Show_Button_6 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#6_V1.png"))
+
+            if ascension_stage ==  4:
+                Show_Button_7 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#7_V1.png"))
+
+
+
+            Show_Button_1 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#1_V2.png")) if ascension_stage >= 1 else Show_Button_1
+            Show_Button_4 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#4_V2.png")) if ascension_stage >= 2 else Show_Button_4
+            Show_Button_5 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#5_V2.png")) if ascension_stage >= 3 else Show_Button_5
+            Show_Button_6 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#6_V2.png")) if ascension_stage >= 4 else Show_Button_6
+
+            Show_Button_2 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#2_V2.png")) if ascension_stage_2 >= 2 else Show_Button_2
+            Show_Button_3 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#3_V2.png")) if ascension_stage_2 >= 3 else Show_Button_3
+
+#------------------------
+# Start of Showwing buttons
+ # -------------------------
+# (X = +\- 420 |||| Y = - 235
+
+            ascension_tokens = 10
+            if ascension_stage >= 0:
+                screen.blit(Show_Button_1, (450, 630))
+                Show_Button_1_hitbox = Show_Button_1.get_rect(topleft=(450, 630))
+
+
+            if ascension_stage_2 >= 1:
+                screen.blit(Show_Button_2, (30, 450))
+                Show_Button_2_hitbox = Show_Button_2.get_rect(topleft=(50, 425))
+
+            if ascension_stage_2 >= 2:
+                screen.blit(Show_Button_3, (30, 185))
+                Show_Button_3_hitbox = Show_Button_3.get_rect(topleft=(50, 220))
+
+            if ascension_stage >= 1:
+                screen.blit(Show_Button_4, (870, 450))
+                Show_Button_4_hitbox = Show_Button_4.get_rect(topleft=(850, 425))
+
+            if ascension_stage >= 2:
+                screen.blit(Show_Button_5, (870, 185))
+                Show_Button_5_hitbox = Show_Button_5.get_rect(topleft=(850, 220))
+
+            if ascension_stage >= 3:
+                screen.blit(Show_Button_6, (450, 15))
+                Show_Button_6_hitbox = Show_Button_6.get_rect(topleft=(450, 15))
+
+            if ascension_stage >= 10:
+                screen.blit(Show_Button_7, (0, 0))
+                Show_Button_7_hitbox = Show_Button_7.get_rect()
 
     #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
