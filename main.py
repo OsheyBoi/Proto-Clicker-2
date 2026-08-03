@@ -7,7 +7,7 @@ import os
 
 try:
     import debugger
-    DEBUGGER_AVAILABLE = True
+    DEBUGGER_AVAILABLE = False
 except ImportError:
     debugger = None
     DEBUGGER_AVAILABLE = False
@@ -538,17 +538,19 @@ while running:
 #    Xp system
 ################################################################################
     Xp_needed =  int(15* (1.4 ** levels ))
+    Xp_needed_sum = amount_sum(Xp_Needed)
 
     total_xp_for_past_levels = 0
     for lvl in range(1, levels):
         total_xp_for_past_levels += int(15 * (1.4 ** lvl) + 3)
 
     Xp_Current_Level = Xp - total_xp_for_past_levels
+    Xp_Current_Level_sum = amount_sum(Xp_Current_Level)
     if Xp_Current_Level >= Xp_needed:
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
-        Xp_AR = font.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level) + "/" + str(Xp_needed) + ")", True, (0, 0, 0))
+        Xp_AR = font.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level_sum) + "/" + str(Xp_needed_sum) + ")", True, (0, 0, 0))
     if current_tier <= 2:
         Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
     if current_tier >= 3:
@@ -741,7 +743,8 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
 
-    Xp_Gain = 1 * CU5 * RU3 * Ascension_XP_Mult
+    Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult
+
     if clicks >= 1000:
         Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
