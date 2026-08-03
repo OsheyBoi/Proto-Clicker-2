@@ -737,8 +737,10 @@ while running:
 
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
+
+    Xp_Gain = 1 * CU5 * RU3 * Ascension_XP_Mult
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self)
+        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -920,10 +922,11 @@ while running:
 
                 if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
                     print("Test 6")
-                    if Menu == 1:
-                        Menu = 6
                     if Menu == 6:
                         Menu = 1
+                    if Menu == 1:
+                        Menu = 6
+
 
 
                 if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:
@@ -1039,7 +1042,7 @@ while running:
                         clicks += CPC
                         current_Cooldown = current_time + CooldownLength
                         if current_tier >= 3:
-                            Xp += 1
+                            Xp += Xp_Gain
  ################################################################################
 #    Console/Debug
 ################################################################################
