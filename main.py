@@ -639,6 +639,9 @@ while running:
 
     if ascension_stage_2 <= 1:
         Ascension_Click_Mult = 1
+        Ascension_XP_Mult = 1
+        Ascension_Rebirth_Mult = 1
+
 
     if ascension_stage == 1:
         Extra_Tiers = 2
