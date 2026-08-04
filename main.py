@@ -1352,19 +1352,15 @@ while running:
 
     #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
-#######
+###################################
 # Debugger -> Note: The Debuger is made by ai but is only used for testing)
-#######
+###################################
     if DEBUGGER_AVAILABLE:
         debugger.draw_hud(screen, globals())
 
-    ########
-    ########
-
-
-    pygame.display.flip()
-
-    pygame.display.flip()
+###################################
+ #   End of Script
+###################################
     pygame.display.flip()
     clock.tick(60)
 

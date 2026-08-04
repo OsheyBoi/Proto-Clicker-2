@@ -16,8 +16,9 @@ Whats Coming up so Far:
 - Rework/Design Of The Shop Menu
 - Small Qol Changes
     - Made the Xp show at the top get summed first
+    - Fix hitboxes to be more accurate
 - Bug Fixes 
-    - Xp multipler just not being a thing
+    - Xp multiplier just not being a thing
     - Fix Auto Rebirth just not working as intended
 
 --------------
