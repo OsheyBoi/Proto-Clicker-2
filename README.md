@@ -1,6 +1,6 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/images/Logo/Logo.png)
 
-![Static Badge](https://img.shields.io/badge/Public%20build-V2.0-darkgreen?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Public%20build-V2.1-darkgreen?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.0-blue?style=for-the-badge)
 
 
@@ -30,6 +30,7 @@ V4:
 
 V5:
 - Recreation Tiers 1 -> 3
+- Application Version of the Game
 
 -------------
 More Planed Updates (if I Continue to Update the game):
