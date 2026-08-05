@@ -10,14 +10,13 @@ import sys
 import importlib
 
 try:
+    import debug_manager
     import debugger
-    DEBUGGER_AVAILABLE = False
     debug_file = 1
-
 except ImportError:
+    debug_manager = None
     debugger = None
     debug_file = 0
-    DEBUGGER_AVAILABLE = False
 
 try:
     import game_console
@@ -887,23 +886,10 @@ while running:
     #-------------------------------------------------
         # Extra Debuging things
     #-----------------
-        elif event.type == pygame.KEYDOWN:
-            if debug_file == 1:
-                print("hi")
-                # Press 'P' to toggle the debugger on/off
-                if event.key == pygame.K_p:
-                    DEBUGGER_AVAILABLE = not DEBUGGER_AVAILABLE
-                    print(f"[SYSTEM] Debugger toggled: {DEBUGGER_AVAILABLE}")
-
-                if event.key == pygame.K_i:
-                    if DEBUGGER_AVAILABLE:
-                        print("[SYSTEM] Restarting game script and saving state...")
-                        pygame.quit()
-                        os.execl(sys.executable, sys.executable, __file__, str(Menu), str(DEBUGGER_AVAILABLE))
-
-                if event.key == pygame.K_o:
-                    importlib.reload(debugger)
-                    print("[SYSTEM] debugger.py reloaded successfully!")
+        if debug_file == 1 and debug_manager:
+            DEBUGGER_AVAILABLE = debug_manager.handle_debug_events(
+                event, Menu, DEBUGGER_AVAILABLE, debugger
+            )
             # ========================================================
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
