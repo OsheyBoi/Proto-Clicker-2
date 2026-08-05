@@ -3,13 +3,20 @@ import sys
 import math
 import json
 import threading
+
+# Debugging and other things
 import os
+import sys
+import importlib
 
 try:
     import debugger
     DEBUGGER_AVAILABLE = False
+    debug_file = 1
+
 except ImportError:
     debugger = None
+    debug_file = 0
     DEBUGGER_AVAILABLE = False
 
 try:
@@ -132,8 +139,11 @@ black = (0, 0, 0)
 orange = (255, 165, 0)
 purple = (128, 0, 128)
 
-font = pygame.font.SysFont("Arial", 40) #(Small)
-font2 = pygame.font.SysFont("Arial", 80) #(Big)
+font1 = pygame.font.SysFont("Arial", 30) #(Smaller)
+font2 = pygame.font.SysFont("Arial", 40) #(Small)
+font3 = pygame.font.SysFont("Arial", 50) #(Normal)
+font4 = pygame.font.SysFont("Arial", 60) #(Big)
+font5 = pygame.font.SysFont("Arial", 80) #(Huge)
 pygame.display.set_caption('Proto Clicker 2')
 
 #Base Veriables
@@ -295,10 +305,10 @@ ascension_stage = 0
 #    Ui Set up
 ################################################################################
 shop_menu = pygame.Rect(420, 720, 440, 140)
-Rebirth_menu = pygame.Rect(24, 230, 110, 110)
-Tier_menu = pygame.Rect(24, 400, 110, 110)
-ascension_menu = pygame.Rect(24, 570, 110, 110)
-setting_menu = pygame.Rect(10, 10, 70, 70)
+Rebirth_menu = pygame.Rect(24, 230, 120, 120)
+Tier_menu = pygame.Rect(24, 400, 120, 120)
+ascension_menu = pygame.Rect(24, 570, 120, 120)
+settings_menu = pygame.Rect(10, 10, 80, 80)
 
 Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
 Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
@@ -326,7 +336,7 @@ background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png')
 Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
 Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
 Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
-#Click_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Click_Button.png"))
+Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
 settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
 ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
 
@@ -345,12 +355,12 @@ menu_ui_5 = pygame.Rect(1170, 200, 50, 50)
 menu_ui_6 = pygame.Rect(660, 780, 190, 80)
 menu_ui_7 = pygame.Rect(860, 780, 220, 80)
 #Menu Text
-menu_text1 = font.render("", True, (0, 0, 0))
-menu_text2 = font.render("", True, (0, 0, 0))
-menu_text3 = font.render("", True, (0, 0, 0))
-menu_text4 = font.render("", True, (0, 0, 0))
-menu_text5 = font.render("", True, (0, 0, 0))
-menu_text6 = font.render("", True, (0, 0, 0))
+menu_text1 = font2.render("", True, (0, 0, 0))
+menu_text2 = font2.render("", True, (0, 0, 0))
+menu_text3 = font2.render("", True, (0, 0, 0))
+menu_text4 = font2.render("", True, (0, 0, 0))
+menu_text5 = font2.render("", True, (0, 0, 0))
+menu_text6 = font2.render("", True, (0, 0, 0))
 
 ################################################################################
 #    Multipler and Upgrade Set up
@@ -528,11 +538,11 @@ while running:
 
     Clicks_Shown = amount_sum(clicks)
     Rebirths_Shown = amount_sum(rebirths)
-    Clicks_AR = font.render(str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
+    Clicks_AR = font2.render(str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
     if current_tier >= 1:
-        Rebirth_AR = font.render(str(Rebirths_Shown), True, (0, 0, 0))
+        Rebirth_AR = font2.render(str(Rebirths_Shown), True, (0, 0, 0))
     else:
-        Rebirth_AR = font.render("Unlock at T1", True, (0, 0, 0))
+        Rebirth_AR = font2.render("Unlock at T1", True, (0, 0, 0))
 
 ################################################################################
 #    Xp system
@@ -550,9 +560,9 @@ while running:
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
-        Xp_AR = font.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level_sum) + "/" + str(Xp_needed_sum) + ")", True, (0, 0, 0))
+        Xp_AR = font1.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level_sum) + "/" + str(Xp_needed_sum) + ")", True, (0, 0, 0))
     if current_tier <= 2:
-        Xp_AR = font.render("Unlock At T3",True, (0, 0, 0))
+        Xp_AR = font2.render("Unlock At T3",True, (0, 0, 0))
     if current_tier >= 3:
         Click_Xp_Mult = 1.1 ** levels
 ################################################################################
@@ -870,11 +880,27 @@ while running:
             save_game(current_state)
             print("Autosaved at 1 Minute interval!")
     #-------------------------------------------------
+        # Extra Debuging things
+    #-----------------
         elif event.type == pygame.KEYDOWN:
-        # Put the P key check directly inside your existing key controls
-            if event.key == pygame.K_p:
-                DEBUGGER_AVAILABLE = not DEBUGGER_AVAILABLE
-        # ========================================================
+            if debug_file == 1:
+                print("hi")
+                # Press 'P' to toggle the debugger on/off
+                if event.key == pygame.K_p:
+                    DEBUGGER_AVAILABLE = not DEBUGGER_AVAILABLE
+                    print(f"[SYSTEM] Debugger toggled: {DEBUGGER_AVAILABLE}")
+
+                # Press 'O' to restart the game script
+                if event.key == pygame.K_i:
+                    print("[SYSTEM] Restarting game script...")
+                    pygame.quit()
+                    os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+                if event.key == pygame.K_o:
+                    importlib.reload(debugger)
+                    print("[SYSTEM] debugger.py reloaded successfully!")
+            # ========================================================
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             print(Click_Xp_Mult)
@@ -897,7 +923,7 @@ while running:
                     if Menu == 0:
                         Menu = 12
 
-                if setting_menu.collidepoint(mouse_pos):
+                if settings_menu.collidepoint(mouse_pos):
                     if Menu == 0:
                         Menu = 52
 
@@ -912,24 +938,24 @@ while running:
                         Menu = 0
 
                 if menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
-                        Tier_cost = tier_cost(current_tier, "None")
-                        Tier_cost_Shown = tier_cost(current_tier, "Suffix")
-                        if clicks >= Tier_cost:
-                            clicks = 0
-                            rebirths = 0
-                        if ascension_stage <= 1:
-                            CU1 = 0
-                            CU2 = 0
-                            CU3 = 0
-                            CU4 = 0
-                        if ascension_stage <= 2:
-                            RU1 = 0
-                            RU2 = 0
-                            RU3 = 0
-                            current_tier += 1
-                            print("Tier up")
-                        else:
-                            print("no")
+                    Tier_cost = tier_cost(current_tier, "None")
+                    Tier_cost_Shown = tier_cost(current_tier, "Suffix")
+                    if clicks >= Tier_cost:
+                        clicks = 0
+                        rebirths = 0
+                    if ascension_stage <= 1:
+                        CU1 = 0
+                        CU2 = 0
+                        CU3 = 0
+                        CU4 = 0
+                    if ascension_stage <= 2:
+                        RU1 = 0
+                        RU2 = 0
+                        RU3 = 0
+                    current_tier += 1
+                    print("Tier up")
+                else:
+                    print("no")
 
                 if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
                     print("Test 6")
@@ -988,10 +1014,11 @@ while running:
                         if Menu == 11:
                             if clicks >= 1000:
                                 clicks = 0
-                                CU1 = 0
-                                CU2 = 0
-                                CU3 = 0
-                                CU4 = 0
+                                if ascension_stage <= 1:
+                                    CU1 = 0
+                                    CU2 = 0
+                                    CU3 = 0
+                                    CU4 = 0
                                 rebirths += Rebirth_Gain
 
                 if menu_ui_1.collidepoint(mouse_pos)  and Menu == 13:
@@ -1093,11 +1120,11 @@ while running:
             Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked.png"))
 
         if 1 >= Menu <= 10:
-            menu_ui_1 = pygame.Rect(110, 340, 420, 50)
-            menu_ui_2 = pygame.Rect(110, 560, 420, 50)
-            menu_ui_3 = pygame.Rect(110, 780, 420, 50)
-            menu_ui_4 = pygame.Rect(710, 340, 420, 50)
-            menu_ui_5 = pygame.Rect(710, 560, 420, 50)
+            menu_ui_1 = pygame.Rect(110, 340, 425, 55)
+            menu_ui_2 = pygame.Rect(110, 560, 425, 55)
+            menu_ui_3 = pygame.Rect(110, 780, 425, 55)
+            menu_ui_4 = pygame.Rect(710, 340, 425, 55)
+            menu_ui_5 = pygame.Rect(710, 560, 425, 55)
             menu_ui_6 = pygame.Rect(660, 780, 200, 80)
             menu_ui_7 = pygame.Rect(860, 780, 220, 80)
 
@@ -1125,20 +1152,20 @@ while running:
         CU4_multipler_s = amount_sum(CU4_multipler)
         CU5_multipler_s = amount_sum(CU5_multipler)
 
-        menu_text1 = font.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
-        menu_text3 = font.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
+        menu_text1 = font2.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font2.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
+        menu_text3 = font2.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
 
         if current_tier >= 2:
-            menu_text4 = font.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
+            menu_text4 = font2.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
         else:
-            menu_text4 = font.render("Unlock At Tier 2 ", True, (0, 0, 0))
+            menu_text4 = font2.render("Unlock At Tier 2 ", True, (0, 0, 0))
         if current_tier >= 4:
-            menu_text5 = font.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
+            menu_text5 = font2.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
         else:
-            menu_text5 = font.render("Unlock At Tier 4 ", True, (0, 0, 0))
+            menu_text5 = font2.render("Unlock At Tier 4 ", True, (0, 0, 0))
 
-        menu_text6 = font.render("", True, (0, 0, 0))
+        menu_text6 = font2.render("", True, (0, 0, 0))
 
     if Menu == 6:
         RU1_Cost_Show = RU1_CostAmount(RU1, current_tier, "Suffix")
@@ -1154,22 +1181,22 @@ while running:
         RU3_multipler_s = amount_sum(RU3_multipler)
 
 
-        menu_text1 = font.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
-        menu_text3 = font.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
-        menu_text4 = font.render("Coming Later", True, (0, 0, 0))
-        menu_text5 = font.render("Coming Later ", True, (0, 0, 0))
-        menu_text6 = font.render("", True, (0, 0, 0))
+        menu_text1 = font2.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
+        menu_text2 = font2.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
+        menu_text3 = font2.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
+        menu_text4 = font2.render("Coming Later", True, (0, 0, 0))
+        menu_text5 = font2.render("Coming Later ", True, (0, 0, 0))
+        menu_text6 = font2.render("", True, (0, 0, 0))
 
     if Menu == 13:
         test1 = ascension_cost(current_ascension,"Suffix")
-        menu_text1 = font2.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
+        menu_text1 = font5.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
     if Menu == 12:
         test = tier_cost(current_tier,"Suffix")
-        menu_text1 = font.render((tier_info(current_tier)), True,  (0, 0, 0))
-        menu_text2 = font.render("Cost: " + str(test) , True, (0, 0, 0))
+        menu_text1 = font3.render((tier_info(current_tier)), True,  (0, 0, 0))
+        menu_text2 = font2.render("Cost: " + str(test) , True, (0, 0, 0))
     if Menu == 11:
-        menu_text1 = font2.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
+        menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
     # Drawing Systems
     screen.blit(background, (0, 0))
     if Menu == 0:
@@ -1246,7 +1273,7 @@ while running:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
             screen.blit(Shown_Menu, (0, 0))
 
-        if Menu <= 9:
+        if Menu <= 9 :
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
             Menu_text3.center = (300, 760)
@@ -1260,12 +1287,22 @@ while running:
             screen.blit(menu_text5, Menu_text5)
             screen.blit(menu_text6, Menu_text6)
 
-
+#####
+# Hide Ui element when not on the menu
+######
+        if Menu == 0 :
+            Menu_text1.center = (3000, 320)
+            Menu_text2.center = (3000, 540)
+            Menu_text3.center = (3000, 760)
+            Menu_text4.center = (8800, 320)
+            Menu_text5.center = (8600, 540)
+            Menu_text6.center = (8600, 760)
+            screen.blit(Shown_Menu, (1000, 1000))
 
 
         if Menu == 12:
             Menu_text2.center = (600, 642)
-            Menu_text1.center = (530, 422)
+            Menu_text1.center = (450, 399)
             screen.blit(menu_text1, Menu_text1)
             screen.blit(menu_text2, Menu_text2)
 
@@ -1352,11 +1389,15 @@ while running:
 
     #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
 
+
+
+
+
 ###################################
-# Debugger -> Note: The Debuger is made by ai but is only used for testing)
+# Debugger -> Note: The Debugger is made by ai but is only used for testing)
 ###################################
     if DEBUGGER_AVAILABLE:
-        debugger.draw_hud(screen, globals())
+        debugger.draw_hud(screen, globals(), clock)
 
 ###################################
  #   End of Script
