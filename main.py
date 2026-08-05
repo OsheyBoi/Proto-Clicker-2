@@ -528,6 +528,11 @@ pygame.time.set_timer(AUTOClick_EVENT, 1000)
 AUTORebirth_EVENT = pygame.USEREVENT + 3
 pygame.time.set_timer(AUTORebirth_EVENT, 1000)
 
+if len(sys.argv) > 2:
+  Menu = int(sys.argv[1])
+  DEBUGGER_AVAILABLE = sys.argv[2] == "True"
+  print(f"[SYSTEM] Restored -> Menu: {Menu}, Debugger Active: {DEBUGGER_AVAILABLE}")
+
 ################################################################################
 #    Start Application
 ################################################################################
@@ -890,12 +895,11 @@ while running:
                     DEBUGGER_AVAILABLE = not DEBUGGER_AVAILABLE
                     print(f"[SYSTEM] Debugger toggled: {DEBUGGER_AVAILABLE}")
 
-                # Press 'O' to restart the game script
                 if event.key == pygame.K_i:
-                    print("[SYSTEM] Restarting game script...")
-                    pygame.quit()
-                    os.execl(sys.executable, sys.executable, *sys.argv)
-
+                    if DEBUGGER_AVAILABLE:
+                        print("[SYSTEM] Restarting game script and saving state...")
+                        pygame.quit()
+                        os.execl(sys.executable, sys.executable, __file__, str(Menu), str(DEBUGGER_AVAILABLE))
 
                 if event.key == pygame.K_o:
                     importlib.reload(debugger)
