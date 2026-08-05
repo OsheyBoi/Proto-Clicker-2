@@ -10,14 +10,16 @@ import sys
 import importlib
 
 try:
-    import debug_manager
     import debugger
+
+    debugger_active = 0
     debug_file = 1
+    DEBUGGER_AVAILABLE = False
 except ImportError:
-    debug_manager = None
+    debugger_active = 0
     debugger = None
     debug_file = 0
-
+    DEBUGGER_AVAILABLE = None
 try:
     import game_console
     CONSOLE_AVAILABLE = True
@@ -104,7 +106,6 @@ class Upgrade2:
     def try_buy(self, mouse_pos, current_menu, rebirths):
         # 1. Check menu and click collision
         if current_menu != 6:
-            print("h")
             return rebirths, False  # Return original clicks, no purchase made
         print("try buy pass menu 6 check")
         if self.rect.collidepoint(mouse_pos):
@@ -237,18 +238,18 @@ def save_game(game_state):
     try:
         with open(save_path, "w") as f:
             json.dump(game_state, f, indent=4)
-        print("Game saved successfully!")
+        print(f"[SYSTEM] Game saved successfully!")
     except IOError:
-        print("Error: Could not write save file.")
+        print(f"[SYSTEM] Error: Could not write save file.")
 
 def save_game_backup(game_state):
     """Writes the current game state dictionary to a JSON file."""
     try:
         with open(save_path_backup, "w") as f:
             json.dump(game_state, f, indent=4)
-        print("Game saved successfully!")
+        print(f"[SYSTEM] Game saved successfully!")
     except IOError:
-        print("Error: Could not write save file.")
+        print(f"[SYSTEM] Error: Could not write save file.")
 
 menu_base_1 = [11,12,13]
 
@@ -859,7 +860,7 @@ while running:
                 "ascension_stage_2" : ascension_stage_2
             }
             save_game(current_state)
-            print("Autosaved at 10-second interval!")
+            print(f"[SYSTEM] Autosaved for Main ")
 
         if event.type == AUTOSAVE_EVENT2:
             current_state = {
@@ -882,21 +883,30 @@ while running:
                 "ascension_stage_2" : ascension_stage_2
             }
             save_game(current_state)
-            print("Autosaved at 1 Minute interval!")
+            print(f"[SYSTEM] Autosaved for backup!")
     #-------------------------------------------------
         # Extra Debuging things
     #-----------------
-        if debug_file == 1 and debug_manager:
-            DEBUGGER_AVAILABLE = debug_manager.handle_debug_events(
-                event, Menu, DEBUGGER_AVAILABLE, debugger
-            )
+        if event.type == pygame.KEYDOWN:
+            # Press 'P' to toggle the HUD on/off
+            if event.key == pygame.K_p:
+                debugger_active = not debugger_active
+                print(f"[SYSTEM] Debugger toggled: {debugger_active}")
+
+
+            # Press 'I' to restart and save state (Menu and Debugger status)
+            elif event.key == pygame.K_o:
+                if debugger_active:
+                    print("[SYSTEM] Restarting game script and saving state...")
+                    pygame.quit()
+                    os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
+
+            # Press 'O' to hot-reload the debugger script
+
             # ========================================================
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            print(Click_Xp_Mult)
             if event.button == 1: # Left click down
-                print(mouse_pos)
-                print(Menu)
                 if Rebirth_menu.collidepoint(mouse_pos):
                     #Open Rebirth menu
                     if Menu == 0:
@@ -918,7 +928,7 @@ while running:
                         Menu = 52
 
                 if shop_menu.collidepoint(mouse_pos):
-                    print(current_tier)
+
                     if Menu == 0:
                         Menu = 1
 
@@ -943,12 +953,9 @@ while running:
                         RU2 = 0
                         RU3 = 0
                     current_tier += 1
-                    print("Tier up")
-                else:
-                    print("no")
+
 
                 if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
-                    print("Test 6")
                     if Menu == 6:
                         Menu = 1
                     if Menu == 1:
@@ -957,7 +964,6 @@ while running:
 
 
                 if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:
-                    print("Open Menu")
                     if Menu == 1:
                         Menu = 14
 
@@ -1192,9 +1198,6 @@ while running:
     if Menu == 0:
         screen.blit(Shop_Menu_Button, (420, 720))
 
-
-
-
     pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(screen, red, Rebirth_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(screen, yellow, Xp_Amount_Box, width=0, border_radius=30)
@@ -1377,16 +1380,11 @@ while running:
                 screen.blit(Show_Button_7, (0, 0))
                 Show_Button_7_hitbox = Show_Button_7.get_rect()
 
-    #pygame.draw.rect(screen, cyan, menu_ui_7, width=0, border_radius=0)
-
-
-
-
 
 ###################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
 ###################################
-    if DEBUGGER_AVAILABLE:
+    if debugger_active:
         debugger.draw_hud(screen, globals(), clock)
 
 ###################################
