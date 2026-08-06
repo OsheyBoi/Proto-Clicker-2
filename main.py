@@ -3,6 +3,7 @@ import sys
 import math
 import json
 import threading
+global WINDOWED_WIDTH_CACHE, WINDOWED_HEIGHT_CACHE, is_fullscreen, WINDOW_WIDTH, WINDOW_HEIGHT, screen, scale, offset_x, offset_y
 
 # Debugging and other things
 import os
@@ -123,9 +124,32 @@ class Upgrade2:
 ################################################################################
 
 pygame.init()
-screen = pygame.display.set_mode((1300, 900))
-clock = pygame.time.Clock()
 
+GAME_WIDTH, GAME_HEIGHT = 1300, 900
+canvas = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
+# 1300 x 900
+WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
+pygame.display.set_caption("Auto-Scaled Window")
+
+is_fullscreen = False
+
+def calculate_scale(win_w, win_h):
+    scale_x = win_w / GAME_WIDTH
+    scale_y = win_h / GAME_HEIGHT
+    scale = min(scale_x, scale_y)
+    offset_x = (win_w - (GAME_WIDTH * scale)) / 2
+    offset_y = (win_h - (GAME_HEIGHT * scale)) / 2
+    return scale, offset_x, offset_y
+
+
+
+Set_size  = 0
+
+scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
+clock = pygame.time.Clock()
+size = 1
+Change_size = 1
 red = (255, 50, 50)
 green = (0, 255, 0)
 blue = (0, 0, 255)
@@ -537,9 +561,41 @@ if len(sys.argv) > 2:
 #    Start Application
 ################################################################################
 while running:
-    screen.fill((0, 0, 0))
-    mouse_pos = pygame.mouse.get_pos()
+    # 1. Get raw physical mouse positions from the OS window
+    physical_mouse_pos = pygame.mouse.get_pos()
+
+    # 2. Subtract offsets and divide by scale factor
+    mouse_x = int((physical_mouse_pos[0] - offset_x) / scale)
+    mouse_y = int((physical_mouse_pos[1] - offset_y) / scale)
+
+    # 3. FIXED: Strictly clamp the upper bounds to 1299 and 899 to avoid index crashes
+    mouse_pos = (
+        max(0, min(mouse_x, GAME_WIDTH - 1)),
+        max(0, min(mouse_y, GAME_HEIGHT - 1))
+    )
+
+    # 4. Your distance calculations will now run completely crash-free
     distance = math.hypot(mouse_pos[0] - Button_center[0], mouse_pos[1] - Button_center[1])
+
+    current_state = {
+        "clicks": clicks,
+        "rebirths": rebirths,
+        "current_tier": current_tier,
+        "total_time_played": total_time_played,
+        "xp": Xp,
+        "CU1": CU1,
+        "CU2": CU2,
+        "CU3": CU3,
+        "CU4": CU4,
+        "CU5": CU5,
+        "RU1": RU1,
+        "RU2": RU2,
+        "RU3": RU3,
+        "current_ascension": current_ascension,
+        "ascension_tokens": ascension_tokens,
+        "ascension_stage": ascension_stage,
+        "ascension_stage_2": ascension_stage_2
+    }
 
     Clicks_Shown = amount_sum(clicks)
     Rebirths_Shown = amount_sum(rebirths)
@@ -802,6 +858,12 @@ while running:
     #    Pygame Mouse  collidepoint checker
     ################################################################################
     for event in pygame.event.get():
+        if event.type == pygame.VIDEORESIZE:
+            if event.type == pygame.VIDEORESIZE:
+                if not is_fullscreen:
+                    WINDOW_WIDTH, WINDOW_HEIGHT = event.w, event.h
+                    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
+                    scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
 
         if event.type == AUTOClick_EVENT:
             if current_tier >= 3:
@@ -815,73 +877,16 @@ while running:
 
         if event.type == pygame.QUIT:
             running = False
-            current_state = {
-                "clicks": clicks,
-                "rebirths": rebirths,
-                "current_tier": current_tier,
-                "total_time_played": total_time_played,
-                "xp": Xp,
-                "CU1": CU1,
-                "CU2": CU2,
-                "CU3": CU3,
-                "CU4": CU4,
-                "CU5": CU5,
-                "RU1": RU1,
-                "RU2": RU2,
-                "RU3": RU3,
-                "current_ascension" : current_ascension,
-                "ascension_tokens" : ascension_tokens,
-                "ascension_stage" : ascension_stage,
-                "ascension_stage_2" : ascension_stage_2
-            }
             save_game(current_state)
             pygame.quit()
             sys.exit()
 
         # 3. Catch the 10-second timer event here
         if event.type == AUTOSAVE_EVENT:
-            current_state = {
-                "clicks": clicks,
-                "rebirths": rebirths,
-                "current_tier": current_tier,
-                "total_time_played": total_time_played,
-                "xp": Xp,
-                "CU1": CU1,
-                "CU2": CU2,
-                "CU3": CU3,
-                "CU4": CU4,
-                "CU5": CU5,
-                "RU1": RU1,
-                "RU2": RU2,
-                "RU3": RU3,
-                "current_ascension" : current_ascension,
-                "ascension_tokens" : ascension_tokens,
-                "ascension_stage" : ascension_stage,
-                "ascension_stage_2" : ascension_stage_2
-            }
             save_game(current_state)
             print(f"[SYSTEM] Autosaved for Main ")
 
         if event.type == AUTOSAVE_EVENT2:
-            current_state = {
-                "clicks": clicks,
-                "rebirths": rebirths,
-                "current_tier": current_tier,
-                "total_time_played": total_time_played,
-                "xp": Xp,
-                "CU1": CU1,
-                "CU2": CU2,
-                "CU3": CU3,
-                "CU4": CU4,
-                "CU5": CU5,
-                "RU1": RU1,
-                "RU2": RU2,
-                "RU3": RU3,
-                "current_ascension" : current_ascension,
-                "ascension_tokens" : ascension_tokens,
-                "ascension_stage" : ascension_stage,
-                "ascension_stage_2" : ascension_stage_2
-            }
             save_game(current_state)
             print(f"[SYSTEM] Autosaved for backup!")
     #-------------------------------------------------
@@ -1077,6 +1082,27 @@ while running:
                         current_Cooldown = current_time + CooldownLength
                         if current_tier >= 3:
                             Xp += Xp_Gain
+#########
+# Settings Buttons
+###########
+                if Menu == 52:
+                    if menu_ui_4.collidepoint(mouse_pos):
+                        if Change_size == 2:
+                            Change_size = 1 # 1300 x 900
+                        elif Change_size == 1:
+                            Change_size = 2
+
+                    if menu_ui_5.collidepoint(mouse_pos):
+                        size = Change_size
+                        Set_size = 1
+
+                    if menu_ui_6.collidepoint(mouse_pos):
+                        running = False
+                        save_game(current_state)
+                        pygame.quit()
+                        sys.exit()
+                else:
+                    Change_size = size
  ################################################################################
 #    Console/Debug
 ################################################################################
@@ -1194,23 +1220,23 @@ while running:
     if Menu == 11:
         menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
     # Drawing Systems
-    screen.blit(background, (0, 0))
+    canvas.blit(background, (0, 0))
     if Menu == 0:
-        screen.blit(Shop_Menu_Button, (420, 720))
+        canvas.blit(Shop_Menu_Button, (420, 720))
 
-    pygame.draw.rect(screen, green, Clicks_Amount_Box, width=0, border_radius=30)
-    pygame.draw.rect(screen, red, Rebirth_Amount_Box, width=0, border_radius=30)
-    pygame.draw.rect(screen, yellow, Xp_Amount_Box, width=0, border_radius=30)
+    pygame.draw.rect(canvas, green, Clicks_Amount_Box, width=0, border_radius=30)
+    pygame.draw.rect(canvas, red, Rebirth_Amount_Box, width=0, border_radius=30)
+    pygame.draw.rect(canvas, yellow, Xp_Amount_Box, width=0, border_radius=30)
 
-    pygame.draw.rect(screen, black, Clicks_Amount_Box, width=5, border_radius=30)
-    pygame.draw.rect(screen, black, Rebirth_Amount_Box, width=5, border_radius=30)
-    pygame.draw.rect(screen, black, Xp_Amount_Box, width=5, border_radius=30)
+    pygame.draw.rect(canvas, black, Clicks_Amount_Box, width=5, border_radius=30)
+    pygame.draw.rect(canvas, black, Rebirth_Amount_Box, width=5, border_radius=30)
+    pygame.draw.rect(canvas, black, Xp_Amount_Box, width=5, border_radius=30)
 
-    screen.blit(Click_Button, (440, 190))
+    canvas.blit(Click_Button, (440, 190))
 
-    screen.blit(click_amount, (95, 15))
-    screen.blit(rebirth_amount, (495, 15))
-    screen.blit(xp_amount, (895, 15))
+    canvas.blit(click_amount, (95, 15))
+    canvas.blit(rebirth_amount, (495, 15))
+    canvas.blit(xp_amount, (895, 15))
 
     CurrencyBox1 = Clicks_AR.get_rect()
     CurrencyBox2 = Rebirth_AR.get_rect()
@@ -1228,43 +1254,48 @@ while running:
     Menu_text6 = menu_text6.get_rect()
 
     CurrencyBox1.center = (250, 75)
-    CurrencyBox2.center = (660, 75)
+
+    if current_tier <= 1:
+        CurrencyBox2.center = (720, 75)
+    if current_tier >= 2:
+        CurrencyBox2.center = (660, 75)
+
     CurrencyBox3.center = (1130, 70)
 
     if current_tier >= 1:
-        screen.blit(Rebirth_Menu_Button, (25, 230))
-    screen.blit(Tier_Menu_Button, (25, 400))
-    screen.blit(settings_Button, (-10, -10))
+        canvas.blit(Rebirth_Menu_Button, (25, 230))
+    canvas.blit(Tier_Menu_Button, (25, 400))
+    canvas.blit(settings_Button, (-10, -10))
     if current_tier >= 10 or current_ascension >= 1:
-        screen.blit(ascension_Button, (25, 570))
-    screen.blit(Clicks_AR, CurrencyBox1)
-    screen.blit(Rebirth_AR, CurrencyBox2)
-    screen.blit(Xp_AR, CurrencyBox3)
+        canvas.blit(ascension_Button, (25, 570))
+    canvas.blit(Clicks_AR, CurrencyBox1)
+    canvas.blit(Rebirth_AR, CurrencyBox2)
+    canvas.blit(Xp_AR, CurrencyBox3)
 
 
     # Menu System (Drawing)
     if Menu != 0:
         if Menu == 1:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 6:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Upgrades.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 11:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Menu.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 12:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tier_Menu.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 13:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Ascension_Menu.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 14:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tree_Background.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
         if Menu == 52:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
-            screen.blit(Shown_Menu, (0, 0))
+            canvas.blit(Shown_Menu, (0, 0))
 
         if Menu <= 9 :
             Menu_text1.center = (300, 320)
@@ -1273,12 +1304,12 @@ while running:
             Menu_text4.center = (880, 320)
             Menu_text5.center = (860, 540)
             Menu_text6.center = (860, 760)
-            screen.blit(menu_text1, Menu_text1)
-            screen.blit(menu_text2, Menu_text2)
-            screen.blit(menu_text3, Menu_text3)
-            screen.blit(menu_text4, Menu_text4)
-            screen.blit(menu_text5, Menu_text5)
-            screen.blit(menu_text6, Menu_text6)
+            canvas.blit(menu_text1, Menu_text1)
+            canvas.blit(menu_text2, Menu_text2)
+            canvas.blit(menu_text3, Menu_text3)
+            canvas.blit(menu_text4, Menu_text4)
+            canvas.blit(menu_text5, Menu_text5)
+            canvas.blit(menu_text6, Menu_text6)
 
 #####
 # Hide Ui element when not on the menu
@@ -1290,24 +1321,24 @@ while running:
             Menu_text4.center = (8800, 320)
             Menu_text5.center = (8600, 540)
             Menu_text6.center = (8600, 760)
-            screen.blit(Shown_Menu, (1000, 1000))
+            canvas.blit(Shown_Menu, (1000, 1000))
 
 
         if Menu == 12:
             Menu_text2.center = (600, 642)
             Menu_text1.center = (450, 399)
-            screen.blit(menu_text1, Menu_text1)
-            screen.blit(menu_text2, Menu_text2)
+            canvas.blit(menu_text1, Menu_text1)
+            canvas.blit(menu_text2, Menu_text2)
 
         if Menu == 11:
 
             Menu_text1.center = (600, 462)
-            screen.blit(menu_text1, Menu_text1)
+            canvas.blit(menu_text1, Menu_text1)
 
         if Menu == 13:
 
             Menu_text1.center = (600, 462)
-            screen.blit(menu_text1, Menu_text1)
+            canvas.blit(menu_text1, Menu_text1)
 
 
 
@@ -1352,44 +1383,91 @@ while running:
 
             ascension_tokens = 10
             if ascension_stage >= 0:
-                screen.blit(Show_Button_1, (450, 630))
+                canvas.blit(Show_Button_1, (450, 630))
                 Show_Button_1_hitbox = Show_Button_1.get_rect(topleft=(450, 630))
 
 
             if ascension_stage_2 >= 1:
-                screen.blit(Show_Button_2, (30, 450))
+                canvas.blit(Show_Button_2, (30, 450))
                 Show_Button_2_hitbox = Show_Button_2.get_rect(topleft=(50, 425))
 
             if ascension_stage_2 >= 2:
-                screen.blit(Show_Button_3, (30, 185))
+                canvas.blit(Show_Button_3, (30, 185))
                 Show_Button_3_hitbox = Show_Button_3.get_rect(topleft=(50, 220))
 
             if ascension_stage >= 1:
-                screen.blit(Show_Button_4, (870, 450))
+                canvas.blit(Show_Button_4, (870, 450))
                 Show_Button_4_hitbox = Show_Button_4.get_rect(topleft=(850, 425))
 
             if ascension_stage >= 2:
-                screen.blit(Show_Button_5, (870, 185))
+                canvas.blit(Show_Button_5, (870, 185))
                 Show_Button_5_hitbox = Show_Button_5.get_rect(topleft=(850, 220))
 
             if ascension_stage >= 3:
-                screen.blit(Show_Button_6, (450, 15))
+                canvas.blit(Show_Button_6, (450, 15))
                 Show_Button_6_hitbox = Show_Button_6.get_rect(topleft=(450, 15))
 
             if ascension_stage >= 10:
-                screen.blit(Show_Button_7, (0, 0))
+                canvas.blit(Show_Button_7, (0, 0))
                 Show_Button_7_hitbox = Show_Button_7.get_rect()
 
+################
+## Settings
+################
+        if Menu == 52:
+            menu_ui_1 = pygame.Rect(145, 370, 440, 105)
+            menu_ui_2 = pygame.Rect(145, 510, 440, 105)
+            menu_ui_3 = pygame.Rect(145, 680, 435, 110)
+            menu_ui_4 = pygame.Rect(700, 405, 440, 101)
+            menu_ui_5 = pygame.Rect(750, 520, 330, 90)
+            menu_ui_6 = pygame.Rect(690, 660, 440, 105)
 
-###################################
+        if Set_size == 1:
+            print(size)
+            if size == 1:
+                is_fullscreen = False
+                WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
+                Set_size = 0
+            if size == 2:
+                is_fullscreen = not is_fullscreen
+                Set_size = 0
+
+                if is_fullscreen:
+                    # Cache the size right before we go into fullscreen mode
+                    info_before = pygame.display.Info()
+                    if info_before.current_w > 0:
+                        WINDOWED_WIDTH_CACHE = info_before.current_w
+                        WINDOWED_HEIGHT_CACHE = info_before.current_h
+
+                    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+                    info = pygame.display.Info()
+                    WINDOW_WIDTH, WINDOW_HEIGHT = info.current_w, info.current_h
+                else:
+                    WINDOW_WIDTH = WINDOWED_WIDTH_CACHE
+                    WINDOW_HEIGHT = WINDOWED_HEIGHT_CACHE
+                    # FIXED: Ensure the resizable flag is applied when returning to windowed mode
+                    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
+
+                # Recalculate your math variables instantly so mouse coordinates don't break
+                scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
+
+
+
+        ###################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
 ###################################
     if debugger_active:
-        debugger.draw_hud(screen, globals(), clock)
+        debugger.draw_hud(canvas, globals(), mouse_pos, clock)
 
-###################################
+    ###################################
  #   End of Script
 ###################################
+
+    screen.fill((0, 0, 0))
+    new_size = (int(GAME_WIDTH * scale), int(GAME_HEIGHT * scale))
+    scaled_canvas = pygame.transform.scale(canvas, new_size)
+    screen.blit(scaled_canvas, (offset_x, offset_y))
+
     pygame.display.flip()
     clock.tick(60)
 
