@@ -58,6 +58,8 @@ def amount_sum(amount):
             rounded_amount = round(amount, 1)
         elif amount >= 100:
             rounded_amount = round(amount, 0)
+        else:
+            rounded_amount = "Error 1"
         return str(rounded_amount)
     suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
     suffix_index = 0
@@ -629,36 +631,41 @@ while running:
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
-    if current_tier ==  1:
-        Tier_Xp = 1
-        Tier_Cm = 2
-        Tier_Rm = 1
-        Tier_Click_Speed = 1
+    if current_tier ==  1:          #    Tier Base Upgrades
+        Tier_Xp = 1                 #    Xp Mult
+        Tier_Cm = 2  # x2           #    Clicks Multipler
+        Tier_Cp = 1                 #    CLicks Power
+        Tier_Rm = 1                 #    Rebirth Mult
+        Tier_Click_Speed = 1        #    Tier Click Speed Mult
 
     if current_tier == 2:
         Tier_Xp = 1
-        Tier_Cm = 4
-        Tier_Rm = 1.5
-        Tier_Click_Speed = 1.5
+        Tier_Cm = 4       #  x2
+        Tier_Cp = 1
+        Tier_Rm = 1.5     # x1.5
+        Tier_Click_Speed = 1.5 # x1.5
 
     if current_tier ==  3:
         Tier_Xp = 1
-        Tier_Cm = 8
-        Tier_Rm = 2.25
+        Tier_Cm = 8    #  x2
+        Tier_Cp = 1
+        Tier_Rm = 2.25  # x1.5
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.5
 
     if current_tier ==  4:
         Tier_Xp = 1
-        Tier_Cm = 24
-        Tier_Rm = 4.5
+        Tier_Cm = 24    # x3
+        Tier_Cp = 1
+        Tier_Rm = 4.5  # x2
         Auto_Click_Speed = 1
-        Tier_Click_Speed = 1.875
+        Tier_Click_Speed = 1.875  # x1.25
 
     if current_tier == 5 or current_tier == 6:
         Tier_Xp = 1
-        Tier_Cm = 48
-        Tier_Rm = 9
+        Tier_Cm = 48 # x2
+        Tier_Cp = 1
+        Tier_Rm = 9 # x2
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875
         Auto_Rebirth_Speed = 1
@@ -666,25 +673,25 @@ while running:
     if current_tier == 7:
         Tier_Xp = 1
         Tier_Cm = 48
+        Tier_Cp = 1
         Tier_Rm = 9
         Auto_Click_Speed = 1
-        Tier_Click_Speed = 2.35
+        Tier_Click_Speed = 2.35 # x1.25
         Auto_Rebirth_Speed = 1
 
     if current_tier == 8:
         Tier_Xp = 4
         Tier_Cm = 48
-        #Clicks Power
-        Tier_Cp = 1.01
+        Tier_Cp = 1.01  # +0.01
         Tier_Rm = 9
-        Auto_Click_Speed = 2
+        Auto_Click_Speed = 2 # x2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 
     if current_tier == 9:
         Tier_Xp = 4
         Tier_Cm = 48
-        Tier_Cp = 1.02
+        Tier_Cp = 1.02 # +0.01
         Tier_Rm = 9
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
@@ -693,11 +700,30 @@ while running:
     if current_tier == 10:
         Tier_Xp = 4
         Tier_Cm = 48
-        Tier_Cp = 1.03
+        Tier_Cp = 1.03 # +0.01
         Tier_Rm = 9
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
+
+    if current_tier == 11:
+        Tier_Xp = 4
+        Tier_Cm = 480 # x10
+        Tier_Cp = 1.04 # +0.01
+        Tier_Rm = 45 # x5
+        Auto_Click_Speed = 2
+        Tier_Click_Speed = 2.35
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 12:
+        Tier_Xp = 4
+        Tier_Cm = 480
+        Tier_Cp = 1.05 # +0.01
+        Tier_Rm = 45
+        Auto_Click_Speed = 2
+        Tier_Click_Speed = 2.35
+        Auto_Rebirth_Speed = 1
+
 
 ################################################################################
 #    Ascension Upgrade Tree
@@ -810,6 +836,20 @@ while running:
         Total_clicks_mult = 1
     # ----------------
 
+
+
+########
+# Auto CLick Speed
+
+    if Auto_Click_Speed == 2:
+        if ascension_Auto_Click_Speed == 1:
+            pygame.time.set_timer(AUTOClick_EVENT, 200)
+        else:
+            pygame.time.set_timer(AUTOClick_EVENT,500)
+    else:
+        pygame.time.set_timer(AUTOClick_EVENT, 1000)
+
+#######
     #Gain Amount
     CPC = base_clicks * Total_clicks_mult  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
@@ -830,10 +870,14 @@ while running:
     ################################################################################
     #    Upgrade Changes
     ################################################################################
-    #Clcik  upgrade 1
+    #Click  upgrade 1
     if current_tier >= 9:
-            CU1M = 100
-            CU1Mult = 2
+        if current_tier >= 12:
+            CU1M = 1000
+            CU1Mult = 5
+    else:
+        CU1M = 100
+        U1Mult = 2
 
     #CLick upgrade 3
     if current_tier >= 5:
@@ -867,8 +911,8 @@ while running:
 
         if event.type == AUTOClick_EVENT:
             if current_tier >= 3:
-                clicks += CPC
-                Xp += 0.25
+                    clicks += CPC
+                    Xp += 0.25
 
         if event.type == AUTORebirth_EVENT:
             if current_tier >= 5:

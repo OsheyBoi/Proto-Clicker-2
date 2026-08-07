@@ -54,10 +54,10 @@ def tier_info (Tier):
          text = " \n  Tier 10: \n Powerful Clicks +0.25x Mult \n 1.02^ - 1.03^ Clicks \n Unlock Ascension (V3)"
          return text
     elif Tier == 10:
-         text = " \n Tier 11: \n 10x Click \n 5x Rebirths \n Clicks Power 1.3 -> 1.4"
+         text = " \n Tier 11: \n 10x Click \n 5x Rebirths \n Clicks Power 1.03 -> 1.04"
          return text
     elif Tier == 11:
-         text = " \n Tier 12 \n Base Power Effect +2 -> =5 \n Base Power Max +900 \n Clicks Power 1.4 -> 1.5 "
+         text = " \n Tier 12 \n Base Power Effect +2 -> +5 \n Base Power Cap x10 \n Clicks Power 1.04 -> 1.05 "
          return text
     elif Tier == 12:
          text = " \n You Have Reach Max Tier in V4.0 \n Tiers 13 - 15 are Coming Soon "
