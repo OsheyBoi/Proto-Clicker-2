@@ -133,9 +133,10 @@ canvas = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
 WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("Auto-Scaled Window")
-Size_changer = 0
+Size_changer = "1300 x 900"
 Old_Size = 0
 
+Visual_Effect_Switch = "On"
 is_fullscreen = False
 
 def calculate_scale(win_w, win_h):
@@ -550,11 +551,15 @@ pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
 AUTOSAVE_EVENT2 = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 60000)
 
+
 AUTOClick_EVENT = pygame.USEREVENT + 2
 pygame.time.set_timer(AUTOClick_EVENT, 1000)
 
 AUTORebirth_EVENT = pygame.USEREVENT + 3
 pygame.time.set_timer(AUTORebirth_EVENT, 1000)
+
+Clicker_Effect_EVENT = pygame.USEREVENT + 4
+pygame.time.set_timer(AUTOClick_EVENT, 100)
 
 if len(sys.argv) > 2:
   Menu = int(sys.argv[1])
@@ -939,20 +944,26 @@ while running:
         # Extra Debuging things
     #-----------------
         if event.type == pygame.KEYDOWN:
-            # Press 'P' to toggle the HUD on/off
-            if event.key == pygame.K_p:
-                debugger_active = not debugger_active
-                print(f"[SYSTEM] Debugger toggled: {debugger_active}")
+            if debug_file == 1:
+                if event.key == pygame.K_p:
+                    debugger_active = not debugger_active
+                    print(f"[SYSTEM] Debugger toggled: {debugger_active}")
+
+                elif event.key == pygame.K_o:
+                    if debugger_active:
+                        print("[SYSTEM] Restarting game script and saving state...")
+                        pygame.quit()
+                        os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
+                elif event.key == pygame.K_i:
+                    print ("[SYSTEM] Debug variable Checker:")
+                    print("Clicks: " + clicks)
+                    print("Rebirths: " + rebirths)
+                    print("Xp: " + Xp)
+                    print("Tokens: " + ascension_tokens)
+                    print("Menu: " + Menu)
 
 
-            # Press 'I' to restart and save state (Menu and Debugger status)
-            elif event.key == pygame.K_o:
-                if debugger_active:
-                    print("[SYSTEM] Restarting game script and saving state...")
-                    pygame.quit()
-                    os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
 
-            # Press 'O' to hot-reload the debugger script
 
             # ========================================================
 
@@ -1132,11 +1143,18 @@ while running:
 # Settings Buttons
 ###########
                 if Menu == 52:
+                    if menu_ui_3.collidepoint(mouse_pos):
+                        if Visual_Effect_Switch == "On":
+                            Visual_Effect_Switch = "Off"
+                        elif Visual_Effect_Switch == "Off":
+                            Visual_Effect_Switch = "On"
                     if menu_ui_4.collidepoint(mouse_pos):
                         if Change_size == 2:
                             Change_size = 1 # 1300 x 900
+                            Size_changer = "1300 x 900"
                         elif Change_size == 1:
                             Change_size = 2
+                            Size_changer = "Full Screen"
 
                     if menu_ui_5.collidepoint(mouse_pos):
                         size = Change_size
@@ -1203,37 +1221,37 @@ while running:
             menu_ui_1 = pygame.Rect(200, 720, 870, 100)
             menu_ui_2 = pygame.Rect(110, 250, 1100, 400)
 
-        CU1_Cost_Show = CU1_CostAmount(CU1, current_tier,"Suffix")
-        CU2_Cost_Show = CU2_CostAmount(CU2, current_tier, "Suffix")
-        CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
-        CU4_Cost_Show = CU4_CostAmount(CU4, current_tier, "Suffix")
-        CU5_Cost_Show = CU5_CostAmount(CU5, current_tier,"Suffix")
+            CU1_Cost_Show = CU1_CostAmount(CU1, current_tier,"Suffix")
+            CU2_Cost_Show = CU2_CostAmount(CU2, current_tier, "Suffix")
+            CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
+            CU4_Cost_Show = CU4_CostAmount(CU4, current_tier, "Suffix")
+            CU5_Cost_Show = CU5_CostAmount(CU5, current_tier,"Suffix")
 
-        CU1_multipler = (CU1 * CU1Mult)
-        CU2_multipler = (CU2 * CU2Mult)
-        CU3_multipler = (CU3Mult ** CU3)
-        CU4_multipler = (CU4Mult ** CU4)
-        CU5_multipler = (CU5Mult ** CU5)
+            CU1_multipler = (CU1 * CU1Mult)
+            CU2_multipler = (CU2 * CU2Mult)
+            CU3_multipler = (CU3Mult ** CU3)
+            CU4_multipler = (CU4Mult ** CU4)
+            CU5_multipler = (CU5Mult ** CU5)
 
-        CU2_multipler_s = amount_sum(CU2_multipler)
-        CU3_multipler_s = amount_sum(CU3_multipler)
-        CU4_multipler_s = amount_sum(CU4_multipler)
-        CU5_multipler_s = amount_sum(CU5_multipler)
+            CU2_multipler_s = amount_sum(CU2_multipler)
+            CU3_multipler_s = amount_sum(CU3_multipler)
+            CU4_multipler_s = amount_sum(CU4_multipler)
+            CU5_multipler_s = amount_sum(CU5_multipler)
 
-        menu_text1 = font2.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font2.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
-        menu_text3 = font2.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
+            menu_text1 = font2.render("Base Power: (" + str(CU1) + "/" + str(CU1M) + ") \n +" + str(CU1_multipler) + " \n  Cost: " + str(CU1_Cost_Show), True, (0, 0, 0))
+            menu_text2 = font2.render("Faster Clicks (" + str(CU2) + "/" + str(CU2M) + ")\n -" + str(CU2_multipler_s) + " Cd \n  Cost: " + str(CU2_Cost_Show), True, (0, 0, 0))
+            menu_text3 = font2.render("Power Clicks (" + str(CU3) + "/" + str(CU3M) + ")\n X" + str(CU3_multipler_s) + " \n  Cost: " + str(CU3_Cost_Show), True, (0, 0, 0))
 
-        if current_tier >= 2:
-            menu_text4 = font2.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
-        else:
-            menu_text4 = font2.render("Unlock At Tier 2 ", True, (0, 0, 0))
-        if current_tier >= 4:
-            menu_text5 = font2.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
-        else:
-            menu_text5 = font2.render("Unlock At Tier 4 ", True, (0, 0, 0))
+            if current_tier >= 2:
+                menu_text4 = font2.render("More Rebirths ("  + str(CU4) + "/" + str(CU4M) + ")\n X" + str(CU4_multipler_s) + " \n   Cost: " + str(CU4_Cost_Show), True, (0, 0, 0))
+            else:
+                menu_text4 = font2.render("Unlock At Tier 2 ", True, (0, 0, 0))
+            if current_tier >= 4:
+                menu_text5 = font2.render("More Xp (" + str(CU5) + "/" + str(CU5M) + ")\n X" + str(CU5_multipler_s) + " \n  Cost: " + str(CU5_Cost_Show), True, (0, 0, 0))
+            else:
+                menu_text5 = font2.render("Unlock At Tier 4 ", True, (0, 0, 0))
 
-        menu_text6 = font2.render("", True, (0, 0, 0))
+            menu_text6 = font2.render("", True, (0, 0, 0))
 
     if Menu == 6:
         RU1_Cost_Show = RU1_CostAmount(RU1, current_tier, "Suffix")
@@ -1343,7 +1361,8 @@ while running:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
             canvas.blit(Shown_Menu, (0, 0))
 
-        if Menu <= 9 :
+        if 1 >= Menu <= 9 :
+
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
             Menu_text3.center = (300, 760)
@@ -1465,17 +1484,21 @@ while running:
             menu_ui_2 = pygame.Rect(145, 510, 440, 105)
             menu_ui_3 = pygame.Rect(145, 680, 435, 110)
             menu_ui_4 = pygame.Rect(700, 405, 440, 101)
-            Menu_text4.center = (830, 420)
-            menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
             menu_ui_5 = pygame.Rect(750, 520, 330, 90)
             menu_ui_6 = pygame.Rect(690, 660, 440, 105)
 
+        if Menu == 52:
+            Menu_text3.center = (340, 735)
+            Menu_text4.center = (920, 460)
+            menu_text3 = font2.render(Visual_Effect_Switch, True, (0, 0, 0))
+            menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
+            canvas.blit(menu_text3, Menu_text3)
+            canvas.blit(menu_text4, Menu_text4)
+
         if Set_size == 1:
-            print(size)
-            if Old_Size == 2:
-                is_fullscreen = not is_fullscreen
-                Old_Size = 1
             if size == 1:
+                if Old_Size == 2:
+                    is_fullscreen = not is_fullscreen
                 WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
                 Size_changer = "1300 x 900"
                 Set_size = 0
@@ -1504,8 +1527,9 @@ while running:
 
                 # Recalculate your math variables instantly so mouse coordinates don't break
                 scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
-
-
+        if Show_Click_Effect = 1
+            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
+            canvas.blit(Shown_Menu, (0, 0))
 
         ###################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
