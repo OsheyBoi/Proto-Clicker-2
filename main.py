@@ -558,8 +558,6 @@ pygame.time.set_timer(AUTOClick_EVENT, 1000)
 AUTORebirth_EVENT = pygame.USEREVENT + 3
 pygame.time.set_timer(AUTORebirth_EVENT, 1000)
 
-Clicker_Effect_EVENT = pygame.USEREVENT + 4
-pygame.time.set_timer(AUTOClick_EVENT, 100)
 
 if len(sys.argv) > 2:
   Menu = int(sys.argv[1])
@@ -1143,11 +1141,11 @@ while running:
 # Settings Buttons
 ###########
                 if Menu == 52:
-                    if menu_ui_3.collidepoint(mouse_pos):
-                        if Visual_Effect_Switch == "On":
-                            Visual_Effect_Switch = "Off"
-                        elif Visual_Effect_Switch == "Off":
-                            Visual_Effect_Switch = "On"
+                   # if menu_ui_3.collidepoint(mouse_pos):
+                    #    if Visual_Effect_Switch == "On":
+                     #       Visual_Effect_Switch = "Off"
+                      #  elif Visual_Effect_Switch == "Off":
+                       #     Visual_Effect_Switch = "On"
                     if menu_ui_4.collidepoint(mouse_pos):
                         if Change_size == 2:
                             Change_size = 1 # 1300 x 900
@@ -1527,9 +1525,7 @@ while running:
 
                 # Recalculate your math variables instantly so mouse coordinates don't break
                 scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
-        if Show_Click_Effect = 1
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
-            canvas.blit(Shown_Menu, (0, 0))
+
 
         ###################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
