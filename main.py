@@ -59,7 +59,7 @@ def amount_sum(amount):
         elif amount >= 100:
             rounded_amount = round(amount, 0)
         else:
-            rounded_amount = "Error 1"
+            rounded_amount = round(amount, 0)
         return str(rounded_amount)
     suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
     suffix_index = 0
@@ -862,7 +862,7 @@ while running:
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
 
-    Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult
+    Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult * Tier_Xp
 
     if clicks >= 1000:
         Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
