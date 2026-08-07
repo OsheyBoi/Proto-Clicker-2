@@ -133,6 +133,8 @@ canvas = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
 WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("Auto-Scaled Window")
+Size_changer = 0
+Old_Size = 0
 
 is_fullscreen = False
 
@@ -1463,18 +1465,26 @@ while running:
             menu_ui_2 = pygame.Rect(145, 510, 440, 105)
             menu_ui_3 = pygame.Rect(145, 680, 435, 110)
             menu_ui_4 = pygame.Rect(700, 405, 440, 101)
+            Menu_text4.center = (830, 420)
+            menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
             menu_ui_5 = pygame.Rect(750, 520, 330, 90)
             menu_ui_6 = pygame.Rect(690, 660, 440, 105)
 
         if Set_size == 1:
             print(size)
+            if Old_Size == 2:
+                is_fullscreen = not is_fullscreen
+                Old_Size = 1
             if size == 1:
-                is_fullscreen = False
                 WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
+                Size_changer = "1300 x 900"
                 Set_size = 0
+                Old_Size = 1
             if size == 2:
                 is_fullscreen = not is_fullscreen
+                Size_changer = "Full Screen"
                 Set_size = 0
+                Old_Size = 2
 
                 if is_fullscreen:
                     # Cache the size right before we go into fullscreen mode
