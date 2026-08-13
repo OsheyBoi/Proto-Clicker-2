@@ -369,7 +369,9 @@ Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Butto
 Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
 settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
 ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
+
 Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
+Locked_Image = pygame.image.load(os.path.join(img_dir,'Menu',"Locked.png"))
 
 click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
 rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
@@ -1376,6 +1378,9 @@ while running:
             canvas.blit(Shown_Menu, (0, 0))
 
         if 1 <= Menu <= 9 :
+            if current_ascension == 0:
+                Locked_Image = pygame.image.load(os.path.join(img_dir, 'Menu', "Locked.png"))
+                canvas.blit(Locked_Image, (0, 0))
 
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
@@ -1389,6 +1394,7 @@ while running:
             canvas.blit(menu_text4, Menu_text4)
             canvas.blit(menu_text5, Menu_text5)
             canvas.blit(menu_text6, Menu_text6)
+
 
 #####
 # Hide Ui element when not on the menu
