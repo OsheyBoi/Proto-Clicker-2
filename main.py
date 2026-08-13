@@ -110,7 +110,6 @@ class Upgrade2:
         # 1. Check menu and click collision
         if current_menu != 6:
             return rebirths, False  # Return original clicks, no purchase made
-        print("try buy pass menu 6 check")
         if self.rect.collidepoint(mouse_pos):
             cost = self.cost_fn(self.level, current_tier, "True Price")
             print(self.level)
