@@ -206,7 +206,8 @@ CooldownLength = 0
 Tier_Click_Speed = 1
 last_time_check = 0
 dev_mult = 1.0
-ascension_Auto_Click_Speed = 0
+
+
 
 # V3.0
 current_ascension = 0
@@ -368,6 +369,7 @@ Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Butto
 Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
 settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
 ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
+Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
 
 click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
 rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
@@ -568,22 +570,19 @@ if len(sys.argv) > 2:
 #    Start Application
 ################################################################################
 while running:
-    # 1. Get raw physical mouse positions from the OS window
+##########################
+# For Debuger
+##########################
     physical_mouse_pos = pygame.mouse.get_pos()
-
-    # 2. Subtract offsets and divide by scale factor
     mouse_x = int((physical_mouse_pos[0] - offset_x) / scale)
     mouse_y = int((physical_mouse_pos[1] - offset_y) / scale)
-
-    # 3. FIXED: Strictly clamp the upper bounds to 1299 and 899 to avoid index crashes
     mouse_pos = (
         max(0, min(mouse_x, GAME_WIDTH - 1)),
         max(0, min(mouse_y, GAME_HEIGHT - 1))
     )
 
-    # 4. Your distance calculations will now run completely crash-free
     distance = math.hypot(mouse_pos[0] - Button_center[0], mouse_pos[1] - Button_center[1])
-
+##########################
     current_state = {
         "clicks": clicks,
         "rebirths": rebirths,
@@ -636,18 +635,27 @@ while running:
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
-    if current_tier ==  1:          #    Tier Base Upgrades
+    if current_tier ==  0:          #    Tier Base Upgrades
         Tier_Xp = 1                 #    Xp Mult
-        Tier_Cm = 2  # x2           #    Clicks Multipler
+        Tier_Cm = 1                 #    Clicks Multipler
         Tier_Cp = 1                 #    CLicks Power
         Tier_Rm = 1                 #    Rebirth Mult
+        Auto_Click_Speed = 0
         Tier_Click_Speed = 1        #    Tier Click Speed Mult
+    if current_tier ==  1:
+        Tier_Xp = 1
+        Tier_Cm = 2  # x2
+        Tier_Cp = 1
+        Tier_Rm = 1
+        Auto_Click_Speed = 0
+        Tier_Click_Speed = 1
 
     if current_tier == 2:
         Tier_Xp = 1
         Tier_Cm = 4       #  x2
         Tier_Cp = 1
         Tier_Rm = 1.5     # x1.5
+        Auto_Click_Speed = 0
         Tier_Click_Speed = 1.5 # x1.5
 
     if current_tier ==  3:
@@ -833,10 +841,10 @@ while running:
 
     CM_Upgrades = (CU3Mult ** CU3) * (RU1Mult ** RU1)
     CM_Tiers = Tier_Cm * Click_Xp_Mult
-    CM_Sacrifices = Ascension_QOL_Clicks * Ascension_Click_Mult
+    CM_Ascension = Ascension_QOL_Clicks * Ascension_Click_Mult
     CM_Other = total_time_played_Click * Rebirth_x_clicks
 
-    Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Sacrifices * CM_Other
+    Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Ascension * CM_Other
     if Total_clicks_mult == 0:
         Total_clicks_mult = 1
     # ----------------
@@ -902,10 +910,10 @@ while running:
             RU1M = 20
             RU1Mult = 1.5
 
-    ################################################################################
-    ################################################################################
-    #    Pygame Mouse  collidepoint checker
-    ################################################################################
+################################################################################
+################################################################################
+#    Pygame Mouse  collidepoint checker
+#################################################################################
     for event in pygame.event.get():
         if event.type == pygame.VIDEORESIZE:
             if event.type == pygame.VIDEORESIZE:
@@ -954,11 +962,17 @@ while running:
                         os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
                 elif event.key == pygame.K_i:
                     print ("[SYSTEM] Debug variable Checker:")
-                    print("Clicks: " + clicks)
-                    print("Rebirths: " + rebirths)
-                    print("Xp: " + Xp)
-                    print("Tokens: " + ascension_tokens)
-                    print("Menu: " + Menu)
+                    print("[SYSTEM] Currencies:")
+                    print("Clicks: " + str(clicks))
+                    print("Rebirths: " + str(rebirths))
+                    print("Xp: " + str(Xp))
+                    print("Tokens: " + str(ascension_tokens))
+                    print("Menu: " + str(Menu))
+                    print("[SYSTEM] Click Multiplers:")
+                    print("Upgrades: " + str(CM_Upgrades))
+                    print("Tier: " + str(CM_Tiers))
+                    print("Ascension: " + str(CM_Ascension))
+                    print("Other: " + str(CM_Other))
 
 
 
@@ -987,6 +1001,11 @@ while running:
                     if Menu == 0:
                         Menu = 52
 
+                if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
+                    if Menu == 6:
+                        Menu = 1
+                    elif Menu == 1:
+                        Menu = 6
                 if shop_menu.collidepoint(mouse_pos):
 
                     if Menu == 0:
@@ -1015,17 +1034,13 @@ while running:
                     current_tier += 1
 
 
-                if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
-                    if Menu == 6:
-                        Menu = 1
-                    if Menu == 1:
-                        Menu = 6
 
 
 
                 if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:
-                    if Menu == 1:
-                        Menu = 14
+                    if 9 <=Menu >= 1:
+                        if current_ascension >= 1:
+                            Menu = 14
 
 
 
@@ -1203,7 +1218,7 @@ while running:
         else:
             Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked.png"))
 
-        if 1 >= Menu <= 10:
+        if Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 425, 55)
             menu_ui_2 = pygame.Rect(110, 560, 425, 55)
             menu_ui_3 = pygame.Rect(110, 780, 425, 55)
@@ -1218,7 +1233,7 @@ while running:
         if Menu in menu_base_1:
             menu_ui_1 = pygame.Rect(200, 720, 870, 100)
             menu_ui_2 = pygame.Rect(110, 250, 1100, 400)
-
+        if Menu == 1:
             CU1_Cost_Show = CU1_CostAmount(CU1, current_tier,"Suffix")
             CU2_Cost_Show = CU2_CostAmount(CU2, current_tier, "Suffix")
             CU3_Cost_Show = CU3_CostAmount(CU3, current_tier, "Suffix")
@@ -1251,40 +1266,41 @@ while running:
 
             menu_text6 = font2.render("", True, (0, 0, 0))
 
-    if Menu == 6:
-        RU1_Cost_Show = RU1_CostAmount(RU1, current_tier, "Suffix")
-        RU2_Cost_Show = RU2_CostAmount(RU2, current_tier, "Suffix")
-        RU3_Cost_Show = RU3_CostAmount(RU3, current_tier, "Suffix")
+        if Menu == 6:
+            RU1_Cost_Show = RU1_CostAmount(RU1, current_tier, "Suffix")
+            RU2_Cost_Show = RU2_CostAmount(RU2, current_tier, "Suffix")
+            RU3_Cost_Show = RU3_CostAmount(RU3, current_tier, "Suffix")
 
-        RU1_multipler = (RU1Mult ** RU1)
-        RU2_multipler = (RU2Mult ** RU2)
-        RU3_multipler = (RU3Mult ** RU3)
+            RU1_multipler = (RU1Mult ** RU1)
+            RU2_multipler = (RU2Mult ** RU2)
+            RU3_multipler = (RU3Mult ** RU3)
 
-        RU1_multipler_s = amount_sum(RU1_multipler)
-        RU2_multipler_s = amount_sum(RU2_multipler)
-        RU3_multipler_s = amount_sum(RU3_multipler)
+            RU1_multipler_s = amount_sum(RU1_multipler)
+            RU2_multipler_s = amount_sum(RU2_multipler)
+            RU3_multipler_s = amount_sum(RU3_multipler)
 
 
-        menu_text1 = font2.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
-        menu_text2 = font2.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
-        menu_text3 = font2.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
-        menu_text4 = font2.render("Coming Later", True, (0, 0, 0))
-        menu_text5 = font2.render("Coming Later ", True, (0, 0, 0))
-        menu_text6 = font2.render("", True, (0, 0, 0))
+            menu_text1 = font2.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
+            menu_text2 = font2.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
+            menu_text3 = font2.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
+            menu_text4 = font2.render("Coming Later", True, (0, 0, 0))
+            menu_text5 = font2.render("Coming Later ", True, (0, 0, 0))
+            menu_text6 = font2.render("", True, (0, 0, 0))
 
-    if Menu == 13:
-        test1 = ascension_cost(current_ascension,"Suffix")
-        menu_text1 = font5.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
-    if Menu == 12:
-        test = tier_cost(current_tier,"Suffix")
-        menu_text1 = font3.render((tier_info(current_tier)), True,  (0, 0, 0))
-        menu_text2 = font2.render("Cost: " + str(test) , True, (0, 0, 0))
-    if Menu == 11:
-        menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
-    # Drawing Systems
-    canvas.blit(background, (0, 0))
-    if Menu == 0:
-        canvas.blit(Shop_Menu_Button, (420, 720))
+
+        if Menu == 13:
+            test1 = ascension_cost(current_ascension,"Suffix")
+            menu_text1 = font5.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
+        if Menu == 12:
+            test = tier_cost(current_tier,"Suffix")
+            menu_text1 = font3.render((tier_info(current_tier)), True,  (0, 0, 0))
+            menu_text2 = font2.render("Cost: " + str(test) , True, (0, 0, 0))
+        if Menu == 11:
+            menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
+        # Drawing Systems
+        canvas.blit(background, (0, 0))
+        if Menu == 0:
+            canvas.blit(Shop_Menu_Button, (420, 720))
 
     pygame.draw.rect(canvas, green, Clicks_Amount_Box, width=0, border_radius=30)
     pygame.draw.rect(canvas, red, Rebirth_Amount_Box, width=0, border_radius=30)
@@ -1359,7 +1375,7 @@ while running:
             Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
             canvas.blit(Shown_Menu, (0, 0))
 
-        if 1 >= Menu <= 9 :
+        if 1 <= Menu <= 9 :
 
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
@@ -1484,11 +1500,7 @@ while running:
             menu_ui_4 = pygame.Rect(700, 405, 440, 101)
             menu_ui_5 = pygame.Rect(750, 520, 330, 90)
             menu_ui_6 = pygame.Rect(690, 660, 440, 105)
-
-        if Menu == 52:
-            Menu_text3.center = (340, 735)
             Menu_text4.center = (920, 460)
-            menu_text3 = font2.render(Visual_Effect_Switch, True, (0, 0, 0))
             menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
             canvas.blit(menu_text3, Menu_text3)
             canvas.blit(menu_text4, Menu_text4)
