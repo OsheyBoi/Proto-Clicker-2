@@ -1379,7 +1379,7 @@ while running:
         if 1 <= Menu <= 9 :
             if current_ascension == 0:
                 Locked_Image = pygame.image.load(os.path.join(img_dir, 'Menu', "Locked.png"))
-                canvas.blit(Locked_Image, (0, 0))
+                canvas.blit(Locked_Image, (0, -1))
 
             Menu_text1.center = (300, 320)
             Menu_text2.center = (300, 540)
@@ -1507,7 +1507,6 @@ while running:
             menu_ui_6 = pygame.Rect(690, 660, 440, 105)
             Menu_text4.center = (920, 460)
             menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
-            canvas.blit(menu_text3, Menu_text3)
             canvas.blit(menu_text4, Menu_text4)
 
         if Set_size == 1:
