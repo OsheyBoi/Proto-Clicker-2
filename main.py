@@ -52,11 +52,11 @@ img_dir = os.path.join(base_dir, 'images')
 
 def amount_sum(amount):
     if amount < 1000:
-        if amount >= 0:
+        if amount <= 9:
             rounded_amount = round(amount, 2)
-        if amount >= 10:
+        elif amount <= 99:
             rounded_amount = round(amount, 1)
-        elif amount >= 100:
+        elif amount <= 999:
             rounded_amount = round(amount, 0)
         else:
             rounded_amount = round(amount, 0)
@@ -149,7 +149,7 @@ def calculate_scale(win_w, win_h):
 
 
 Set_size  = 0
-
+dev_mult = 1
 scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
 clock = pygame.time.Clock()
 size = 1
@@ -845,7 +845,7 @@ while running:
     CM_Ascension = Ascension_QOL_Clicks * Ascension_Click_Mult
     CM_Other = total_time_played_Click * Rebirth_x_clicks
 
-    Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Ascension * CM_Other
+    Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Ascension * CM_Other * dev_mult
     if Total_clicks_mult == 0:
         Total_clicks_mult = 1
     # ----------------

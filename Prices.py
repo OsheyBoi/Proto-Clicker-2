@@ -3,7 +3,7 @@ def amount_sum(amount):
         if amount > 100:
             rounded_amount = round(amount, 1)
         else:
-            rounded_amount = round(amount, 0)
+            rounded_amount = round(amount, 2)
         return str(rounded_amount)
     suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
     suffix_index = 0
@@ -11,7 +11,7 @@ def amount_sum(amount):
     while amount >= 1000:
         amount /= 1000
         suffix_index += 1
-        rounded_amount = 0.0
+    rounded_amount = 1
     if amount >= 1 and amount <= 9:
         rounded_amount = round(amount, 2)
     if amount >= 10 and amount <= 99:
@@ -26,7 +26,7 @@ def CU1_CostAmount(upgrade,tier,Type):
         if upgrade == 0:
             cost = 10
         else:
-            cost = (10 + int(upgrade ** 1.07 * 4)) ** 1.05
+            cost = (10 + int(upgrade ** 1.06 * 3.7)) ** 1.05
     elif tier >= 9:
         if upgrade == 0:
             cost = 100
