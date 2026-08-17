@@ -5,27 +5,27 @@
 
 ![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
-V3.0 Will should be out by 20th of Aug
+V3.0 Should be out by the end of Aug
 --------------
 Whats Happening in V3.0:
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12
 - Settings
-  - Screen Size Changer
 
-- Small Desig Change in  The Shop Menu
+- Small Design Change in The Shop Menu
     - The Switch to Rebirth Shop button has been remove and switch with 3 buttons that take you too
         - Rebirth Upgrades
-        - Ascension Tree (Locked till you do a Ascension)
+        - Ascension Tree (Locked till you do an Ascension)
         - ??? (Coming Soon)
 
-- Small Qol Changes
+- Small Qol Updates/Changes:
     - Made the Xp show at the top get summed first
     - Fix hitboxes to be more accurate 
     - Fixing the menu to not be a few pixels off
+    - Adjusted Text locations for Tiers Upgrade Info
   
-- Balancing
+- Balancing Changes 
     - Lowered Price scaling  on CU1 scaling before its upgraded
   
 - Bug Fixes 
