@@ -3,7 +3,7 @@
 ![Static Badge](https://img.shields.io/badge/Public%20build-V2.1-darkgreen?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.0-blue?style=for-the-badge)
 
-
+![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
 V3.0 Will should be out by 20th of Aug
 --------------
