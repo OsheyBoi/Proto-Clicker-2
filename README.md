@@ -8,7 +8,6 @@
 V3.0 Will should be out by 20th of Aug
 --------------
 Whats Happening in V3.0:
-
 - Sacrifices
 - The Sacrifice Upgrade Tree (#1 -> #6)
 - Tiers 11 - 12

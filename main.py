@@ -205,7 +205,7 @@ CooldownLength = 0
 Tier_Click_Speed = 1
 last_time_check = 0
 dev_mult = 1.0
-
+Last_Speed = 1
 
 
 # V3.0
@@ -555,7 +555,7 @@ AUTOSAVE_EVENT2 = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 60000)
 
 
-AUTOClick_EVENT = pygame.USEREVENT + 2
+AUTOClick_EVENT = pygame.USEREVENT + 4
 pygame.time.set_timer(AUTOClick_EVENT, 1000)
 
 AUTORebirth_EVENT = pygame.USEREVENT + 3
@@ -856,12 +856,15 @@ while running:
 # Auto CLick Speed
 
     if Auto_Click_Speed == 2:
-        if ascension_Auto_Click_Speed == 1:
+        if ascension_Auto_Click_Speed == 1 and Last_Speed != 3:
             pygame.time.set_timer(AUTOClick_EVENT, 200)
-        else:
+            Last_Speed = 3
+        elif ascension_Auto_Click_Speed == 0 and Last_Speed != 2:
             pygame.time.set_timer(AUTOClick_EVENT,500)
-    else:
+            Last_Speed = 2
+    elif Auto_Click_Speed == 1 and Last_Speed != 1:
         pygame.time.set_timer(AUTOClick_EVENT, 1000)
+        Last_Speed = 1
 
 #######
     #Gain Amount
@@ -923,15 +926,15 @@ while running:
                     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
                     scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-        if event.type == AUTOClick_EVENT:
-            if current_tier >= 3:
-                    clicks += CPC
-                    Xp += 0.25
 
         if event.type == AUTORebirth_EVENT:
             if current_tier >= 5:
                 rebirths += Rebirth_Gain / 100
 
+        if event.type == AUTOClick_EVENT:
+            if current_tier >= 3:
+                    clicks += CPC
+                    Xp += 0.25
 
         if event.type == pygame.QUIT:
             running = False
@@ -959,6 +962,7 @@ while running:
                 elif event.key == pygame.K_o:
                     if debugger_active:
                         print("[SYSTEM] Restarting game script and saving state...")
+                        save_game(current_state)
                         pygame.quit()
                         os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
                 elif event.key == pygame.K_i:
@@ -1020,19 +1024,20 @@ while running:
                 if menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
                     Tier_cost = tier_cost(current_tier, "None")
                     Tier_cost_Shown = tier_cost(current_tier, "Suffix")
-                    if clicks >= Tier_cost:
-                        clicks = 0
-                        rebirths = 0
-                    if ascension_stage <= 1:
-                        CU1 = 0
-                        CU2 = 0
-                        CU3 = 0
-                        CU4 = 0
-                    if ascension_stage <= 2:
-                        RU1 = 0
-                        RU2 = 0
-                        RU3 = 0
-                    current_tier += 1
+                    if current_tier <= 11:
+                        if clicks >= Tier_cost:
+                            clicks = 0
+                            rebirths = 0
+                            if ascension_stage <= 1:
+                                CU1 = 0
+                                CU2 = 0
+                                CU3 = 0
+                                CU4 = 0
+                            if ascension_stage <= 2:
+                                RU1 = 0
+                                RU2 = 0
+                                RU3 = 0
+                            current_tier += 1
 
 
 
@@ -1407,15 +1412,41 @@ while running:
             Menu_text6.center = (8600, 760)
             canvas.blit(Shown_Menu, (1000, 1000))
 
-
+######
+# Tiers Menu Text line up
+######
         if Menu == 12:
-            Menu_text2.center = (600, 642)
-            Menu_text1.center = (450, 399)
+            if current_tier == 1:
+                Menu_text1.center = (470, 410)
+            elif current_tier == 2:
+                Menu_text1.center = (610, 410)
+            elif current_tier == 3:
+                Menu_text1.center = (550, 420)
+            elif current_tier == 4:
+                Menu_text1.center = (610, 430)
+            elif current_tier == 5:
+                Menu_text1.center = (400, 510)
+            elif current_tier == 6:
+                Menu_text1.center = (570, 370)
+            elif current_tier == 7:
+                Menu_text1.center = (400, 370)
+            elif current_tier == 8:
+                Menu_text1.center = (600, 370)
+            elif current_tier == 9:
+                Menu_text1.center = (570, 370)
+            elif current_tier == 10:
+                Menu_text1.center = (435, 370)
+            elif current_tier == 11:
+                Menu_text1.center = (470, 370)
+            elif current_tier == 12:
+                Menu_text1.center = (570, 370)
+            elif current_tier == 13:
+                Menu_text1.center = (570, 370)
+
             canvas.blit(menu_text1, Menu_text1)
-            canvas.blit(menu_text2, Menu_text2)
+
 
         if Menu == 11:
-
             Menu_text1.center = (600, 462)
             canvas.blit(menu_text1, Menu_text1)
 
@@ -1543,7 +1574,7 @@ while running:
                 scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 
-        ###################################
+##################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
 ###################################
     if debugger_active:
