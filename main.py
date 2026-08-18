@@ -146,7 +146,9 @@ def calculate_scale(win_w, win_h):
     offset_y = (win_h - (GAME_HEIGHT * scale)) / 2
     return scale, offset_x, offset_y
 
-
+##########################
+#   Display Set up
+##########################
 
 Set_size  = 0
 dev_mult = 1
@@ -174,7 +176,9 @@ font4 = pygame.font.SysFont("Arial", 60) #(Big)
 font5 = pygame.font.SysFont("Arial", 80) #(Huge)
 pygame.display.set_caption('Proto Clicker 2')
 
-#Base Veriables
+##########################
+#   Veriable Setup
+##########################
 # V1.0
 clicks = 0
 rebirths = 0
@@ -290,9 +294,9 @@ menu_base_1 = [11,12,13]
 #  (y) U(x) = (Currency) Upgrade (x = Number) - Current Amount of the upgrade you have
 #  (y)U(x)M = (Currency) Upgrade (Number) Max Amount
 #  (y)U(x)Mult = CU(x) = (Currency) (Number) Multipler
-# Y = Currency  (C = Clicks) (R = Rebirths
+# Y = Currency  (C = Clicks) (R = Rebirths)
 
-#Clicks
+#   Clicks
 
 CU1M = 25
 CU1Mult = 1
@@ -331,7 +335,7 @@ RU3_Cost = 1
 ascension_stage = 0
 
 ################################################################################
-#    Ui Set up
+#    Ui / Text Set up
 ################################################################################
 shop_menu = pygame.Rect(420, 720, 440, 140)
 Rebirth_menu = pygame.Rect(24, 230, 120, 120)
@@ -395,7 +399,7 @@ menu_text5 = font2.render("", True, (0, 0, 0))
 menu_text6 = font2.render("", True, (0, 0, 0))
 
 ################################################################################
-#    Multipler and Upgrade Set up
+#    Loading System
 ################################################################################
 
 running = True
@@ -523,6 +527,10 @@ except (FileNotFoundError, json.JSONDecodeError):
             ascension_stage = 0
             ascension_stage_2 = 0
 
+##########################
+#   Multipler Setup
+##########################
+
 
 CU1_multipler = (CU1 * CU1Mult)
 CU2_multipler = (CU2 * CU2Mult)
@@ -531,6 +539,9 @@ CU4_multipler = (CU4Mult ** CU4)
 CU5_multipler = (CU5Mult ** CU5)
 
 #-----------------
+##########################
+#   Upgrade Shop set up
+##########################
 upgrades = [
     Upgrade(menu_ui_1, 0, CU1M, CU1_CostAmount),
     Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
@@ -547,7 +558,10 @@ upgrades2 = [
 
 
 ]
-#----------------
+##########################
+#   Auto Events (Save, Clicks, Rebirths)
+##########################
+
 AUTOSAVE_EVENT = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
 
@@ -555,7 +569,7 @@ AUTOSAVE_EVENT2 = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 60000)
 
 
-AUTOClick_EVENT = pygame.USEREVENT + 4
+AUTOClick_EVENT = pygame.USEREVENT + 2
 pygame.time.set_timer(AUTOClick_EVENT, 1000)
 
 AUTORebirth_EVENT = pygame.USEREVENT + 3
@@ -571,8 +585,9 @@ if len(sys.argv) > 2:
 #    Start Application
 ################################################################################
 while running:
+
 ##########################
-# For Debuger
+#   For Debuger
 ##########################
     physical_mouse_pos = pygame.mouse.get_pos()
     mouse_x = int((physical_mouse_pos[0] - offset_x) / scale)
@@ -583,7 +598,7 @@ while running:
     )
 
     distance = math.hypot(mouse_pos[0] - Button_center[0], mouse_pos[1] - Button_center[1])
-##########################
+
     current_state = {
         "clicks": clicks,
         "rebirths": rebirths,
@@ -603,7 +618,9 @@ while running:
         "ascension_stage": ascension_stage,
         "ascension_stage_2": ascension_stage_2
     }
-
+##########################
+#   Currency Being shown
+##########################
     Clicks_Shown = amount_sum(clicks)
     Rebirths_Shown = amount_sum(rebirths)
     Clicks_AR = font2.render(str(Clicks_Shown), True, (0, 0, 0)) #AR - Amount Render
@@ -628,11 +645,11 @@ while running:
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
+        Click_Xp_Mult = 1.1 ** levels
         Xp_AR = font1.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level_sum) + "/" + str(Xp_needed_sum) + ")", True, (0, 0, 0))
     if current_tier <= 2:
         Xp_AR = font2.render("Unlock At T3",True, (0, 0, 0))
-    if current_tier >= 3:
-        Click_Xp_Mult = 1.1 ** levels
+
 ################################################################################
 #    Tier Upgrade Multiplers
 ################################################################################
@@ -759,6 +776,7 @@ while running:
         Ascension_QOL_Clicks = 1
 
 # QOL PATH PART 1
+
     if ascension_stage == 2:
         Extra_Tiers = 2
         Keep_Click_Upgrades = 1
@@ -797,7 +815,7 @@ while running:
         Ascension_Rebirth_Mult = 30
         Ascension_XP_Mult = 12
 ################################################################################
-#Gain Amount
+#   Gain Amount
 ################################################################################
     current_time = pygame.time.get_ticks()
     time_passed = current_time - last_time_check
@@ -810,8 +828,6 @@ while running:
         total_time_played_Click = 1
 
 
-
-    # -----------------
     upgrades = [
         Upgrade(menu_ui_1, 0, CU1M, CU1_CostAmount),
         Upgrade(menu_ui_2, 0, CU2M, CU2_CostAmount),
@@ -827,11 +843,10 @@ while running:
         Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
 
     ]
-    # ----------------
-    ################################################################################
-    #    Currency Amount Gain
-    ################################################################################
-    # ----------------
+################################################################################
+#    Currency Amount Gain
+#################################################################################
+
     base_clicks = (1 + CU1)
     if current_tier <= 5:
         Rebirth_x_clicks = 1
@@ -850,10 +865,9 @@ while running:
         Total_clicks_mult = 1
     # ----------------
 
-
-
-########
-# Auto CLick Speed
+######################
+#   Auto CLick Speed
+#####################
 
     if Auto_Click_Speed == 2:
         if ascension_Auto_Click_Speed == 1 and Last_Speed != 3:
@@ -866,8 +880,9 @@ while running:
         pygame.time.set_timer(AUTOClick_EVENT, 1000)
         Last_Speed = 1
 
-#######
-    #Gain Amount
+#####################
+#   Gain Amount
+#####################
     CPC = base_clicks * Total_clicks_mult  #Click per Click
     CPC_Show = amount_sum(CPC)   # Click per Click
 
@@ -884,9 +899,9 @@ while running:
         Rebirth_Gain_Show = str(0)
 
 
-    ################################################################################
-    #    Upgrade Changes
-    ################################################################################
+################################################################################
+#    Upgrade Changes
+################################################################################
     #Click  upgrade 1
     if current_tier >= 9:
         if current_tier >= 12:
@@ -914,18 +929,22 @@ while running:
             RU1M = 20
             RU1Mult = 1.5
 
-################################################################################
-################################################################################
-#    Pygame Mouse  collidepoint checker
-#################################################################################
-    for event in pygame.event.get():
-        if event.type == pygame.VIDEORESIZE:
-            if event.type == pygame.VIDEORESIZE:
-                if not is_fullscreen:
-                    WINDOW_WIDTH, WINDOW_HEIGHT = event.w, event.h
-                    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
-                    scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
 
+    for event in pygame.event.get():
+
+##########################################
+#    Full Screen Mode
+###########################################
+
+        if event.type == pygame.VIDEORESIZE:
+            if not is_fullscreen:
+                WINDOW_WIDTH, WINDOW_HEIGHT = event.w, event.h
+                screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
+                scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
+
+####################################
+#   Auto Events (+ pygame.quit)
+####################################
 
         if event.type == AUTORebirth_EVENT:
             if current_tier >= 5:
@@ -950,9 +969,9 @@ while running:
         if event.type == AUTOSAVE_EVENT2:
             save_game(current_state)
             print(f"[SYSTEM] Autosaved for backup!")
-    #-------------------------------------------------
-        # Extra Debuging things
-    #-----------------
+################################################################################
+#    Extra Debug Tools (Only For Development)
+#################################################################################
         if event.type == pygame.KEYDOWN:
             if debug_file == 1:
                 if event.key == pygame.K_p:
@@ -979,10 +998,9 @@ while running:
                     print("Ascension: " + str(CM_Ascension))
                     print("Other: " + str(CM_Other))
 
-
-
-
-            # ========================================================
+##############################
+# Button Clicked with mouse
+##############################
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: # Left click down
@@ -1127,7 +1145,7 @@ while running:
                     for up in upgrades:
                         clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
                         if bought:
-                            break # Stop checking other upgrades if one was clicked
+                            break
                     CU1 = upgrades[0].level
                     CU2 = upgrades[1].level
                     CU3 = upgrades[2].level
@@ -1142,15 +1160,13 @@ while running:
                     for up in upgrades2:
                         rebirths, bought = up.try_buy(mouse_pos, Menu, rebirths)
                         if bought:
-                            break # Stop checking other upgrades if one was clicked
+                            break #
                     RU1 = upgrades2[0].level
                     RU2 = upgrades2[1].level
                     RU3 = upgrades2[2].level
 
-
                 X1 = mouse_pos[1]
                 Y1 = mouse_pos[0]
-
 
                 if distance <= Button_radius and Menu == 0:
                     if current_Cooldown <= current_time:
@@ -1162,14 +1178,9 @@ while running:
 # Settings Buttons
 ###########
                 if Menu == 52:
-                   # if menu_ui_3.collidepoint(mouse_pos):
-                    #    if Visual_Effect_Switch == "On":
-                     #       Visual_Effect_Switch = "Off"
-                      #  elif Visual_Effect_Switch == "Off":
-                       #     Visual_Effect_Switch = "On"
                     if menu_ui_4.collidepoint(mouse_pos):
                         if Change_size == 2:
-                            Change_size = 1 # 1300 x 900
+                            Change_size = 1
                             Size_changer = "1300 x 900"
                         elif Change_size == 1:
                             Change_size = 2
@@ -1580,7 +1591,7 @@ while running:
     if debugger_active:
         debugger.draw_hud(canvas, globals(), mouse_pos, clock)
 
-    ###################################
+###################################
  #   End of Script
 ###################################
 
