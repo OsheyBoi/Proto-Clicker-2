@@ -892,7 +892,7 @@ while running:
     Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult * Tier_Xp
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 200) ** 0.275) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
+        Rebirth_Gain = int(((clicks / 500) ** 0.32) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -1117,18 +1117,17 @@ while running:
                                 rebirths += Rebirth_Gain
 
                 if menu_ui_1.collidepoint(mouse_pos)  and Menu == 13:
-                        if Menu == 11:
-                            if clicks >= ascension_cost(current_ascension, "NA"):
-                                clicks = 0
-                                CU1 = 0
-                                CU2 = 0
-                                CU3 = 0
-                                CU4 = 0
-                                RU1 = 0
-                                RU2 = 0
-                                RU3 = 0
-                                rebirths = 0
-                                current_tier = 0
+                        if clicks >= ascension_cost(current_ascension, "NA"):
+                            clicks = 0
+                            CU1 = 0
+                            CU2 = 0
+                            CU3 = 0
+                            CU4 = 0
+                            RU1 = 0
+                            RU2 = 0
+                            RU3 = 0
+                            rebirths = 0
+                            current_tier = 0
 
 
 
@@ -1306,12 +1305,12 @@ while running:
 
 
         if Menu == 13:
-            test1 = ascension_cost(current_ascension,"Suffix")
-            menu_text1 = font5.render("To Ascend get:\n  " + str(test1) +" Clicks", True, (0, 0, 0))
+            ascensiontext = ascension_cost(current_ascension,"Suffix")
+            menu_text1 = font5.render("To Ascend get:\n  " + str(ascensiontext) +" Clicks", True, (0, 0, 0))
         if Menu == 12:
-            test = tier_cost(current_tier,"Suffix")
+            Tiertext = tier_cost(current_tier,"Suffix")
             menu_text1 = font3.render((tier_info(current_tier)), True,  (0, 0, 0))
-            menu_text2 = font2.render("Cost: " + str(test) , True, (0, 0, 0))
+            menu_text2 = font2.render("Cost: " + str(Tiertext) , True, (0, 0, 0))
         if Menu == 11:
             menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
         # Drawing Systems
@@ -1427,7 +1426,9 @@ while running:
 # Tiers Menu Text line up
 ######
         if Menu == 12:
-            if current_tier == 1:
+            if current_tier == 0:
+                Menu_text1.center = (440, 380)
+            elif current_tier == 1:
                 Menu_text1.center = (470, 410)
             elif current_tier == 2:
                 Menu_text1.center = (610, 410)
@@ -1458,7 +1459,7 @@ while running:
 
 
         if Menu == 11:
-            Menu_text1.center = (600, 462)
+            Menu_text1.center = (650, 462)
             canvas.blit(menu_text1, Menu_text1)
 
         if Menu == 13:
