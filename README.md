@@ -26,7 +26,7 @@ Whats Happening in V3.0:
     - Adjusted Text locations for Tiers Upgrade Info
   
 - Balancing Changes 
-    - Lowered Price scaling  on CU1 scaling before its upgraded
+    - Changed Price Scaling for CU1 and CU4
   
 - Bug Fixes 
     - Xp multiplier just not being a thing
