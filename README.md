@@ -8,16 +8,16 @@
 V3.0 Should be out by the end of Aug
 --------------
 Whats Happening in V3.0:
-- Sacrifices
-- The Sacrifice Upgrade Tree (#1 -> #6)
-- Tiers 11 - 12
-- Settings
+New Features:
+    - Sacrifices
+    - The Sacrifice Upgrade Tree (#1 -> #6)
+    - Tiers 11 - 12
+    - Settings
 
-- Small Design Change in The Shop Menu
+- Design Change for the Shop 
     - The Switch to Rebirth Shop button has been remove and switch with 3 buttons that take you too
-        - Rebirth Upgrades
-        - Ascension Tree (Locked till you do an Ascension)
-        - ??? (Coming Soon)
+      - Rebirth Upgrades
+      - Ascension Tree (Locked till you do an Ascension)
 
 - Small Qol Updates/Changes:
     - Added the Ability to Max buy upgrades by holding shift
@@ -28,11 +28,12 @@ Whats Happening in V3.0:
   
 - Balancing Changes 
     - Changed Price Scaling for CU1 and CU4
-  
+    - Change Tier Prices
+
 - Bug Fixes 
     - Xp multiplier just not being a thing
     - Fix Auto Rebirth just not working as intended
-
+    - Fix RU4 Showing before Tier 5
 --------------
 Other Planed Update Features*:
 --------------

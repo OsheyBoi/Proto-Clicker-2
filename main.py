@@ -92,7 +92,6 @@ class Upgrade:
 
         if self.rect.collidepoint(mouse_pos):
             cost = self.cost_fn(self.level, current_tier, "True Price")
-            print(self.level)
             if clicks >= cost and self.level < self.max_level:
                 clicks -= cost
                 self.level += 1
@@ -112,7 +111,6 @@ class Upgrade2:
             return rebirths, False  # Return original clicks, no purchase made
         if self.rect.collidepoint(mouse_pos):
             cost = self.cost_fn(self.level, current_tier, "True Price")
-            print(self.level)
             if rebirths >= cost and self.level < self.max_level:
                 rebirths -= cost
                 self.level += 1
@@ -1318,7 +1316,10 @@ while running:
 
             menu_text1 = font2.render("Clicks Power 2: (" + str(RU1) + "/" + str(RU1M) + ") \n x" + str(RU1_multipler_s) + " \n  Cost: " + str(RU1_Cost_Show), True, (0, 0, 0))
             menu_text2 = font2.render("Rebirth Power (" + str(RU2) + "/" + str(RU2M) + ")\n x" + str(RU2_multipler_s) + " \n  Cost: " + str(RU2_Cost_Show), True, (0, 0, 0))
-            menu_text3 = font2.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
+            if current_tier >= 5:
+                menu_text3 = font2.render("Extra Xp (" + str(RU3) + "/" + str(RU3M) + ")\n X" + str(RU3_multipler_s) + " \n  Cost: " + str(RU3_Cost_Show), True, (0, 0, 0))
+            else:
+                menu_text3 = font2.render("Unlock at Tier 5", True, (0, 0, 0))
             menu_text4 = font2.render("Coming Later", True, (0, 0, 0))
             menu_text5 = font2.render("Coming Later ", True, (0, 0, 0))
             menu_text6 = font2.render("", True, (0, 0, 0))

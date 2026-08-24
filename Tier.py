@@ -79,8 +79,8 @@ def tier_cost(tier, type):
         Cost = 150000
 
     elif tier == 2:
-        #5 Million
-        Cost = (1000 ** 2) *5
+        #2.5 Million
+        Cost = (1000 ** 2) * 2.5
 
     elif tier == 3:
         #100 Million
