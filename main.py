@@ -585,7 +585,7 @@ if len(sys.argv) > 2:
 #    Start Application
 ################################################################################
 while running:
-
+    keys = pygame.key.get_pressed()
 ##########################
 #   For Debuger
 ##########################
@@ -969,6 +969,12 @@ while running:
         if event.type == AUTOSAVE_EVENT2:
             save_game(current_state)
             print(f"[SYSTEM] Autosaved for backup!")
+
+        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+            Shift_Held = 1
+        else:
+            Shift_Held = 0
+
 ################################################################################
 #    Extra Debug Tools (Only For Development)
 #################################################################################
@@ -1142,9 +1148,23 @@ while running:
                     upgrades[3].level = CU4
                     upgrades[4].level = CU5
                     for up in upgrades:
-                        clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
-                        if bought:
-                            break
+                        if Shift_Held:
+                            # Keep buying this specific upgrade until you run out of clicks
+                            any_bought = False
+                            while True:
+                                clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
+                                if not bought:
+                                    break
+                                any_bought = True
+
+                            # If we max-bought at least one level, stop checking other upgrades
+                            if any_bought:
+                                break
+                        else:
+                            # Normal single-buy behavior when Shift is NOT held
+                            clicks, bought = up.try_buy(mouse_pos, Menu, clicks)
+                            if bought:
+                                break
                     CU1 = upgrades[0].level
                     CU2 = upgrades[1].level
                     CU3 = upgrades[2].level

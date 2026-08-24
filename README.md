@@ -20,6 +20,7 @@ Whats Happening in V3.0:
         - ??? (Coming Soon)
 
 - Small Qol Updates/Changes:
+    - Added the Ability to Max buy upgrades by holding shift
     - Made the Xp show at the top get summed first
     - Fix hitboxes to be more accurate 
     - Fixing the menu to not be a few pixels off
