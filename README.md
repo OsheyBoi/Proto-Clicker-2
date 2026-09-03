@@ -5,37 +5,13 @@
 
 ![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
-V3.0 Will come at some point I SWEAR
+V3.1 (QOL and Backend Update) Coming Soon 
 --------------
-Whats Happening in V3.0:
-- New Features:
-    - Sacrifices
-    - The Sacrifice Upgrade Tree (#1 -> #6)
-    - Tiers 11 - 12
-    - Settings
-
-- Design Change for the Shop:
-    - The Switch to Rebirth Shop button has been remove and switch with 3 buttons that take you too
-      - Rebirth Upgrades
-      - Ascension Tree (Locked till you do an Ascension)
-
-- Small Qol Updates/Changes:
-    - Added the Ability to Max buy upgrades by holding shift
-    - Made the Xp show at the top get summed first
-    - Fix hitboxes to be more accurate 
-    - Fixing the menu to not be a few pixels off
-    - Adjusted Text locations for Tiers Upgrade Info
-  
-- Balancing Changes 
-    - Changed Price Scaling for CU1/3/4
-    - Change Lowered Tier Prices a ton
-
-- Bug Fixes 
-    - Xp multiplier just not being a thing
-    - Fix Auto Rebirth just not working as intended
-    - Fix RU4 Showing before Tier 5
-    - Fix CU3 being higher after tier 5 then intended
-
+Upcoming changelog:
+ - Balancing
+ - QOL Features
+ - Less Code Space
+ - Updated save system
 --------------
 Other Planed Update Features*:
 --------------
