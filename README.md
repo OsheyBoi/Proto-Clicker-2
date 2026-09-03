@@ -5,7 +5,7 @@
 
 ![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
-V3.0 Should be out by the end of Aug
+V3.0 Will come at some point I SWEAR
 --------------
 Whats Happening in V3.0:
 New Features:
