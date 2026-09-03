@@ -91,30 +91,30 @@ def tier_cost(tier, type):
         Cost = (1000 ** 3)
 
     elif tier == 5:
-        # 5 Billion
-        Cost = (1000 ** 3) * 100
+        # 25 Billion
+        Cost = (1000 ** 3) * 50
 
     elif tier == 6:
-        # 5 trillion
-        Cost = (1000 ** 4) * 5
+        # 1 trillion
+        Cost = 1000 ** 4
 
     elif tier == 7:
-        # 100 trillion
-        Cost = (1000 ** 4) * 100
+        # 25 trillion
+        Cost = (1000 ** 4) * 15
 
     elif tier == 8:
-        # 750 quadrillion
-        Cost = (1000 ** 5) * 750
+        #100 quadrillion
+        Cost = (1000 ** 5) * 100
 
     elif tier == 9:
-        # 1 sextillion
-        Cost = (1000 ** 7)
+        # 100 quintillion
+        Cost = (1000 ** 6) * 100
 
     elif tier == 10:
-        Cost =  (1000 ** 8) * 250
+        Cost =  (1000 ** 8) * 25
 
     elif tier == 11:
-        Cost =  (1000 ** 10) * 10
+        Cost =  (1000 ** 9) * 500
 
     elif tier == 12:
         Cost =  100000**10

@@ -8,7 +8,6 @@
 V3.0 Will come at some point I SWEAR
 --------------
 Whats Happening in V3.0:
-
 - New Features:
     - Sacrifices
     - The Sacrifice Upgrade Tree (#1 -> #6)
@@ -28,14 +27,15 @@ Whats Happening in V3.0:
     - Adjusted Text locations for Tiers Upgrade Info
   
 - Balancing Changes 
-    - Changed Price Scaling for CU1 and CU4
-    - Change Tier Prices (2/3/4/5)
+    - Changed Price Scaling for CU1/3/4
+    - Change Lowered Tier Prices a ton
 
 - Bug Fixes 
     - Xp multiplier just not being a thing
     - Fix Auto Rebirth just not working as intended
     - Fix RU4 Showing before Tier 5
     - Fix CU3 being higher after tier 5 then intended
+
 --------------
 Other Planed Update Features*:
 --------------
