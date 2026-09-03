@@ -34,6 +34,7 @@ New Features:
     - Xp multiplier just not being a thing
     - Fix Auto Rebirth just not working as intended
     - Fix RU4 Showing before Tier 5
+    - Fix CU3 being higher after tier 5 then intended
 --------------
 Other Planed Update Features*:
 --------------

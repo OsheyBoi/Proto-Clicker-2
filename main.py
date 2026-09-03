@@ -913,13 +913,13 @@ while running:
     if current_tier >= 5:
         if current_tier >= 7:
             if current_tier >= 10:
-                CU3M = 25
+                CU3M = 15
                 CU3Mult = 1.75
             else:
-                CU3M = 20
+                CU3M = 15
                 CU3Mult = 1.5
         else:
-            CU3M = 15
+            CU3M = 10
             CU3Mult = 1.3
 
     #Rebirth upgrade 1
