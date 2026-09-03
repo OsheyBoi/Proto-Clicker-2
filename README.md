@@ -8,13 +8,14 @@
 V3.0 Will come at some point I SWEAR
 --------------
 Whats Happening in V3.0:
-New Features:
+
+- New Features:
     - Sacrifices
     - The Sacrifice Upgrade Tree (#1 -> #6)
     - Tiers 11 - 12
     - Settings
 
-- Design Change for the Shop 
+- Design Change for the Shop:
     - The Switch to Rebirth Shop button has been remove and switch with 3 buttons that take you too
       - Rebirth Upgrades
       - Ascension Tree (Locked till you do an Ascension)
