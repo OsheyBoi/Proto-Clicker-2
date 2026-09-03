@@ -28,7 +28,7 @@ New Features:
   
 - Balancing Changes 
     - Changed Price Scaling for CU1 and CU4
-    - Change Tier Prices
+    - Change Tier Prices (2/3/4/5)
 
 - Bug Fixes 
     - Xp multiplier just not being a thing

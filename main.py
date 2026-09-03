@@ -1454,11 +1454,11 @@ while running:
             elif current_tier == 2:
                 Menu_text1.center = (610, 410)
             elif current_tier == 3:
-                Menu_text1.center = (550, 420)
+                Menu_text1.center = (500, 400)
             elif current_tier == 4:
                 Menu_text1.center = (610, 430)
             elif current_tier == 5:
-                Menu_text1.center = (400, 510)
+                Menu_text1.center = (505, 410)
             elif current_tier == 6:
                 Menu_text1.center = (570, 370)
             elif current_tier == 7:
