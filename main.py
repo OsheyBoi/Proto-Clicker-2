@@ -2,6 +2,7 @@ import pygame
 import sys
 import math
 import json
+import save_system
 import threading
 global WINDOWED_WIDTH_CACHE, WINDOWED_HEIGHT_CACHE, is_fullscreen, WINDOW_WIDTH, WINDOW_HEIGHT, screen, scale, offset_x, offset_y
 
@@ -1191,9 +1192,9 @@ while running:
                         current_Cooldown = current_time + CooldownLength
                         if current_tier >= 3:
                             Xp += Xp_Gain
-#########
+###############
 # Settings Buttons
-###########
+###############
                 if Menu == 52:
                     if menu_ui_4.collidepoint(mouse_pos):
                         if Change_size == 2:
@@ -1238,14 +1239,11 @@ while running:
                 current_ascension = temp_state["current_ascension"]
                 ascension_tokens = temp_state["ascension_tokens"]
         # ========================================================
-        # ========================================================
-
-        # ========================================================
 
 ################################################################################
 #    Drawing Ui Elements
 ################################################################################
-        #Upgrade  Menu
+        # Upgrade  Menu
 
         if current_Cooldown <= current_time:
             Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked.png"))

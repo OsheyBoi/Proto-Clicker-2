@@ -5,12 +5,12 @@
 
 ![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
-V3.1 (QOL and Backend Update) Coming Soon 
+V3.1 (QOL and Backend Update) Maybe Soonish (idk)
 --------------
 Upcoming changelog:
  - Balancing
  - QOL Features
- - Less Code Space
+ - Less Code Space in Main file (1630 -> ????)
  - Updated save system
 --------------
 Other Planed Update Features*:
