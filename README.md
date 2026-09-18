@@ -7,10 +7,12 @@
 --------------
 V3.1 (QOL and Backend Update) Maybe Soonish (idk)
 --------------
+
+NOTE: V3.1 WILL STOP SUPPORT OF OLD SAVE SYSTEM (V2.0 and Earlier)
 Upcoming changelog:
  - Balancing
  - QOL Features
- - Less Code Space in Main file (1630 -> ????)
+ - Code Clean upSpace in Main file
  - Updated save system
 --------------
 Other Planed Update Features*:

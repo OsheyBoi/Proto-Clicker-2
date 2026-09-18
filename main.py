@@ -11,46 +11,33 @@ import os
 import sys
 import importlib
 
+#Import Console and Debug Tools for Development
 try:
     import debugger
-
+    import game_console
     debugger_active = 0
     debug_file = 1
+    CONSOLE_AVAILABLE = True
+    game_console.start() # Fire up the background thread immediately
     DEBUGGER_AVAILABLE = False
 except ImportError:
     debugger_active = 0
     debugger = None
     debug_file = 0
     DEBUGGER_AVAILABLE = None
-try:
-    import game_console
-    CONSOLE_AVAILABLE = True
-    game_console.start() # Fire up the background thread immediately
-except ImportError:
     game_console = None
     CONSOLE_AVAILABLE = False
 
 from Prices import *
 from Tier import *
 from ascension  import *
-from Prices import amount_sum
 from Tier import tier_cost
-
-
-# Save File
-save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
-save_path = os.path.join(save_dir, "save_Data.json")
-save_path_backup = os.path.join(save_dir, "save_data_Backup.json")
-
-#Old Local File Saves
-SAVE_FILE = "save_data.json"
-SAVE_FILE_BACKUP = "save_data_backup.json"
-
 
 # Image Locations
 base_dir = os.path.dirname(__file__)
 img_dir = os.path.join(base_dir, 'images')
 
+# Cost Sum
 def amount_sum(amount):
     if amount < 1000:
         if amount <= 9:
@@ -78,7 +65,7 @@ def amount_sum(amount):
     Summed_Amount = str(rounded_amount) + suffixes[suffix_index]
     return str(Summed_Amount)
 
-
+#Click Upgrades
 class Upgrade:
     def __init__(self, menu_rect, current_level, max_level, cost_function):
         self.rect = menu_rect
@@ -98,7 +85,8 @@ class Upgrade:
                 self.level += 1
                 return clicks, True  # Return new clicks, purchase successful
 
-        return clicks, False
+        return clicks, False #
+# Rebirth Upgrades
 class Upgrade2:
     def __init__(self, menu_rect, current_level, max_level, cost_function):
         self.rect = menu_rect
@@ -122,7 +110,7 @@ class Upgrade2:
 ################################################################################
 #    Set up
 ################################################################################
-
+hello = 0
 pygame.init()
 
 GAME_WIDTH, GAME_HEIGHT = 1300, 900
@@ -148,77 +136,88 @@ def calculate_scale(win_w, win_h):
 ##########################
 #   Display Set up
 ##########################
+if hello == 0:
+    Set_size  = 0
+    dev_mult = 1
+    scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
+    clock = pygame.time.Clock()
+    size = 1
+    Change_size = 1
+    red = (255, 50, 50)
+    green = (0, 255, 0)
+    blue = (0, 0, 255)
+    yellow = (255, 255, 0)
+    cyan = (0, 255, 255)
+    white = (255, 255, 255)
+    light_gray = (200, 200, 200)
+    gray = (128, 128, 128)
+    dark_gray = (64, 64, 64)
+    black = (0, 0, 0)
+    orange = (255, 165, 0)
+    purple = (128, 0, 128)
 
-Set_size  = 0
-dev_mult = 1
-scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
-clock = pygame.time.Clock()
-size = 1
-Change_size = 1
-red = (255, 50, 50)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-yellow = (255, 255, 0)
-cyan = (0, 255, 255)
-white = (255, 255, 255)
-light_gray = (200, 200, 200)
-gray = (128, 128, 128)
-dark_gray = (64, 64, 64)
-black = (0, 0, 0)
-orange = (255, 165, 0)
-purple = (128, 0, 128)
+    font1 = pygame.font.SysFont("Arial", 30) #(Smaller)
+    font2 = pygame.font.SysFont("Arial", 40) #(Small)
+    font3 = pygame.font.SysFont("Arial", 50) #(Normal)
+    font4 = pygame.font.SysFont("Arial", 60) #(Big)
+    font5 = pygame.font.SysFont("Arial", 80) #(Huge)
+    pygame.display.set_caption('Proto Clicker 2')
 
-font1 = pygame.font.SysFont("Arial", 30) #(Smaller)
-font2 = pygame.font.SysFont("Arial", 40) #(Small)
-font3 = pygame.font.SysFont("Arial", 50) #(Normal)
-font4 = pygame.font.SysFont("Arial", 60) #(Big)
-font5 = pygame.font.SysFont("Arial", 80) #(Huge)
-pygame.display.set_caption('Proto Clicker 2')
+    menu_base_1 = [11,12,13]
+##########################
+#   Variable Setup
+##########################
+if hello == 0:
+    # V1.0
+    clicks = 0
+    rebirths = 0
+    current_tier = 0
+    Menu = 0
+    total_time_played = 0
+    Xp = 0
+    CU1 = 0
+    CU2 = 0
+    CU3 = 0
+    CU4 = 0
+    CU5 = 0
+    RU1 = 0
+    RU2 = 0
+    CPS = 0
+    Tier_Cm = 1
+    Tier_Rm = 1
+    RU3 = 0
+    levels = 1
+    Xp_Current_Level = 0
+    Xp_needed = 0
+    current_Cooldown = 0
+    time_passed_Since_Last_Click = 0
+    total_time_played_Click = 1
+    last_time_check_for_Auto_click = 0
+    Click_Xp_Mult = 1
+    CooldownLength = 0
+    Tier_Click_Speed = 1
+    last_time_check = 0
+    dev_mult = 1.0
+    Last_Speed = 1
+
+
+    # V3.0
+    current_ascension = 0
+    ascension_tokens = 0
+    ascension_stage = 0
+    ascension_stage_2 = 0
+    Keep_Click_Upgrades = 1
+    Keep_Rebirth_Upgrades = 1
+    ascension_Auto_Click_Speed = 1
 
 ##########################
-#   Veriable Setup
+#   Save System Setup
 ##########################
-# V1.0
-clicks = 0
-rebirths = 0
-current_tier = 0
-Menu = 0
-total_time_played = 0
-Xp = 0
-CU1 = 0
-CU2 = 0
-CU3 = 0
-CU4 = 0
-CU5 = 0
-RU1 = 0
-RU2 = 0
-CPS = 0
-Tier_Cm = 1
-Tier_Rm = 1
-RU3 = 0
-levels = 1
-Xp_Current_Level = 0
-Xp_needed = 0
-current_Cooldown = 0
-time_passed_Since_Last_Click = 0
-total_time_played_Click = 1
-last_time_check_for_Auto_click = 0
-Click_Xp_Mult = 1
-CooldownLength = 0
-Tier_Click_Speed = 1
-last_time_check = 0
-dev_mult = 1.0
-Last_Speed = 1
 
-
-# V3.0
-current_ascension = 0
-ascension_tokens = 0
-ascension_stage = 0
-ascension_stage_2 = 0
-Keep_Click_Upgrades = 1
-Keep_Rebirth_Upgrades = 1
-ascension_Auto_Click_Speed = 1
+# Save File
+save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
+save_path = os.path.join(save_dir, "save_Data.json")
+save_path_backup = os.path.join(save_dir, "save_data_Backup.json")
 
 default_game_state = {
     # V1.0
@@ -283,8 +282,6 @@ def save_game_backup(game_state):
     except IOError:
         print(f"[SYSTEM] Error: Could not write save file.")
 
-menu_base_1 = [11,12,13]
-
 
 ################################################################################
 #    Upgrades
@@ -295,107 +292,112 @@ menu_base_1 = [11,12,13]
 #  (y)U(x)Mult = CU(x) = (Currency) (Number) Multipler
 # Y = Currency  (C = Clicks) (R = Rebirths)
 
-#   Clicks
+#  Clicks Upgrades
+if hello == 0:
+    CU1M = 25
+    CU1Mult = 1
+    CU1_Cost = 1
 
-CU1M = 25
-CU1Mult = 1
-CU1_Cost = 1
+    CU2M = 10
+    CU2Mult = 0.1
+    CU2_Cost = 1
 
-CU2M = 10
-CU2Mult = 0.1
-CU2_Cost = 1
+    CU3M = 5
+    CU3Mult = 1.25
+    CU3_Cost = 1
 
-CU3M = 5
-CU3Mult = 1.25
-CU3_Cost = 1
+    CU4M = 10
+    CU4Mult = 1.3
+    CU4_Cost = 1
 
-CU4M = 10
-CU4Mult = 1.3
-CU4_Cost = 1
+    CU5M = 25
+    CU5Mult = 1.1
+    CU5_Cost = 1
 
-CU5M = 25
-CU5Mult = 1.1
-CU5_Cost = 1
+# Rebirths Upgrades
+if hello == 0:
+    RU1M = 15
+    RU1Mult = 1.6
+    RU1_Cost = 1
 
-#Rebirths
+    RU2M = 15
+    RU2Mult = 1.25
+    RU2_Cost = 1
 
-RU1M = 15
-RU1Mult = 1.6
-RU1_Cost = 1
-
-RU2M = 15
-RU2Mult = 1.25
-RU2_Cost = 1
-
-RU3M = 25
-RU3Mult = 1.1
-RU3_Cost = 1
+    RU3M = 25
+    RU3Mult = 1.1
+    RU3_Cost = 1
 
 ascension_stage = 0
 
 ################################################################################
-#    Ui / Text Set up
+#    Ui Set up
 ################################################################################
-shop_menu = pygame.Rect(420, 720, 440, 140)
-Rebirth_menu = pygame.Rect(24, 230, 120, 120)
-Tier_menu = pygame.Rect(24, 400, 120, 120)
-ascension_menu = pygame.Rect(24, 570, 120, 120)
-settings_menu = pygame.Rect(10, 10, 80, 80)
+if hello == 0:
+    shop_menu = pygame.Rect(420, 720, 440, 140)
+    Rebirth_menu = pygame.Rect(24, 230, 120, 120)
+    Tier_menu = pygame.Rect(24, 400, 120, 120)
+    ascension_menu = pygame.Rect(24, 570, 120, 120)
+    settings_menu = pygame.Rect(10, 10, 80, 80)
 
-Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
-Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
-Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
-Button_center = (675, 400)
-Button_radius = 200
+    Clicks_Amount_Box = pygame.Rect(100, 20, 350, 100)
+    Rebirth_Amount_Box = pygame.Rect(500, 20, 350, 100)
+    Xp_Amount_Box = pygame.Rect(900, 20, 350, 100)
+    Button_center = (675, 400)
+    Button_radius = 200
 
-Show_Button_1_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_2_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_3_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_4_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_5_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_6_hitbox = pygame.Rect(0, 0, 0, 0)
-Show_Button_7_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_1_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_2_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_3_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_4_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_5_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_6_hitbox = pygame.Rect(0, 0, 0, 0)
+    Show_Button_7_hitbox = pygame.Rect(0, 0, 0, 0)
 
-Show_Button_1 = pygame.Surface((0, 0))
-Show_Button_2 = pygame.Surface((0, 0))
-Show_Button_3 = pygame.Surface((0, 0))
-Show_Button_4 = pygame.Surface((0, 0))
-Show_Button_5 = pygame.Surface((0, 0))
-Show_Button_6 = pygame.Surface((0, 0))
-Show_Button_7 = pygame.Surface((0, 0))
+    Show_Button_1 = pygame.Surface((0, 0))
+    Show_Button_2 = pygame.Surface((0, 0))
+    Show_Button_3 = pygame.Surface((0, 0))
+    Show_Button_4 = pygame.Surface((0, 0))
+    Show_Button_5 = pygame.Surface((0, 0))
+    Show_Button_6 = pygame.Surface((0, 0))
+    Show_Button_7 = pygame.Surface((0, 0))
 
-background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png'))
-Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
-Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
-Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
-Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
-settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
-ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
+    background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png'))
+    Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
+    Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
+    Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
+    Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
+    settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
+    ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
 
-Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
-Locked_Image = pygame.image.load(os.path.join(img_dir,'Menu',"Locked.png"))
+    Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
+    Locked_Image = pygame.image.load(os.path.join(img_dir,'Menu',"Locked.png"))
 
-click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
-rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
-xp_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "xp_amount.png"))
+    click_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "click_amount.png"))
+    rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
+    xp_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "xp_amount.png"))
 
+################################################################################
+#    Text Set up
+################################################################################
 #Menu Stuff (Render place and size)
-Menu_Box = pygame.Rect(20, 150, 1250, 710)
-close_menu = pygame.Rect(1170, 200, 50, 50)
-menu_ui_1 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_2 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_3 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_4 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_5 = pygame.Rect(1170, 200, 50, 50)
-menu_ui_6 = pygame.Rect(660, 780, 190, 80)
-menu_ui_7 = pygame.Rect(860, 780, 220, 80)
-#Menu Text
-menu_text1 = font2.render("", True, (0, 0, 0))
-menu_text2 = font2.render("", True, (0, 0, 0))
-menu_text3 = font2.render("", True, (0, 0, 0))
-menu_text4 = font2.render("", True, (0, 0, 0))
-menu_text5 = font2.render("", True, (0, 0, 0))
-menu_text6 = font2.render("", True, (0, 0, 0))
+if hello == 0:
+    Menu_Box = pygame.Rect(20, 150, 1250, 710)
+    close_menu = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_1 = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_2 = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_3 = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_4 = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_5 = pygame.Rect(1170, 200, 50, 50)
+    menu_ui_6 = pygame.Rect(660, 780, 190, 80)
+    menu_ui_7 = pygame.Rect(860, 780, 220, 80)
+    #Menu Text
+    menu_text1 = font2.render("", True, (0, 0, 0))
+    menu_text2 = font2.render("", True, (0, 0, 0))
+    menu_text3 = font2.render("", True, (0, 0, 0))
+    menu_text4 = font2.render("", True, (0, 0, 0))
+    menu_text5 = font2.render("", True, (0, 0, 0))
+    menu_text6 = font2.render("", True, (0, 0, 0))
 
 ################################################################################
 #    Loading System
@@ -412,6 +414,9 @@ game_vars = {
 
 }
 
+################
+# Save Loader
+################
 try:
     with open(save_path, "r") as f:
         loaded_data = json.load(f)
@@ -440,8 +445,6 @@ try:
         ascension_tokens = loaded_data.get("ascension_tokens", 0)
         ascension_stage = loaded_data.get("ascension_stage", 0)
         ascension_stage_2 = loaded_data.get("ascension_stage", 0)
-
-
 except (FileNotFoundError, json.JSONDecodeError):
     try:
         with open(save_path_backup, "r") as f:
@@ -471,73 +474,29 @@ except (FileNotFoundError, json.JSONDecodeError):
             ascension_tokens = loaded_data.get("ascension_tokens", 0)
             ascension_stage = loaded_data.get("ascension_stage", 0)
             ascension_stage_2 = loaded_data.get("ascension_stage", 0)
-
     except (FileNotFoundError, json.JSONDecodeError):
-        try:
-            with open(SAVE_FILE, "r") as f:
-                loaded_data = json.load(f)
+        # Default variables if no save file exists
+        clicks = 0
+        rebirths = 0
+        current_tier = 0
+        xp = 0
+        total_time_played = 0
+        CU1 = 0
+        CU2 = 0
+        CU3 = 0
+        CU4 = 0
+        CU5 = 0
 
-                # Core game progress variables
-                clicks = loaded_data.get("clicks", 0)
-                rebirths = loaded_data.get("rebirths", 0)
-                current_tier = loaded_data.get("current_tier", 0)
-                Xp = loaded_data.get("xp", 0)
-                total_time_played = loaded_data.get("total_time_played", 0)
+        RU1 = 0
+        RU2 = 0
+        RU3 = 0
 
-                # Click Upgrades
-                CU1 = loaded_data.get("CU1", 0)
-                CU2 = loaded_data.get("CU2", 0)
-                CU3 = loaded_data.get("CU3", 0)
-                CU4 = loaded_data.get("CU4", 0)
-                CU5 = loaded_data.get("CU5", 0)
+        # V3.0 Ascensions
+        current_ascension = 0
+        ascension_tokens = 0
+        ascension_stage = 0
+        ascension_stage_2 = 0
 
-                # Rebirth Upgrades
-                RU1 = loaded_data.get("RU1", 0)
-                RU2 = loaded_data.get("RU2", 0)
-                RU3 = loaded_data.get("RU3", 0)
-
-                # V3.0 Ascensions
-                current_ascension = loaded_data.get("current_ascension", 0)
-                ascension_tokens = loaded_data.get("ascension_tokens", 0)
-                ascension_stage = loaded_data.get("ascension_stage", 0)
-                ascension_stage_2 = loaded_data.get("ascension_stage", 0)
-
-        except (FileNotFoundError, json.JSONDecodeError):
-            # Default variables if no save file exists
-            clicks = 0
-            rebirths = 0
-            current_tier = 0
-            xp = 0
-            total_time_played = 0
-
-            CU1 = 0
-            CU2 = 0
-            CU3 = 0
-            CU4 = 0
-            CU5 = 0
-
-            RU1 = 0
-            RU2 = 0
-            RU3 = 0
-
-            # V3.0 Ascensions
-            current_ascension = 0
-            ascension_tokens = 0
-            ascension_stage = 0
-            ascension_stage_2 = 0
-
-##########################
-#   Multipler Setup
-##########################
-
-
-CU1_multipler = (CU1 * CU1Mult)
-CU2_multipler = (CU2 * CU2Mult)
-CU3_multipler = (CU3Mult ** CU3)
-CU4_multipler = (CU4Mult ** CU4)
-CU5_multipler = (CU5Mult ** CU5)
-
-#-----------------
 ##########################
 #   Upgrade Shop set up
 ##########################
@@ -547,20 +506,16 @@ upgrades = [
     Upgrade(menu_ui_3, 0, CU3M, CU3_CostAmount),
     Upgrade(menu_ui_4, 0, CU4M, CU4_CostAmount),
     Upgrade(menu_ui_5, 0, CU5M, CU5_CostAmount),
-
 ]
-
 upgrades2 = [
     Upgrade2(menu_ui_1, 0, RU2M, RU1_CostAmount),
     Upgrade2(menu_ui_2, 0, RU2M, RU2_CostAmount),
     Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
-
-
 ]
+
 ##########################
 #   Auto Events (Save, Clicks, Rebirths)
 ##########################
-
 AUTOSAVE_EVENT = pygame.USEREVENT + 1
 pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
 
@@ -574,7 +529,7 @@ pygame.time.set_timer(AUTOClick_EVENT, 1000)
 AUTORebirth_EVENT = pygame.USEREVENT + 3
 pygame.time.set_timer(AUTORebirth_EVENT, 1000)
 
-
+# Debug
 if len(sys.argv) > 2:
   Menu = int(sys.argv[1])
   DEBUGGER_AVAILABLE = sys.argv[2] == "True"
@@ -586,8 +541,7 @@ if len(sys.argv) > 2:
 while running:
     keys = pygame.key.get_pressed()
 ##########################
-#   For Debuger
-##########################
+#For Debugger
     physical_mouse_pos = pygame.mouse.get_pos()
     mouse_x = int((physical_mouse_pos[0] - offset_x) / scale)
     mouse_y = int((physical_mouse_pos[1] - offset_y) / scale)
@@ -595,9 +549,10 @@ while running:
         max(0, min(mouse_x, GAME_WIDTH - 1)),
         max(0, min(mouse_y, GAME_HEIGHT - 1))
     )
-
+###########################
+# For Clicking the button
     distance = math.hypot(mouse_pos[0] - Button_center[0], mouse_pos[1] - Button_center[1])
-
+# Final Loading Stage
     current_state = {
         "clicks": clicks,
         "rebirths": rebirths,
@@ -650,8 +605,9 @@ while running:
         Xp_AR = font2.render("Unlock At T3",True, (0, 0, 0))
 
 ################################################################################
-#    Tier Upgrade Multiplers
+#    Tier Upgrade Multiplier
 ################################################################################
+#s
     if current_tier ==  0:          #    Tier Base Upgrades
         Tier_Xp = 1                 #    Xp Mult
         Tier_Cm = 1                 #    Clicks Multipler
@@ -753,8 +709,6 @@ while running:
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
-
-
 ################################################################################
 #    Ascension Upgrade Tree
 ################################################################################
@@ -842,10 +796,10 @@ while running:
         Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
 
     ]
-################################################################################
-#    Currency Amount Gain
-#################################################################################
-
+##################################
+#    CLick Gain Calculator
+##################################
+#
     base_clicks = (1 + CU1)
     if current_tier <= 5:
         Rebirth_x_clicks = 1
@@ -862,12 +816,14 @@ while running:
     Total_clicks_mult =  CM_Upgrades * CM_Tiers * CM_Ascension * CM_Other * dev_mult
     if Total_clicks_mult == 0:
         Total_clicks_mult = 1
-    # ----------------
+    CPC = base_clicks * Total_clicks_mult  #Click per Click
+    CPC_Show = amount_sum(CPC)   # Click per Click
+    CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
 
 ######################
 #   Auto CLick Speed
 #####################
-
+#
     if Auto_Click_Speed == 2:
         if ascension_Auto_Click_Speed == 1 and Last_Speed != 3:
             pygame.time.set_timer(AUTOClick_EVENT, 200)
@@ -880,14 +836,10 @@ while running:
         Last_Speed = 1
 
 #####################
-#   Gain Amount
+#   XP/ Rebirth Gain Amount
 #####################
-    CPC = base_clicks * Total_clicks_mult  #Click per Click
-    CPC_Show = amount_sum(CPC)   # Click per Click
-
+#
     CooldownLength = 1000 - ((CU2Mult * CU2) * 1000) / Tier_Click_Speed
-
-
     Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult * Tier_Xp
 
     if clicks >= 1000:
@@ -897,10 +849,10 @@ while running:
         Rebirth_Gain = 0
         Rebirth_Gain_Show = str(0)
 
-
 ################################################################################
 #    Upgrade Changes
 ################################################################################
+#
     #Click  upgrade 1
     if current_tier >= 9:
         if current_tier >= 12:
@@ -928,13 +880,10 @@ while running:
             RU1M = 20
             RU1Mult = 1.5
 
-
-    for event in pygame.event.get():
-
 ##########################################
 #    Full Screen Mode
 ###########################################
-
+    for event in pygame.event.get():
         if event.type == pygame.VIDEORESIZE:
             if not is_fullscreen:
                 WINDOW_WIDTH, WINDOW_HEIGHT = event.w, event.h
