@@ -214,73 +214,28 @@ if hello == 0:
 #   Save System Setup
 ##########################
 
-# Save File
-save_dir = pygame.system.get_pref_path("Oshey Studios", "Proto Clicker 2")
-save_path = os.path.join(save_dir, "save_Data.json")
-save_path_backup = os.path.join(save_dir, "save_data_Backup.json")
+loaded_data = save_system.load_game()
 
-default_game_state = {
-    # V1.0
-    "clicks": clicks,
-    "rebirths": rebirths,
-    "current_tier": current_tier,
-    "total_time_played": total_time_played,
-    "xp": Xp,
-    "CU1": CU1,
-    "CU2": CU2,
-    "CU3": CU3,
-    "CU4": CU4,
-    "CU5": CU5,
-    "RU1": RU1,
-    "RU2": RU2,
-    "RU3": RU3,
-    # V3.0
-    "current_ascension"  : current_ascension,
-    "ascension_tokens" : ascension_tokens,
-    "ascension_stage" : ascension_stage,
-    "ascension_stage_2": ascension_stage_2
-}
+clicks = loaded_data.get("clicks", 0)
+rebirths = loaded_data.get("rebirths", 0)
+current_tier = loaded_data.get("current_tier", 0)
+Xp = loaded_data.get("xp", 0)
+total_time_played = loaded_data.get("total_time_played", 0)
 
-current_state = {
-    # V1.0
-    "clicks": clicks,
-    "rebirths": rebirths,
-    "current_tier": current_tier,
-    "total_time_played": total_time_played,
-    "xp": Xp,
-    "CU1": CU1,
-    "CU2": CU2,
-    "CU3": CU3,
-    "CU4": CU4,
-    "CU5": CU5,
-    "RU1": RU1,
-    "RU2": RU2,
-    "RU3": RU3,
-    # V3.0
-    "current_ascension": current_ascension,
-    "ascension_tokens": ascension_tokens,
-    "ascension_stage": ascension_stage,
-    "ascension_stage_2": ascension_stage_2
-}
+CU1 = loaded_data.get("CU1", 0)
+CU2 = loaded_data.get("CU2", 0)
+CU3 = loaded_data.get("CU3", 0)
+CU4 = loaded_data.get("CU4", 0)
+CU5 = loaded_data.get("CU5", 0)
 
+RU1 = loaded_data.get("RU1", 0)
+RU2 = loaded_data.get("RU2", 0)
+RU3 = loaded_data.get("RU3", 0)
 
-def save_game(game_state):
-    """Writes the current game state dictionary to a JSON file."""
-    try:
-        with open(save_path, "w") as f:
-            json.dump(game_state, f, indent=4)
-        print(f"[SYSTEM] Game saved successfully!")
-    except IOError:
-        print(f"[SYSTEM] Error: Could not write save file.")
-
-def save_game_backup(game_state):
-    """Writes the current game state dictionary to a JSON file."""
-    try:
-        with open(save_path_backup, "w") as f:
-            json.dump(game_state, f, indent=4)
-        print(f"[SYSTEM] Game saved successfully!")
-    except IOError:
-        print(f"[SYSTEM] Error: Could not write save file.")
+current_ascension = loaded_data.get("current_ascension", 0)
+ascension_tokens = loaded_data.get("ascension_tokens", 0)
+ascension_stage = loaded_data.get("ascension_stage", 0)
+ascension_stage_2 = loaded_data.get("ascension_stage_2", 0)
 
 
 ################################################################################
@@ -402,101 +357,7 @@ if hello == 0:
 ################################################################################
 #    Loading System
 ################################################################################
-
 running = True
-
-game_vars = {
-    "clicks": 0,
-    "rebirths": 0,
-    "current_tier" : 0,
-    "current_ascension" : 0,
-    "ascension_tokens": 0,
-
-}
-
-################
-# Save Loader
-################
-try:
-    with open(save_path, "r") as f:
-        loaded_data = json.load(f)
-
-        # Core game progress variables
-        clicks = loaded_data.get("clicks", 0)
-        rebirths = loaded_data.get("rebirths", 0)
-        current_tier = loaded_data.get("current_tier", 0)
-        Xp = loaded_data.get("xp", 0)
-        total_time_played = loaded_data.get("total_time_played", 0)
-
-        # Click Upgrades
-        CU1 = loaded_data.get("CU1", 0)
-        CU2 = loaded_data.get("CU2", 0)
-        CU3 = loaded_data.get("CU3", 0)
-        CU4 = loaded_data.get("CU4", 0)
-        CU5 = loaded_data.get("CU5", 0)
-
-        # Rebirth Upgrades
-        RU1 = loaded_data.get("RU1", 0)
-        RU2 = loaded_data.get("RU2", 0)
-        RU3 = loaded_data.get("RU3", 0)
-
-        # V3.0 Ascensions
-        current_ascension = loaded_data.get("current_ascension", 0)
-        ascension_tokens = loaded_data.get("ascension_tokens", 0)
-        ascension_stage = loaded_data.get("ascension_stage", 0)
-        ascension_stage_2 = loaded_data.get("ascension_stage", 0)
-except (FileNotFoundError, json.JSONDecodeError):
-    try:
-        with open(save_path_backup, "r") as f:
-            loaded_data = json.load(f)
-
-            # Core game progress variables
-            clicks = loaded_data.get("clicks", 0)
-            rebirths = loaded_data.get("rebirths", 0)
-            current_tier = loaded_data.get("current_tier", 0)
-            Xp = loaded_data.get("xp", 0)
-            total_time_played = loaded_data.get("total_time_played", 0)
-
-            # Click Upgrades
-            CU1 = loaded_data.get("CU1", 0)
-            CU2 = loaded_data.get("CU2", 0)
-            CU3 = loaded_data.get("CU3", 0)
-            CU4 = loaded_data.get("CU4", 0)
-            CU5 = loaded_data.get("CU5", 0)
-
-            # Rebirth Upgrades
-            RU1 = loaded_data.get("RU1", 0)
-            RU2 = loaded_data.get("RU2", 0)
-            RU3 = loaded_data.get("RU3", 0)
-
-            # V3.0 Ascensions
-            current_ascension = loaded_data.get("current_ascension", 0)
-            ascension_tokens = loaded_data.get("ascension_tokens", 0)
-            ascension_stage = loaded_data.get("ascension_stage", 0)
-            ascension_stage_2 = loaded_data.get("ascension_stage", 0)
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Default variables if no save file exists
-        clicks = 0
-        rebirths = 0
-        current_tier = 0
-        xp = 0
-        total_time_played = 0
-        CU1 = 0
-        CU2 = 0
-        CU3 = 0
-        CU4 = 0
-        CU5 = 0
-
-        RU1 = 0
-        RU2 = 0
-        RU3 = 0
-
-        # V3.0 Ascensions
-        current_ascension = 0
-        ascension_tokens = 0
-        ascension_stage = 0
-        ascension_stage_2 = 0
-
 ##########################
 #   Upgrade Shop set up
 ##########################
@@ -883,7 +744,10 @@ while running:
 ##########################################
 #    Full Screen Mode
 ###########################################
+###########################################
     for event in pygame.event.get():
+        if game_console.handle_event(event):
+            continue  # Don't execute game hotkeys if typing inside the console box
         if event.type == pygame.VIDEORESIZE:
             if not is_fullscreen:
                 WINDOW_WIDTH, WINDOW_HEIGHT = event.w, event.h
@@ -927,30 +791,38 @@ while running:
 #    Extra Debug Tools (Only For Development)
 #################################################################################
         if event.type == pygame.KEYDOWN:
-            if debug_file == 1:
-                if event.key == pygame.K_p:
-                    debugger_active = not debugger_active
-                    print(f"[SYSTEM] Debugger toggled: {debugger_active}")
-
-                elif event.key == pygame.K_o:
-                    if debugger_active:
+            if debug_file == 1 and not game_console.active:
+                    if event.key == pygame.K_p:
+                        debugger_active = not debugger_active
+                        print(f"[SYSTEM] Debugger toggled: {debugger_active}")
+                    elif event.key == pygame.K_o:
                         print("[SYSTEM] Restarting game script and saving state...")
-                        save_game(current_state)
+                        current_state = {
+                            "clicks": clicks, "rebirths": rebirths, "current_tier": current_tier,
+                            "total_time_played": total_time_played, "xp": Xp,
+                            "CU1": CU1, "CU2": CU2, "CU3": CU3, "CU4": CU4, "CU5": CU5,
+                            "RU1": RU1, "RU2": RU2, "RU3": RU3,
+                            "current_ascension": current_ascension, "ascension_tokens": ascension_tokens,
+                            "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
+                        }
+                        # 2. Call your new file module instead of the old function
+                        save_system.save_game(current_state)
+                        # 3. Cleanly close the current frame and restart the script
                         pygame.quit()
                         os.execl(sys.executable, sys.executable, __file__, str(Menu), str(debugger_active))
-                elif event.key == pygame.K_i:
-                    print ("[SYSTEM] Debug variable Checker:")
-                    print("[SYSTEM] Currencies:")
-                    print("Clicks: " + str(clicks))
-                    print("Rebirths: " + str(rebirths))
-                    print("Xp: " + str(Xp))
-                    print("Tokens: " + str(ascension_tokens))
-                    print("Menu: " + str(Menu))
-                    print("[SYSTEM] Click Multiplers:")
-                    print("Upgrades: " + str(CM_Upgrades))
-                    print("Tier: " + str(CM_Tiers))
-                    print("Ascension: " + str(CM_Ascension))
-                    print("Other: " + str(CM_Other))
+                    elif event.key == pygame.K_i:
+                        print ("[SYSTEM] Debug variable Checker:")
+                        print("[SYSTEM] Currencies:")
+                        print("Clicks: " + str(clicks))
+                        print("Rebirths: " + str(rebirths))
+                        print("Xp: " + str(Xp))
+                        print("Tokens: " + str(ascension_tokens))
+                        print("Menu: " + str(Menu))
+                        print("[SYSTEM] Click Multiplers:")
+                        print("Upgrades: " + str(CM_Upgrades))
+                        print("Tier: " + str(CM_Tiers))
+                        print("Ascension: " + str(CM_Ascension))
+                        print("Other: " + str(CM_Other))
 
 ##############################
 # Button Clicked with mouse
@@ -983,14 +855,13 @@ while running:
                         Menu = 1
                     elif Menu == 1:
                         Menu = 6
-                if shop_menu.collidepoint(mouse_pos):
 
+                if shop_menu.collidepoint(mouse_pos):
                     if Menu == 0:
                         Menu = 1
 
                 if close_menu.collidepoint(mouse_pos):
                     if Menu >= 1:
-                        # Close Menu Button
                         Menu = 0
 
                 if menu_ui_1.collidepoint(mouse_pos) and Menu == 12:
@@ -1568,7 +1439,7 @@ while running:
     new_size = (int(GAME_WIDTH * scale), int(GAME_HEIGHT * scale))
     scaled_canvas = pygame.transform.scale(canvas, new_size)
     screen.blit(scaled_canvas, (offset_x, offset_y))
-
+    game_console.draw(screen)
     pygame.display.flip()
     clock.tick(60)
 

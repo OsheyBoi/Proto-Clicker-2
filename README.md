@@ -8,11 +8,11 @@
 V3.1 (QOL and Backend Update) Maybe Soonish (idk)
 --------------
 
-NOTE: V3.1 WILL STOP SUPPORT OF OLD SAVE SYSTEM (V2.0 and Earlier)
+NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
 Upcoming changelog:
  - Balancing
  - QOL Features
- - Code Clean upSpace in Main file
+ - Seasonal Events 
  - Updated save system
 --------------
 Other Planed Update Features*:
