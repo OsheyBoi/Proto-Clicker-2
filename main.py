@@ -4,6 +4,7 @@ import math
 import json
 import save_system
 import threading
+import seasonal_event
 global WINDOWED_WIDTH_CACHE, WINDOWED_HEIGHT_CACHE, is_fullscreen, WINDOW_WIDTH, WINDOW_HEIGHT, screen, scale, offset_x, offset_y
 
 # Debugging and other things
@@ -112,7 +113,7 @@ class Upgrade2:
 ################################################################################
 hello = 0
 pygame.init()
-
+saving = 0
 GAME_WIDTH, GAME_HEIGHT = 1300, 900
 canvas = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
 # 1300 x 900
@@ -289,6 +290,7 @@ ascension_stage = 0
 #    Ui Set up
 ################################################################################
 if hello == 0:
+    event_type = seasonal_event.event()
     shop_menu = pygame.Rect(420, 720, 440, 140)
     Rebirth_menu = pygame.Rect(24, 230, 120, 120)
     Tier_menu = pygame.Rect(24, 400, 120, 120)
@@ -317,11 +319,11 @@ if hello == 0:
     Show_Button_6 = pygame.Surface((0, 0))
     Show_Button_7 = pygame.Surface((0, 0))
 
-    background =  pygame.image.load(os.path.join(img_dir, 'Other', 'Background.png'))
+    background =  pygame.image.load(os.path.join(img_dir, 'Other', "Background_" + event_type + ".png"))
     Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
     Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
     Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
-    Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked.png"))
+    Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked_" + event_type  + ".png"))
     settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
     ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
 
@@ -332,6 +334,7 @@ if hello == 0:
     rebirth_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "rebirth_amount.png"))
     xp_amount = pygame.image.load(os.path.join(img_dir, 'Amount_Shown', "xp_amount.png"))
 
+    save_icon = pygame.image.load(os.path.join(img_dir, 'Other', "save_icon.png"))
 ################################################################################
 #    Text Set up
 ################################################################################
@@ -358,6 +361,7 @@ if hello == 0:
 #    Loading System
 ################################################################################
 running = True
+apple = 0
 ##########################
 #   Upgrade Shop set up
 ##########################
@@ -378,16 +382,18 @@ upgrades2 = [
 #   Auto Events (Save, Clicks, Rebirths)
 ##########################
 AUTOSAVE_EVENT = pygame.USEREVENT + 1
-pygame.time.set_timer(AUTOSAVE_EVENT, 10000)
+pygame.time.set_timer(AUTOSAVE_EVENT, 15000)
 
-AUTOSAVE_EVENT2 = pygame.USEREVENT + 1
-pygame.time.set_timer(AUTOSAVE_EVENT, 60000)
+AUTOSAVE_EVENT2 = pygame.USEREVENT + 2
+pygame.time.set_timer(AUTOSAVE_EVENT2, 60000)
 
+AUTOSAVE_MESSAGE_EVENT = pygame.USEREVENT + 3
+pygame.time.set_timer(AUTOSAVE_MESSAGE_EVENT, 1000)
 
-AUTOClick_EVENT = pygame.USEREVENT + 2
+AUTOClick_EVENT = pygame.USEREVENT + 4
 pygame.time.set_timer(AUTOClick_EVENT, 1000)
 
-AUTORebirth_EVENT = pygame.USEREVENT + 3
+AUTORebirth_EVENT = pygame.USEREVENT + 5
 pygame.time.set_timer(AUTORebirth_EVENT, 1000)
 
 # Debug
@@ -769,18 +775,52 @@ while running:
 
         if event.type == pygame.QUIT:
             running = False
-            save_game(current_state)
+            current_state = {
+                "clicks": clicks, "rebirths": rebirths, "current_tier": current_tier,
+                "total_time_played": total_time_played, "xp": Xp,
+                "CU1": CU1, "CU2": CU2, "CU3": CU3, "CU4": CU4, "CU5": CU5,
+                "RU1": RU1, "RU2": RU2, "RU3": RU3,
+                "current_ascension": current_ascension, "ascension_tokens": ascension_tokens,
+                "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
+            }
+            save_system.save_game(current_state)
             pygame.quit()
             sys.exit()
 
-        # 3. Catch the 10-second timer event here
-        if event.type == AUTOSAVE_EVENT:
-            save_game(current_state)
-            print(f"[SYSTEM] Autosaved for Main ")
+        # ==========================================
+        # 2. MAIN AUTOSAVE TIMER EVENT
+        # ==========================================
+        elif event.type == AUTOSAVE_EVENT:
+            current_state = {
+                "clicks": clicks, "rebirths": rebirths, "current_tier": current_tier,
+                "total_time_played": total_time_played, "xp": Xp,
+                "CU1": CU1, "CU2": CU2, "CU3": CU3, "CU4": CU4, "CU5": CU5,
+                "RU1": RU1, "RU2": RU2, "RU3": RU3,
+                "current_ascension": current_ascension, "ascension_tokens": ascension_tokens,
+                "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
+            }
+            save_system.save_game(current_state)
+            print(f"[SYSTEM] Autosaved for Main Profile (Encrypted)")
+            saving = 1
 
-        if event.type == AUTOSAVE_EVENT2:
-            save_game(current_state)
-            print(f"[SYSTEM] Autosaved for backup!")
+
+        elif event.type == AUTOSAVE_EVENT2:
+            current_state = {
+                "clicks": clicks, "rebirths": rebirths, "current_tier": current_tier,
+                "total_time_played": total_time_played, "xp": Xp,
+                "CU1": CU1, "CU2": CU2, "CU3": CU3, "CU4": CU4, "CU5": CU5,
+                "RU1": RU1, "RU2": RU2, "RU3": RU3,
+                "current_ascension": current_ascension, "ascension_tokens": ascension_tokens,
+                "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
+            }
+            save_system.save_game(current_state, backup=True)
+            print(f"[SYSTEM] Autosaved for Backup Profile (Encrypted)")
+        elif event.type == AUTOSAVE_MESSAGE_EVENT:
+            if apple != 4:
+                apple = apple + 1
+            else:
+                saving = 0
+                apple = 0
 
         if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
             Shift_Held = 1
@@ -1066,9 +1106,9 @@ while running:
         # Upgrade  Menu
 
         if current_Cooldown <= current_time:
-            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked.png"))
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked_" + event_type  +".png"))
         else:
-            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked.png"))
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked_" + event_type  +".png"))
 
         if Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 425, 55)
@@ -1423,8 +1463,6 @@ while running:
 
                 # Recalculate your math variables instantly so mouse coordinates don't break
                 scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
-
-
 ##################################
 # Debugger -> Note: The Debugger is made by ai but is only used for testing)
 ###################################
@@ -1440,6 +1478,16 @@ while running:
     scaled_canvas = pygame.transform.scale(canvas, new_size)
     screen.blit(scaled_canvas, (offset_x, offset_y))
     game_console.draw(screen)
+    if saving == 1:
+        save_icon = pygame.image.load(os.path.join(img_dir, 'Other', "save_icon.png")).convert_alpha()
+        save_icon.set_alpha(128)
+        canvas.blit(save_icon, (1160, 780))
+        save_icon = save_icon.get_rect(topleft=(1160, 780))
+    elif saving == 0:
+        save_icon = pygame.image.load(os.path.join(img_dir, 'Other', "save_icon.png")).convert_alpha()
+        save_icon.set_alpha(128)
+        canvas.blit(save_icon, (4500, 1500))
+        save_icon = save_icon.get_rect(topleft=(4500, 1500))
     pygame.display.flip()
     clock.tick(60)
 
