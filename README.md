@@ -3,7 +3,6 @@
 ![Static Badge](https://img.shields.io/badge/Public%20build-V3.0-darkgreen?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.1-blue?style=for-the-badge)
 
-![Static Badge](https://img.shields.io/badge/Current_Development_Stage:-Bug_Fixs%20-%20Blue)
 --------------
 V3.1 (QOL and Backend Update) Maybe Soonish (idk)
 --------------
