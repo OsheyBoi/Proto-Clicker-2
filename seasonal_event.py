@@ -5,8 +5,6 @@ def event():
     day = today.day
     if month == 10 and day >= 20:
         event = "spooky"
-    elif month == 10 and day >= 20:
-        event = "spooky"
     elif month == 12 and day <= 25:
         event = "festive"
     elif month == 12 and day >= 26 or month == 1 and day <= 3:
