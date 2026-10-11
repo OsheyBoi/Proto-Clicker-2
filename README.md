@@ -4,7 +4,7 @@
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.1-blue?style=for-the-badge)
 
 --------------
-V3.1 (QOL and Backend Update) Maybe Soonish (idk)
+V3.1 (QOL and Backend Update) 
 --------------
 
 NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
@@ -13,10 +13,10 @@ Upcoming changelog:
  - QOL Features
  - Seasonal Events 
  - Updated save system
---------------
-Other Planed Update Features*:
---------------
 
+-------------
+More Planed Updates (if I Continue to Update the game):
+--------
 V4:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
@@ -24,10 +24,6 @@ V4:
 V5:
 - Recreation Tiers 1 -> 3
 - Application Version of the Game
-
--------------
-More Planed Updates (if I Continue to Update the game):
---------
 
 V6:
 - Recreation Tiers 4 + 5
