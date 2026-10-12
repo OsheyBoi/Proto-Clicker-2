@@ -4,7 +4,7 @@
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.1-blue?style=for-the-badge)
 
 --------------
-V3.1 (QOL and Backend Update) 
+V3.1 (Loading Events n Fixes encrypted) (Also last updated planed for now)
 --------------
 
 NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
