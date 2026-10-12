@@ -60,9 +60,9 @@ def amount_sum(amount):
     if amount >= 0 and amount <= 9:
         rounded_amount = round(amount, 2)
     if amount >= 10 and amount <= 99:
-        rounded_amount = round(amount, 1)
+        rounded_amount = round(amount, 2)
     if amount >= 100:
-        rounded_amount = round(amount, 0)
+        rounded_amount = round(amount, 1)
     Summed_Amount = str(rounded_amount) + suffixes[suffix_index]
     return str(Summed_Amount)
 
@@ -800,7 +800,7 @@ while running:
                 "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
             }
             save_system.save_game(current_state)
-            print(f"[SYSTEM] Autosaved for Main Profile (Encrypted)")
+            print(f"[SYSTEM] Autosaved for Main Profile")
             saving = 1
 
 
@@ -814,7 +814,7 @@ while running:
                 "ascension_stage": ascension_stage, "ascension_stage_2": ascension_stage_2
             }
             save_system.save_game(current_state, backup=True)
-            print(f"[SYSTEM] Autosaved for Backup Profile (Encrypted)")
+            print(f"[SYSTEM] Autosaved for Backup Profile")
         elif event.type == AUTOSAVE_MESSAGE_EVENT:
             if apple != 4:
                 apple = apple + 1
