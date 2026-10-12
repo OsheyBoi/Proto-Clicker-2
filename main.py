@@ -1,6 +1,7 @@
 import pygame
 import sys
 import math
+import time
 import json
 import save_system
 import threading
@@ -138,6 +139,7 @@ def calculate_scale(win_w, win_h):
 #   Display Set up
 ##########################
 if hello == 0:
+    a = 0
     Set_size  = 0
     dev_mult = 1
     scale, offset_x, offset_y = calculate_scale(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -173,7 +175,7 @@ if hello == 0:
     clicks = 0
     rebirths = 0
     current_tier = 0
-    Menu = 0
+    Menu = 50
     total_time_played = 0
     Xp = 0
     CU1 = 0
@@ -323,7 +325,6 @@ if hello == 0:
     Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
     Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
     Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
-    Click_Button = pygame.image.load(os.path.join(img_dir, 'Click_Button', "Click_Button_clicked_" + event_type  + ".png"))
     settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
     ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
 
@@ -361,6 +362,7 @@ if hello == 0:
 #    Loading System
 ################################################################################
 running = True
+
 apple = 0
 ##########################
 #   Upgrade Shop set up
@@ -406,6 +408,12 @@ if len(sys.argv) > 2:
 #    Start Application
 ################################################################################
 while running:
+    if Menu == 50:
+        loading = pygame.image.load(os.path.join(img_dir, 'Other', "logo.png"))
+        if a == 1:
+            time.sleep(2)
+            Menu = 0
+        a = 1
     keys = pygame.key.get_pressed()
 ##########################
 #For Debugger
@@ -886,9 +894,9 @@ while running:
                     if Menu == 0:
                         Menu = 12
 
-                if settings_menu.collidepoint(mouse_pos):
-                    if Menu == 0:
-                        Menu = 52
+                #if settings_menu.collidepoint(mouse_pos):
+                #    if Menu == 0:
+                #        Menu = 52
 
                 if menu_ui_6.collidepoint(mouse_pos)  and Menu <= 9:
                     if Menu == 6:
@@ -1070,7 +1078,6 @@ while running:
 
                     if menu_ui_6.collidepoint(mouse_pos):
                         running = False
-                        save_game(current_state)
                         pygame.quit()
                         sys.exit()
                 else:
@@ -1105,9 +1112,9 @@ while running:
 ################################################################################
         # Upgrade  Menu
 
-        if current_Cooldown <= current_time:
+        if current_Cooldown <= current_time and Menu == 0:
             Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked_" + event_type  +".png"))
-        else:
+        elif Menu != 50:
             Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked_" + event_type  +".png"))
 
         if Menu <= 10:
@@ -1192,244 +1199,245 @@ while running:
             menu_text2 = font2.render("Cost: " + str(Tiertext) , True, (0, 0, 0))
         if Menu == 11:
             menu_text1 = font5.render(("If you rebirth you gain: \n \n     " + Rebirth_Gain_Show) + " Rebirths", True,  (0, 0, 0))
-        # Drawing Systems
         canvas.blit(background, (0, 0))
         if Menu == 0:
             canvas.blit(Shop_Menu_Button, (420, 720))
+        if Menu == 50:
+            canvas.blit(loading, (0, 0))
+    if Menu != 50:
+        pygame.draw.rect(canvas, green, Clicks_Amount_Box, width=0, border_radius=30)
+        pygame.draw.rect(canvas, red, Rebirth_Amount_Box, width=0, border_radius=30)
+        pygame.draw.rect(canvas, yellow, Xp_Amount_Box, width=0, border_radius=30)
 
-    pygame.draw.rect(canvas, green, Clicks_Amount_Box, width=0, border_radius=30)
-    pygame.draw.rect(canvas, red, Rebirth_Amount_Box, width=0, border_radius=30)
-    pygame.draw.rect(canvas, yellow, Xp_Amount_Box, width=0, border_radius=30)
+        pygame.draw.rect(canvas, black, Clicks_Amount_Box, width=5, border_radius=30)
+        pygame.draw.rect(canvas, black, Rebirth_Amount_Box, width=5, border_radius=30)
+        pygame.draw.rect(canvas, black, Xp_Amount_Box, width=5, border_radius=30)
 
-    pygame.draw.rect(canvas, black, Clicks_Amount_Box, width=5, border_radius=30)
-    pygame.draw.rect(canvas, black, Rebirth_Amount_Box, width=5, border_radius=30)
-    pygame.draw.rect(canvas, black, Xp_Amount_Box, width=5, border_radius=30)
+        canvas.blit(Click_Button, (440, 190))
 
-    canvas.blit(Click_Button, (440, 190))
+        canvas.blit(click_amount, (95, 15))
+        canvas.blit(rebirth_amount, (495, 15))
+        canvas.blit(xp_amount, (895, 15))
 
-    canvas.blit(click_amount, (95, 15))
-    canvas.blit(rebirth_amount, (495, 15))
-    canvas.blit(xp_amount, (895, 15))
-
-    CurrencyBox1 = Clicks_AR.get_rect()
-    CurrencyBox2 = Rebirth_AR.get_rect()
-    CurrencyBox3 = Xp_AR.get_rect()
-    if Menu != 14:
-        close_menu = pygame.Rect(1170, 200, 50, 50)
-    if Menu == 14:
-        close_menu = pygame.Rect(1170, 100, 50, 50)
-
-    Menu_text1 = menu_text1.get_rect()
-    Menu_text2 = menu_text2.get_rect()
-    Menu_text3 = menu_text3.get_rect()
-    Menu_text4 = menu_text4.get_rect()
-    Menu_text5 = menu_text5.get_rect()
-    Menu_text6 = menu_text6.get_rect()
-
-    CurrencyBox1.center = (250, 75)
-
-    if current_tier <= 1:
-        CurrencyBox2.center = (720, 75)
-    if current_tier >= 2:
-        CurrencyBox2.center = (660, 75)
-
-    CurrencyBox3.center = (1130, 70)
-
-    if current_tier >= 1:
-        canvas.blit(Rebirth_Menu_Button, (25, 230))
-    canvas.blit(Tier_Menu_Button, (25, 400))
-    canvas.blit(settings_Button, (-10, -10))
-    if current_tier >= 10 or current_ascension >= 1:
-        canvas.blit(ascension_Button, (25, 570))
-    canvas.blit(Clicks_AR, CurrencyBox1)
-    canvas.blit(Rebirth_AR, CurrencyBox2)
-    canvas.blit(Xp_AR, CurrencyBox3)
-
-
-    # Menu System (Drawing)
-    if Menu != 0:
-        if Menu == 1:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
-            canvas.blit(Shown_Menu, (0, 0))
-        if Menu == 6:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Upgrades.png"))
-            canvas.blit(Shown_Menu, (0, 0))
-        if Menu == 11:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Menu.png"))
-            canvas.blit(Shown_Menu, (0, 0))
-        if Menu == 12:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tier_Menu.png"))
-            canvas.blit(Shown_Menu, (0, 0))
-        if Menu == 13:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Ascension_Menu.png"))
-            canvas.blit(Shown_Menu, (0, 0))
+        CurrencyBox1 = Clicks_AR.get_rect()
+        CurrencyBox2 = Rebirth_AR.get_rect()
+        CurrencyBox3 = Xp_AR.get_rect()
+        if Menu != 14:
+            close_menu = pygame.Rect(1170, 200, 50, 50)
         if Menu == 14:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tree_Background.png"))
-            canvas.blit(Shown_Menu, (0, 0))
-        if Menu == 52:
-            Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
-            canvas.blit(Shown_Menu, (0, 0))
+            close_menu = pygame.Rect(1170, 100, 50, 50)
 
-        if 1 <= Menu <= 9 :
-            if current_ascension == 0:
-                Locked_Image = pygame.image.load(os.path.join(img_dir, 'Menu', "Locked.png"))
-                canvas.blit(Locked_Image, (0, -1))
+        Menu_text1 = menu_text1.get_rect()
+        Menu_text2 = menu_text2.get_rect()
+        Menu_text3 = menu_text3.get_rect()
+        Menu_text4 = menu_text4.get_rect()
+        Menu_text5 = menu_text5.get_rect()
+        Menu_text6 = menu_text6.get_rect()
 
-            Menu_text1.center = (300, 320)
-            Menu_text2.center = (300, 540)
-            Menu_text3.center = (300, 760)
-            Menu_text4.center = (880, 320)
-            Menu_text5.center = (860, 540)
-            Menu_text6.center = (860, 760)
-            canvas.blit(menu_text1, Menu_text1)
-            canvas.blit(menu_text2, Menu_text2)
-            canvas.blit(menu_text3, Menu_text3)
-            canvas.blit(menu_text4, Menu_text4)
-            canvas.blit(menu_text5, Menu_text5)
-            canvas.blit(menu_text6, Menu_text6)
+        CurrencyBox1.center = (250, 75)
 
+        if current_tier <= 1:
+            CurrencyBox2.center = (720, 75)
+        if current_tier >= 2:
+            CurrencyBox2.center = (660, 75)
 
-#####
-# Hide Ui element when not on the menu
-######
-        if Menu == 0 :
-            Menu_text1.center = (3000, 320)
-            Menu_text2.center = (3000, 540)
-            Menu_text3.center = (3000, 760)
-            Menu_text4.center = (8800, 320)
-            Menu_text5.center = (8600, 540)
-            Menu_text6.center = (8600, 760)
-            canvas.blit(Shown_Menu, (1000, 1000))
+        CurrencyBox3.center = (1130, 70)
 
-######
-# Tiers Menu Text line up
-######
-        if Menu == 12:
-            if current_tier == 0:
-                Menu_text1.center = (440, 380)
-            elif current_tier == 1:
-                Menu_text1.center = (470, 410)
-            elif current_tier == 2:
-                Menu_text1.center = (610, 410)
-            elif current_tier == 3:
-                Menu_text1.center = (500, 400)
-            elif current_tier == 4:
-                Menu_text1.center = (610, 430)
-            elif current_tier == 5:
-                Menu_text1.center = (505, 410)
-            elif current_tier == 6:
-                Menu_text1.center = (570, 370)
-            elif current_tier == 7:
-                Menu_text1.center = (400, 370)
-            elif current_tier == 8:
-                Menu_text1.center = (600, 370)
-            elif current_tier == 9:
-                Menu_text1.center = (570, 370)
-            elif current_tier == 10:
-                Menu_text1.center = (435, 370)
-            elif current_tier == 11:
-                Menu_text1.center = (470, 370)
-            elif current_tier == 12:
-                Menu_text1.center = (570, 370)
-            elif current_tier == 13:
-                Menu_text1.center = (570, 370)
-
-            canvas.blit(menu_text1, Menu_text1)
+        if current_tier >= 1:
+            canvas.blit(Rebirth_Menu_Button, (25, 230))
+        canvas.blit(Tier_Menu_Button, (25, 400))
+        #canvas.blit(settings_Button, (-10, -10))
+        if current_tier >= 10 or current_ascension >= 1:
+            canvas.blit(ascension_Button, (25, 570))
+        canvas.blit(Clicks_AR, CurrencyBox1)
+        canvas.blit(Rebirth_AR, CurrencyBox2)
+        canvas.blit(Xp_AR, CurrencyBox3)
 
 
-        if Menu == 11:
-            Menu_text1.center = (650, 462)
-            canvas.blit(menu_text1, Menu_text1)
+        # Menu System (Drawing)
+        if Menu != 0:
+            if Menu == 1:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 6:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Upgrades.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 11:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Rebirth_Menu.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 12:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tier_Menu.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 13:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Ascension_Menu.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 14:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Tree_Background.png"))
+                canvas.blit(Shown_Menu, (0, 0))
+            if Menu == 52:
+                Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Settings_Menu.png"))
+                canvas.blit(Shown_Menu, (0, 0))
 
-        if Menu == 13:
+            if 1 <= Menu <= 9 :
+                if current_ascension == 0:
+                    Locked_Image = pygame.image.load(os.path.join(img_dir, 'Menu', "Locked.png"))
+                    canvas.blit(Locked_Image, (0, -1))
 
-            Menu_text1.center = (600, 462)
-            canvas.blit(menu_text1, Menu_text1)
-
-
-
-        if Menu == 14:
-            if ascension_stage == 0:
-                Show_Button_1 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#1_V1.png"))
-
-
-            if ascension_stage_2 == 1:
-                Show_Button_2 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#2_V1.png"))
-
-
-            if ascension_stage_2 == 2:
-                Show_Button_3 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#3_V1.png"))
-
-            if ascension_stage == 1:
-                Show_Button_4 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#4_V1.png"))
-
-            if ascension_stage == 2:
-                Show_Button_5 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#5_V1.png"))
-
-            if ascension_stage == 3:
-                Show_Button_6 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#6_V1.png"))
-
-            if ascension_stage ==  4:
-                Show_Button_7 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#7_V1.png"))
-
-
-
-            Show_Button_1 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#1_V2.png")) if ascension_stage >= 1 else Show_Button_1
-            Show_Button_4 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#4_V2.png")) if ascension_stage >= 2 else Show_Button_4
-            Show_Button_5 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#5_V2.png")) if ascension_stage >= 3 else Show_Button_5
-            Show_Button_6 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#6_V2.png")) if ascension_stage >= 4 else Show_Button_6
-
-            Show_Button_2 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#2_V2.png")) if ascension_stage_2 >= 2 else Show_Button_2
-            Show_Button_3 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#3_V2.png")) if ascension_stage_2 >= 3 else Show_Button_3
-
-#------------------------
-# Start of Showwing buttons
- # -------------------------
-# (X = +\- 420 |||| Y = - 235
-
-            ascension_tokens = 10
-            if ascension_stage >= 0:
-                canvas.blit(Show_Button_1, (450, 630))
-                Show_Button_1_hitbox = Show_Button_1.get_rect(topleft=(450, 630))
+                Menu_text1.center = (300, 320)
+                Menu_text2.center = (300, 540)
+                Menu_text3.center = (300, 760)
+                Menu_text4.center = (880, 320)
+                Menu_text5.center = (860, 540)
+                Menu_text6.center = (860, 760)
+                canvas.blit(menu_text1, Menu_text1)
+                canvas.blit(menu_text2, Menu_text2)
+                canvas.blit(menu_text3, Menu_text3)
+                canvas.blit(menu_text4, Menu_text4)
+                canvas.blit(menu_text5, Menu_text5)
+                canvas.blit(menu_text6, Menu_text6)
 
 
-            if ascension_stage_2 >= 1:
-                canvas.blit(Show_Button_2, (30, 450))
-                Show_Button_2_hitbox = Show_Button_2.get_rect(topleft=(50, 425))
+    #####
+    # Hide Ui element when not on the menu
+    ######
+            if Menu == 0 :
+                Menu_text1.center = (3000, 320)
+                Menu_text2.center = (3000, 540)
+                Menu_text3.center = (3000, 760)
+                Menu_text4.center = (8800, 320)
+                Menu_text5.center = (8600, 540)
+                Menu_text6.center = (8600, 760)
+                canvas.blit(Shown_Menu, (1000, 1000))
 
-            if ascension_stage_2 >= 2:
-                canvas.blit(Show_Button_3, (30, 185))
-                Show_Button_3_hitbox = Show_Button_3.get_rect(topleft=(50, 220))
+    ######
+    # Tiers Menu Text line up
+    ######
+            if Menu == 12:
+                if current_tier == 0:
+                    Menu_text1.center = (440, 380)
+                elif current_tier == 1:
+                    Menu_text1.center = (470, 410)
+                elif current_tier == 2:
+                    Menu_text1.center = (610, 410)
+                elif current_tier == 3:
+                    Menu_text1.center = (500, 400)
+                elif current_tier == 4:
+                    Menu_text1.center = (610, 430)
+                elif current_tier == 5:
+                    Menu_text1.center = (505, 410)
+                elif current_tier == 6:
+                    Menu_text1.center = (570, 370)
+                elif current_tier == 7:
+                    Menu_text1.center = (400, 370)
+                elif current_tier == 8:
+                    Menu_text1.center = (600, 370)
+                elif current_tier == 9:
+                    Menu_text1.center = (570, 370)
+                elif current_tier == 10:
+                    Menu_text1.center = (435, 370)
+                elif current_tier == 11:
+                    Menu_text1.center = (470, 370)
+                elif current_tier == 12:
+                    Menu_text1.center = (570, 370)
+                elif current_tier == 13:
+                    Menu_text1.center = (570, 370)
 
-            if ascension_stage >= 1:
-                canvas.blit(Show_Button_4, (870, 450))
-                Show_Button_4_hitbox = Show_Button_4.get_rect(topleft=(850, 425))
+                canvas.blit(menu_text1, Menu_text1)
 
-            if ascension_stage >= 2:
-                canvas.blit(Show_Button_5, (870, 185))
-                Show_Button_5_hitbox = Show_Button_5.get_rect(topleft=(850, 220))
 
-            if ascension_stage >= 3:
-                canvas.blit(Show_Button_6, (450, 15))
-                Show_Button_6_hitbox = Show_Button_6.get_rect(topleft=(450, 15))
+            if Menu == 11:
+                Menu_text1.center = (650, 462)
+                canvas.blit(menu_text1, Menu_text1)
 
-            if ascension_stage >= 10:
-                canvas.blit(Show_Button_7, (0, 0))
-                Show_Button_7_hitbox = Show_Button_7.get_rect()
+            if Menu == 13:
 
-################
-## Settings
-################
-        if Menu == 52:
-            menu_ui_1 = pygame.Rect(145, 370, 440, 105)
-            menu_ui_2 = pygame.Rect(145, 510, 440, 105)
-            menu_ui_3 = pygame.Rect(145, 680, 435, 110)
-            menu_ui_4 = pygame.Rect(700, 405, 440, 101)
-            menu_ui_5 = pygame.Rect(750, 520, 330, 90)
-            menu_ui_6 = pygame.Rect(690, 660, 440, 105)
-            Menu_text4.center = (920, 460)
-            menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
-            canvas.blit(menu_text4, Menu_text4)
+                Menu_text1.center = (600, 462)
+                canvas.blit(menu_text1, Menu_text1)
+
+
+
+            if Menu == 14:
+                if ascension_stage == 0:
+                    Show_Button_1 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#1_V1.png"))
+
+
+                if ascension_stage_2 == 1:
+                    Show_Button_2 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#2_V1.png"))
+
+
+                if ascension_stage_2 == 2:
+                    Show_Button_3 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#3_V1.png"))
+
+                if ascension_stage == 1:
+                    Show_Button_4 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#4_V1.png"))
+
+                if ascension_stage == 2:
+                    Show_Button_5 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#5_V1.png"))
+
+                if ascension_stage == 3:
+                    Show_Button_6 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#6_V1.png"))
+
+                if ascension_stage ==  4:
+                    Show_Button_7 = pygame.image.load(os.path.join(img_dir,'Tree_Buttons',"#7_V1.png"))
+
+
+
+                Show_Button_1 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#1_V2.png")) if ascension_stage >= 1 else Show_Button_1
+                Show_Button_4 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#4_V2.png")) if ascension_stage >= 2 else Show_Button_4
+                Show_Button_5 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#5_V2.png")) if ascension_stage >= 3 else Show_Button_5
+                Show_Button_6 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#6_V2.png")) if ascension_stage >= 4 else Show_Button_6
+
+                Show_Button_2 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#2_V2.png")) if ascension_stage_2 >= 2 else Show_Button_2
+                Show_Button_3 = pygame.image.load(os.path.join(img_dir, 'Tree_Buttons', "#3_V2.png")) if ascension_stage_2 >= 3 else Show_Button_3
+
+    #------------------------
+    # Start of Showwing buttons
+     # -------------------------
+    # (X = +\- 420 |||| Y = - 235
+
+                ascension_tokens = 10
+                if ascension_stage >= 0:
+                    canvas.blit(Show_Button_1, (450, 630))
+                    Show_Button_1_hitbox = Show_Button_1.get_rect(topleft=(450, 630))
+
+
+                if ascension_stage_2 >= 1:
+                    canvas.blit(Show_Button_2, (30, 450))
+                    Show_Button_2_hitbox = Show_Button_2.get_rect(topleft=(50, 425))
+
+                if ascension_stage_2 >= 2:
+                    canvas.blit(Show_Button_3, (30, 185))
+                    Show_Button_3_hitbox = Show_Button_3.get_rect(topleft=(50, 220))
+
+                if ascension_stage >= 1:
+                    canvas.blit(Show_Button_4, (870, 450))
+                    Show_Button_4_hitbox = Show_Button_4.get_rect(topleft=(850, 425))
+
+                if ascension_stage >= 2:
+                    canvas.blit(Show_Button_5, (870, 185))
+                    Show_Button_5_hitbox = Show_Button_5.get_rect(topleft=(850, 220))
+
+                if ascension_stage >= 3:
+                    canvas.blit(Show_Button_6, (450, 15))
+                    Show_Button_6_hitbox = Show_Button_6.get_rect(topleft=(450, 15))
+
+                if ascension_stage >= 10:
+                    canvas.blit(Show_Button_7, (0, 0))
+                    Show_Button_7_hitbox = Show_Button_7.get_rect()
+
+    ################
+    ## Settings
+    ################
+            if Menu == 52:
+                menu_ui_1 = pygame.Rect(145, 370, 440, 105)
+                menu_ui_2 = pygame.Rect(145, 510, 440, 105)
+                menu_ui_3 = pygame.Rect(145, 680, 435, 110)
+                menu_ui_4 = pygame.Rect(700, 405, 440, 101)
+                menu_ui_5 = pygame.Rect(750, 520, 330, 90)
+                menu_ui_6 = pygame.Rect(690, 660, 440, 105)
+                Menu_text4.center = (920, 460)
+                menu_text4 = font2.render(Size_changer, True, (0, 0, 0))
+                canvas.blit(menu_text4, Menu_text4)
 
         if Set_size == 1:
             if size == 1:
