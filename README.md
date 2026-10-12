@@ -12,8 +12,14 @@ Upcoming changelog:
  - Balancing
  - QOL Features
  - Seasonal Events 
+ - Loading Screen
  - Updated save system
+ - Removed Settings (for now)
 
+Bug Fixes
+ - Change Price balencing for CU3 (Fixed)
+ - Rebirth Upgrade 1 not letting it self go passed level 15 (To Fix)
+ - Text Not Being Lined up correctly in Shop (To Fix)
 -------------
 More Planed Updates (if I Continue to Update the game):
 --------
@@ -66,3 +72,5 @@ Note 2b: AI was also used for the Debugger and Console that only I (Oshey) have 
 Note 3: This is only my 3rd Main Project in Python so i am still learning new tech
 
 Note 4: There are bound to be things i forgot to do and code fully so let me know by making a issue on github
+
+Note 5: While This project was planed to end at version 5.0 I have changed this to version 3.1 unless i change my mind
