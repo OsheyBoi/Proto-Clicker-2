@@ -12,6 +12,10 @@ Upcoming changelog:
  - Balancing
  - QOL Features
  - Seasonal Events 
+   - Halloween
+   - Christmas
+   - New Year
+   - Easter
  - Loading Screen
  - Updated save system
  - Removed Settings (for now)

@@ -1476,7 +1476,7 @@ while running:
 ###################################
     if debugger_active:
         debugger.draw_hud(canvas, globals(), mouse_pos, clock)
-
+    background =  pygame.image.load(os.path.join(img_dir, 'Other', "Background_" + event_type + ".png"))
 ###################################
  #   End of Script
 ###################################

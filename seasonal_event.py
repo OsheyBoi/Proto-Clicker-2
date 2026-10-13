@@ -15,8 +15,8 @@ def event():
         event = "festive" # Lasts From December 1st -> December 25th
     elif month == 12 and day >= 26 or month == 1 and day <= 2:
         event = "celebration" # Lasts From December 26th -> January 2nd
-        return event
-    #elif month == 3 or month == 4: # Easter
+
+    elif month == 3 or month == 4: # Easter
         year = today.year
         year = year - 2026
         easter_day = (easter_days)[year]
@@ -24,11 +24,11 @@ def event():
         if easter_day <= 5:
             split_start = 36 - easter_day
             if month == 3 and split_start <= 31 or month == 4 and easter_day >= day:
-                event = "easter"  # Goes to 2050
+                event = "egg"  # Goes to 2050
         elif easter_day >= 6:
             easter_start = easter_day - 5
             if month == easter_month and easter_day >= easter_start:
-                event = "easter" # Goes to 2050
+                event = "egg" # Goes to 2050
         else:
             event = "base"
     else:
@@ -41,8 +41,4 @@ def event():
 # To Add:
 # Anniversary -> Jun 18
 # St Partrics Day -> 14 Feb
-#
-#
-#
-#
 ##############################
