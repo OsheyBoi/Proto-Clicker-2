@@ -666,7 +666,7 @@ while running:
     ]
 
     upgrades2 = [
-        Upgrade2(menu_ui_1, 0, RU2M, RU1_CostAmount),
+        Upgrade2(menu_ui_1, 0, RU1M, RU1_CostAmount),
         Upgrade2(menu_ui_2, 0, RU2M, RU2_CostAmount),
         Upgrade2(menu_ui_3, 0, RU3M, RU3_CostAmount)
 
@@ -732,10 +732,10 @@ while running:
     if current_tier >= 9:
         if current_tier >= 12:
             CU1M = 1000
-            CU1Mult = 5
+            CU1Mult = 10
     else:
         CU1M = 100
-        U1Mult = 2
+        CU1Mult = 5
 
     #CLick upgrade 3
     if current_tier >= 5:
@@ -752,8 +752,12 @@ while running:
 
     #Rebirth upgrade 1
     if current_tier >= 6:
-            RU1M = 20
+            RU1M = 25
             RU1Mult = 1.5
+    #Rebirth upgrade 2
+    if current_tier >= 7:
+            RU2M = 25
+
 
 ##########################################
 #    Full Screen Mode
@@ -1282,19 +1286,32 @@ while running:
                 if current_ascension == 0:
                     Locked_Image = pygame.image.load(os.path.join(img_dir, 'Menu', "Locked.png"))
                     canvas.blit(Locked_Image, (0, -1))
-
-                Menu_text1.center = (300, 320)
-                Menu_text2.center = (300, 540)
-                Menu_text3.center = (300, 760)
-                Menu_text4.center = (880, 320)
-                Menu_text5.center = (860, 540)
-                Menu_text6.center = (860, 760)
-                canvas.blit(menu_text1, Menu_text1)
-                canvas.blit(menu_text2, Menu_text2)
-                canvas.blit(menu_text3, Menu_text3)
-                canvas.blit(menu_text4, Menu_text4)
-                canvas.blit(menu_text5, Menu_text5)
-                canvas.blit(menu_text6, Menu_text6)
+                if Menu == 1:
+                    Menu_text1.center = (320, 320)
+                    Menu_text2.center = (300, 540)
+                    Menu_text3.center = (280, 760)
+                    Menu_text4.center = (880, 320)
+                    Menu_text5.center = (860, 540)
+                    Menu_text6.center = (860, 760)
+                    canvas.blit(menu_text1, Menu_text1)
+                    canvas.blit(menu_text2, Menu_text2)
+                    canvas.blit(menu_text3, Menu_text3)
+                    canvas.blit(menu_text4, Menu_text4)
+                    canvas.blit(menu_text5, Menu_text5)
+                    canvas.blit(menu_text6, Menu_text6)
+                if Menu == 6:
+                    Menu_text1.center = (320, 320)
+                    Menu_text2.center = (300, 540)
+                    Menu_text3.center = (240, 760)
+                    Menu_text4.center = (880, 320)
+                    Menu_text5.center = (860, 540)
+                    Menu_text6.center = (860, 760)
+                    canvas.blit(menu_text1, Menu_text1)
+                    canvas.blit(menu_text2, Menu_text2)
+                    canvas.blit(menu_text3, Menu_text3)
+                    canvas.blit(menu_text4, Menu_text4)
+                    canvas.blit(menu_text5, Menu_text5)
+                    canvas.blit(menu_text6, Menu_text6)
 
 
     #####

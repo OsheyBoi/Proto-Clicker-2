@@ -8,8 +8,7 @@ V3.1 (Loading Events n Fixes encrypted) (Also last updated planed for now)
 --------------
 
 NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
-Upcoming changelog:
- - Balancing
+Upcoming Changelog:
  - QOL Features
  - Seasonal Events 
    - Halloween
@@ -20,10 +19,16 @@ Upcoming changelog:
  - Updated save system
  - Removed Settings (for now)
 
-Bug Fixes
- - Change Price balencing for CU3 (Fixed)
- - Rebirth Upgrade 1 not letting it self go passed level 15 (To Fix)
- - Text Not Being Lined up correctly in Shop (To Fix)
+Balancing:
+- Change Price Scaling On Base Clicks on T9+
+- T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
+- T8 Now Increases Power Rebirth max up to 25 (+10)
+- Changed Some Tier Prices
+Bug Fixes:
+ - Change Price balancing for CU3
+ - Rebirth Upgrade 1 not letting it self go passed level 15
+ - Text Not Being Lined up correctly in Shop 
+ - Fixed RU2 getting a cost increased for no reason
 -------------
 More Planed Updates (if I Continue to Update the game):
 --------

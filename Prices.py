@@ -29,9 +29,9 @@ def CU1_CostAmount(upgrade,tier,Type):
             cost = (10 + int(upgrade ** 1.05 * 3.3)) ** 1.05
     elif tier >= 9:
         if upgrade == 0:
-            cost = 100
+            cost = 250
         else:
-            cost = (100 + int(upgrade ** 1.13 * 5)) ** 1.15
+            cost = (250 + int(upgrade ** 1.15 * 5)) ** 1.175
 
     if Type != "Suffix":
         return cost
@@ -136,16 +136,16 @@ def RU1_CostAmount(upgrade,tier,Type):
     return cost
 
 def RU2_CostAmount(upgrade,tier,Type):
-    if tier <= 5:
+    if tier <= 7:
         if upgrade == 0:
             cost = 10
         else:
             cost = (10 + (upgrade ** 1.5 * (upgrade ** 1.3))) ** 1.5
-    if tier >= 6:
+    if tier >= 8:
         if upgrade == 0:
-            cost = 20
+            cost = 50
         else:
-            cost = (20 + (upgrade ** 1.75 * (upgrade ** 1.45))) ** 1.6
+            cost = (50 + (upgrade ** 1.8 * (upgrade ** 1.5))) ** 1.625
 
     if Type != "Suffix":
         return cost
