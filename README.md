@@ -84,5 +84,5 @@ How to Play:
 Link for Proto Clicker 1: https://studio.penguinmod.com/?fps=60&nohqpen&offscreen#7693053383
 
 
-Notes from Oshey are seeable in Notes.md
+Notes from Oshey are seeable in Notes.md 
 
