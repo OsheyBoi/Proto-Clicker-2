@@ -33,6 +33,22 @@ def event():
             event = "base"
     else:
         event = "base"
+
+
+########
+# Override
+########
+    a = 0
+    if a == 1:
+        event = "base"
+    if a == 2:
+        event = "spooky"
+    if a == 3:
+        event = "festive"
+    if a == 4:
+        event = "celebration"
+    if a == 5:
+        event = "egg"
     return event
 
 
