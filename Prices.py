@@ -5,7 +5,7 @@ def amount_sum(amount):
         else:
             rounded_amount = round(amount, 2)
         return str(rounded_amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
+    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe"]
     suffix_index = 0
 
     while amount >= 1000:
@@ -27,11 +27,11 @@ def CU1_CostAmount(upgrade,tier,Type):
             cost = 10
         else:
             cost = (10 + int(upgrade ** 1.05 * 3.3)) ** 1.05
-    elif tier >= 9:
+    elif tier >= 8:
         if upgrade == 0:
-            cost = 250
+            cost = 1000
         else:
-            cost = (250 + int(upgrade ** 1.15 * 5)) ** 1.175
+            cost = (1000 + int(upgrade ** 1.25 * 5)) ** 1.175
 
     if Type != "Suffix":
         return cost
@@ -63,7 +63,7 @@ def CU3_CostAmount(upgrade,tier, Type):
         if upgrade == 0:
             cost = 1000000
         else:
-            cost = (100000 * 2.35 ** ((upgrade * 1.25)** 1.17))
+            cost = (100000 * 2.1 ** ((upgrade * 1.225)** 1.15))
     #If Tier = 7 - 9
     elif 7 <= tier <= 9:
         if upgrade == 0:
@@ -88,18 +88,22 @@ def CU3_CostAmount(upgrade,tier, Type):
 
 
 def CU4_CostAmount(upgrade,tier,Type):
-    if upgrade == 0:
-        cost = 10000
-        if Type != "Suffix":
-            return cost
+    if tier <= 6:
+        if upgrade == 0:
+            cost = 10000
         else:
-            cost = amount_sum(cost)
+            cost = (50000 + int(upgrade ** 1.4 * ((upgrade /2) ** 1.225) * 1000 ) ** 1.2)
+    if tier >= 7:
+        if upgrade == 0:
+            cost = 1000000
+        else:
+            cost = (1000000 * 1.25 ** ((upgrade ** 1.525) ))
+    if Type != "Suffix":
+        return cost
     else:
-        cost = (50000 + int(upgrade ** 1.4 * ((upgrade /2) ** 1.225) * 1000 ) ** 1.2)
-        if Type != "Suffix":
-            return cost
-        else:
-            cost = amount_sum(cost)
+        cost = amount_sum(cost)
+        return cost
+
     return cost
 def CU5_CostAmount(upgrade,tier,Type):
 

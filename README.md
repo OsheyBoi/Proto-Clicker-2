@@ -16,10 +16,12 @@ New Features:
    - Christmas
    - New Year
    - Easter
+   
  - ***Seasonal Events Include:***
     - Event themed Logo
     - Event themed Button
     - Event themed Background
+ 
  - New Loading Screen
  - Updated save system
  - Removed Settings (for now)
@@ -35,6 +37,7 @@ Balancing:
 - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
 - T8 Now Increases Power Rebirth max up to 25 (+10)
 - Changed Some Tier Prices
+
 
 ----
 Bug Fixes:

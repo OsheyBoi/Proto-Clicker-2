@@ -718,7 +718,7 @@ while running:
     Xp_Gain = 1 * (1.1 ** CU5) * (1.1 ** RU3) * Ascension_XP_Mult * Tier_Xp
 
     if clicks >= 1000:
-        Rebirth_Gain = int(((clicks / 500) ** 0.32) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
+        Rebirth_Gain = int(((clicks / 500) ** 0.37) * (CU4Mult ** CU4) * (RU2Mult ** RU2) * Tier_Rm * rebirth_x_self * Ascension_Rebirth_Mult)
         Rebirth_Gain_Show = amount_sum(Rebirth_Gain)
     else:
         Rebirth_Gain = 0
@@ -733,9 +733,12 @@ while running:
         if current_tier >= 12:
             CU1M = 1000
             CU1Mult = 10
+        else:
+            CU1M = 100
+            CU1Mult = 5
     else:
-        CU1M = 100
-        CU1Mult = 5
+        CU1M = 25
+        CU1Mult = 1
 
     #CLick upgrade 3
     if current_tier >= 5:
@@ -757,6 +760,7 @@ while running:
     #Rebirth upgrade 2
     if current_tier >= 7:
             RU2M = 25
+            CU4M = 20
 
 
 ##########################################
@@ -1048,9 +1052,23 @@ while running:
                     upgrades2[2].level = RU3
 
                     for up in upgrades2:
-                        rebirths, bought = up.try_buy(mouse_pos, Menu, rebirths)
-                        if bought:
-                            break #
+                        if Shift_Held:
+                            # Keep buying this specific upgrade until you run out of clicks
+                            any_bought = False
+                            while True:
+                                clicks, bought = up.try_buy(mouse_pos, Menu, rebirths)
+                                if not bought:
+                                    break
+                                any_bought = True
+
+                            # If we max-bought at least one level, stop checking other upgrades
+                            if any_bought:
+                                break
+                        else:
+                            # Normal single-buy behavior when Shift is NOT held
+                            clicks, bought = up.try_buy(mouse_pos, Menu, rebirths)
+                            if bought:
+                                break
                     RU1 = upgrades2[0].level
                     RU2 = upgrades2[1].level
                     RU3 = upgrades2[2].level
