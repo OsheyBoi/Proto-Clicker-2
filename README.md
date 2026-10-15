@@ -24,7 +24,7 @@ New Features:
  - Removed Settings (for now)
 
 QOL Features:
-    - Buy Max For Rebirth Upgrades
+- Buy Max For Rebirth Upgrades
 
 Balancing:
 - Change Price Scaling On Base Clicks on T9+
