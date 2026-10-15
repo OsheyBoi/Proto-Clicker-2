@@ -321,12 +321,12 @@ if hello == 0:
     Show_Button_6 = pygame.Surface((0, 0))
     Show_Button_7 = pygame.Surface((0, 0))
 
-    background =  pygame.image.load(os.path.join(img_dir, 'Other', "Background_" + event_type + ".png"))
-    Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Rebirth_Button.png"))
-    Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Button', "Tier_Button.png"))
-    Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Shop_Button.png"))
-    settings_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Setting_Button.png"))
-    ascension_Button = pygame.image.load(os.path.join(img_dir, 'Button', "Ascension_Button.png"))
+    background =  pygame.image.load(os.path.join(img_dir, 'Backgrounds', "Background_" + event_type + ".png"))
+    Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Rebirth_Button.png"))
+    Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Buttons', "Tier_Button.png"))
+    Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Shop_Button.png"))
+    settings_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Setting_Button.png"))
+    ascension_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Ascension_Button.png"))
 
     Shown_Menu = pygame.image.load(os.path.join(img_dir,'Menu',"Click_Upgrades.png"))
     Locked_Image = pygame.image.load(os.path.join(img_dir,'Menu',"Locked.png"))
@@ -409,7 +409,7 @@ if len(sys.argv) > 2:
 ################################################################################
 while running:
     if Menu == 50:
-        loading = pygame.image.load(os.path.join(img_dir, 'Other', "logo.png"))
+        loading = pygame.image.load(os.path.join(img_dir, 'Logos', "logo_" + event_type + ".png"))
         if a == 1:
             time.sleep(2)
             Menu = 0
@@ -1117,9 +1117,9 @@ while running:
         # Upgrade  Menu
 
         if current_Cooldown <= current_time and Menu == 0:
-            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button', "Click_Button_unclicked_" + event_type  +".png"))
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Buttons', "Click_Button_unclicked_" + event_type  +".png"))
         elif Menu != 50:
-            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Button',"Click_Button_clicked_" + event_type  +".png"))
+            Click_Button = pygame.image.load(os.path.join(img_dir,'Click_Buttons',"Click_Button_clicked_" + event_type  +".png"))
 
         if Menu <= 10:
             menu_ui_1 = pygame.Rect(110, 340, 425, 55)
@@ -1493,7 +1493,7 @@ while running:
 ###################################
     if debugger_active:
         debugger.draw_hud(canvas, globals(), mouse_pos, clock)
-    background =  pygame.image.load(os.path.join(img_dir, 'Other', "Background_" + event_type + ".png"))
+    background =  pygame.image.load(os.path.join(img_dir, 'Backgrounds', "Background_" + event_type + ".png"))
 ###################################
  #   End of Script
 ###################################
