@@ -935,7 +935,6 @@ while running:
                             if ascension_stage <= 2:
                                 RU1 = 0
                                 RU2 = 0
-                                RU3 = 0
                             current_tier += 1
 
 
@@ -1363,7 +1362,7 @@ while running:
                 elif current_tier == 6:
                     Menu_text1.center = (600, 370)
                 elif current_tier == 7:
-                    Menu_text1.center = (400, 370)
+                    Menu_text1.center = (410, 430)
                 elif current_tier == 8:
                     Menu_text1.center = (600, 370)
                 elif current_tier == 9:

@@ -4,9 +4,9 @@
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V4.0-blue?style=for-the-badge)
 
 --------------
-V4.0 (Loading Events n Fixes encrypted) (Also last updated planed for now)
+V4.0 (Loading Events n Balancing Fixes encrypted) (Also last updated planed for now)
 --------------
-**NOTE: V4.0 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE**
+**NOTE: V4.0 will be a soft reboot launch include new savefiles and LOTS of changes **
 --
 New Features:
 --
@@ -29,6 +29,7 @@ New Features:
 QOL Features:
 ---
 - Buy Max For Rebirth Upgrades
+- Auto Rebirth now gives 10% instead of 1%
 
 ---
 Balancing:
@@ -37,7 +38,7 @@ Balancing:
 - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
 - T8 Now Increases Power Rebirth max up to 25 (+10)
 - Changed Most Tier Prices
-
+- Boosted Xp Mult from CU5 and RU3 (1.1 -> 1.15)
 
 ----
 Bug Fixes:
@@ -46,6 +47,7 @@ Bug Fixes:
  - Rebirth Upgrade 1 not letting it self go passed level 15
  - Text Not Being Lined up correctly in Shop 
  - Fixed RU2 getting a cost increased for no reason
+ - Fixed RU3 being reset on Tier
 
 -------------
 More Planed Updates (if I Continue to Update the game):
