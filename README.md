@@ -4,10 +4,9 @@
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V3.1-blue?style=for-the-badge)
 
 --------------
-V3.1 (Loading Events n Fixes encrypted) (Also last updated planed for now)
+V4.0 (Loading Events n Fixes encrypted) (Also last updated planed for now)
 --------------
-
-NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
+**NOTE: V4.0 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE**
 --
 New Features:
 --
@@ -44,26 +43,27 @@ Bug Fixes:
  - Rebirth Upgrade 1 not letting it self go passed level 15
  - Text Not Being Lined up correctly in Shop 
  - Fixed RU2 getting a cost increased for no reason
+
 -------------
 More Planed Updates (if I Continue to Update the game):
 --------
-V4:
+V5:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
 
-V5:
+V6:
 - Recreation Tiers 1 -> 3
 - Application Version of the Game
 
-V6:
+V7:
 - Recreation Tiers 4 + 5
 - 1 New Reset Currency (For after Rebirths)
 
-V7:
+V8:
 - Recreation Tiers 6 -> 8
 - 1 New Feature
 
-V8:
+V9:
 - Recreation Tiers 9 + 10
 - 1 Final Reset
 
