@@ -269,7 +269,7 @@ if hello == 0:
     CU4_Cost = 1
 
     CU5M = 25
-    CU5Mult = 1.1
+    CU5Mult = 1.15
     CU5_Cost = 1
 
 # Rebirths Upgrades
@@ -283,7 +283,7 @@ if hello == 0:
     RU2_Cost = 1
 
     RU3M = 25
-    RU3Mult = 1.1
+    RU3Mult = 1.15
     RU3_Cost = 1
 
 ascension_stage = 0
@@ -732,7 +732,7 @@ while running:
     if current_tier >= 9:
         if current_tier >= 12:
             CU1M = 1000
-            CU1Mult = 10
+            CU1Mult = 25
         else:
             CU1M = 100
             CU1Mult = 5
@@ -782,7 +782,7 @@ while running:
 
         if event.type == AUTORebirth_EVENT:
             if current_tier >= 5:
-                rebirths += Rebirth_Gain / 100
+                rebirths += Rebirth_Gain / 10
 
         if event.type == AUTOClick_EVENT:
             if current_tier >= 3:
@@ -1056,7 +1056,7 @@ while running:
                             # Keep buying this specific upgrade until you run out of clicks
                             any_bought = False
                             while True:
-                                clicks, bought = up.try_buy(mouse_pos, Menu, rebirths)
+                                rebirths, bought = up.try_buy(mouse_pos, Menu, rebirths)
                                 if not bought:
                                     break
                                 any_bought = True
@@ -1066,7 +1066,7 @@ while running:
                                 break
                         else:
                             # Normal single-buy behavior when Shift is NOT held
-                            clicks, bought = up.try_buy(mouse_pos, Menu, rebirths)
+                            rebirths, bought = up.try_buy(mouse_pos, Menu, rebirths)
                             if bought:
                                 break
                     RU1 = upgrades2[0].level
@@ -1361,7 +1361,7 @@ while running:
                 elif current_tier == 5:
                     Menu_text1.center = (505, 410)
                 elif current_tier == 6:
-                    Menu_text1.center = (570, 370)
+                    Menu_text1.center = (600, 370)
                 elif current_tier == 7:
                     Menu_text1.center = (400, 370)
                 elif current_tier == 8:

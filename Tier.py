@@ -36,7 +36,7 @@ def tier_info (Tier):
          text = " \n Tier 4: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Click Upgrade 5 \n - 3x Clicks \n - 2x Rebirths \n - 1.25x Faster Button Cooldown"
          return text
     elif Tier == 4:
-         text = " \n Tier 5: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (1% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Effect: +0.05 / Cap: +5  \n - Playtime Boost Clicks (Permanent)"
+         text = " \n Tier 5: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (10% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Effect: +0.05 / Cap: +5  \n - Playtime Boost Clicks (Permanent)"
          return text
     elif Tier == 5:
          text = " \n Tier 6: Cost: (" + tier_cost(Tier,"Suffix") + ") \n Rebirths Boost Clicks \n Rebirths Boost themself \n Clicks Power 2 +10 Max / +0.05x \n (+ Price Increase) "
@@ -48,7 +48,7 @@ def tier_info (Tier):
          text = " \n Tier 8: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - 4x Xp \n Power Rebirth: +10 Max \n More Rebirths +5 Max \n - 1.01^ Clicks \n - 2x Faster Autoclicker. "
          return text
     elif Tier == 8:
-         text = " \n Tier 9: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: +1 -> +5 / Cap: +80  \n (+ Price Increase) \n - 1.01^ - 1.02^ Clicks"
+         text = " \n Tier 9: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: x5 / Cap: +80  \n (+ Price Increase) \n - 1.01^ - 1.02^ Clicks"
          return text
     elif Tier == 9:
          text = " \n Tier 10: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Powerful Clicks Effect: +0.25x  \n 1.02^ - 1.03^ Clicks \n Unlock Ascension (V3)"
@@ -57,7 +57,7 @@ def tier_info (Tier):
          text = " \n Tier 11: Cost: (" + tier_cost(Tier,"Suffix") + ")\n - 10x Click \n - 5x Rebirths \n - Clicks Power 1.03 -> 1.04"
          return text
     elif Tier == 11:
-         text = " \n Tier 12: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: +5 -> + 10 \n - Base Power Cap: +900 \n - Clicks Power 1.04 -> 1.05 "
+         text = " \n Tier 12: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: x5 \n - Base Power Cap: +900 \n - Clicks Power 1.04 -> 1.05 "
          return text
     elif Tier == 12:
          text = " \n You Have Reach Max Tier in V4.0 \n Tiers 13 - 15 are Coming Soon "
