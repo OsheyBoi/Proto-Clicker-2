@@ -30,6 +30,7 @@ QOL Features:
 ---
 - Buy Max For Rebirth Upgrades
 - Auto Rebirth now gives 10% instead of 1%
+- Game now Shows a saving icon when saving
 
 ---
 Balancing:
@@ -48,6 +49,7 @@ Bug Fixes:
  - Text Not Being Lined up correctly in Shop 
  - Fixed RU2 getting a cost increased for no reason
  - Fixed RU3 being reset on Tier
+
 
 -------------
 More Planed Updates (if I Continue to Update the game):
