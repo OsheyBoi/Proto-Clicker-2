@@ -4,7 +4,7 @@
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V4.0-blue?style=for-the-badge)
 
 --------------
-V4.0 (Loading Events n Balancing Fixes encrypted) (Also last updated planed for now)
+V4.0 (Loading Events n Balancing Fixes encrypted) (November 6th)
 --------------
 **NOTE: V4.0 will be a soft reboot launch include new savefiles and LOTS of changes **
 --
@@ -12,7 +12,7 @@ New Features:
 --
 
  - ***Seasonal Events:*** 
-   - Halloween
+   - Halloween (from next year)
    - Christmas
    - New Year
    - Easter
