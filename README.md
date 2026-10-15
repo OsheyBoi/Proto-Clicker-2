@@ -9,21 +9,29 @@ V3.1 (Loading Events n Fixes encrypted) (Also last updated planed for now)
 
 NOTE: V3.1 WILL NOT USE OLD SAVES AND WILL MAKE A NEW SAVE
 Upcoming Changelog:
- - QOL Features
- - Seasonal Events 
+New Features:
+ - Seasonal Events: 
    - Halloween
    - Christmas
    - New Year
    - Easter
- - Loading Screen
+ - Seasonal Events Include:
+    - Event themed Logo
+    - Event themed Button
+    - Event themed Background
+ - New Loading Screen
  - Updated save system
  - Removed Settings (for now)
+
+QOL Features:
+    - Buy Max For Rebirth Upgrades
 
 Balancing:
 - Change Price Scaling On Base Clicks on T9+
 - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
 - T8 Now Increases Power Rebirth max up to 25 (+10)
 - Changed Some Tier Prices
+
 Bug Fixes:
  - Change Price balancing for CU3
  - Rebirth Upgrade 1 not letting it self go passed level 15
