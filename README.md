@@ -60,12 +60,12 @@ More Planed Updates (if I Continue to Update the game):
 - Tiers 13 - 15
 
 **Version 6.0**:
-- Recreation Tiers 1 ->5
+- Recreation Tiers 1 -> 5
 - Application Version of the Game
 
 **Version 7.0**:
-- Recreation Tiers 6 - 10
-- 1 Final Reset
+- Recreation Tiers 6 -> 10
+- Final Reset (End of the game)
 
 
 --------------
