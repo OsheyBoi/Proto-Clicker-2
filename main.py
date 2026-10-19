@@ -324,7 +324,7 @@ if hello == 0:
     background =  pygame.image.load(os.path.join(img_dir, 'Backgrounds', "Background_" + event_type + ".png"))
     Rebirth_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Rebirth_Button.png"))
     Tier_Menu_Button =  pygame.image.load(os.path.join(img_dir, 'Buttons', "Tier_Button.png"))
-    Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Shop_Button.png"))
+    Shop_Menu_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Shop_Button_" + event_type + ".png"))
     settings_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Setting_Button.png"))
     ascension_Button = pygame.image.load(os.path.join(img_dir, 'Buttons', "Ascension_Button.png"))
 

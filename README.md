@@ -21,6 +21,7 @@ New Features:
     - Event themed Logo
     - Event themed Button
     - Event themed Background
+    - Event themed Shop Button
  
  - New Loading Screen
  - Updated save system
@@ -59,19 +60,11 @@ More Planed Updates (if I Continue to Update the game):
 - Tiers 13 - 15
 
 **Version 6.0**:
-- Recreation Tiers 1 -> 3
+- Recreation Tiers 1 ->5
 - Application Version of the Game
 
 **Version 7.0**:
-- Recreation Tiers 4 + 5
-- 1 New Reset Currency (For after Rebirths)
-
-**Version 8.0**:
-- Recreation Tiers 6 -> 8
-- 1 New Feature
-
-**Version 9.0**:
-- Recreation Tiers 9 + 10
+- Recreation Tiers 6 - 10
 - 1 Final Reset
 
 
