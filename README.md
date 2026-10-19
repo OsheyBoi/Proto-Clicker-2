@@ -41,11 +41,11 @@ Balancing:
 - T8 Now Increases Power Rebirth max up to 25 (+10)
 - Changed Most Tier Prices
 - Boosted Xp Mult from CU5 and RU3 (1.1 -> 1.15)
+- Change Price balancing for CU3
 
 ----
 Bug Fixes:
 ----
- - Change Price balancing for CU3
  - Rebirth Upgrade 1 not letting it self go passed level 15
  - Text Not Being Lined up correctly in Shop 
  - Fixed RU2 getting a cost increased for no reason
