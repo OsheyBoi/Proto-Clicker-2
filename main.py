@@ -832,7 +832,7 @@ while running:
             save_system.save_game(current_state, backup=True)
             print(f"[SYSTEM] Autosaved for Backup Profile")
         elif event.type == AUTOSAVE_MESSAGE_EVENT:
-            if apple != 4:
+            if apple != 5:
                 apple = apple + 1
             else:
                 saving = 0
@@ -1514,22 +1514,21 @@ while running:
 ###################################
  #   End of Script
 ###################################
-
-    screen.fill((0, 0, 0))
-    new_size = (int(GAME_WIDTH * scale), int(GAME_HEIGHT * scale))
-    scaled_canvas = pygame.transform.scale(canvas, new_size)
-    screen.blit(scaled_canvas, (offset_x, offset_y))
-    game_console.draw(screen)
     if saving == 1:
         save_icon = pygame.image.load(os.path.join(img_dir, 'Other', "save_icon.png")).convert_alpha()
         save_icon.set_alpha(128)
-        canvas.blit(save_icon, (1160, 780))
-        save_icon = save_icon.get_rect(topleft=(1160, 780))
+        canvas.blit(save_icon, (1200, 810))
+        save_icon = save_icon.get_rect(topleft=(1200, 810))
     elif saving == 0:
         save_icon = pygame.image.load(os.path.join(img_dir, 'Other', "save_icon.png")).convert_alpha()
         save_icon.set_alpha(128)
         canvas.blit(save_icon, (4500, 1500))
         save_icon = save_icon.get_rect(topleft=(4500, 1500))
+    screen.fill((0, 0, 0))
+    new_size = (int(GAME_WIDTH * scale), int(GAME_HEIGHT * scale))
+    scaled_canvas = pygame.transform.scale(canvas, new_size)
+    screen.blit(scaled_canvas, (offset_x, offset_y))
+    game_console.draw(screen)
     pygame.display.flip()
     clock.tick(60)
 
