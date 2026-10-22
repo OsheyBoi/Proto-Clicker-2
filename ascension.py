@@ -5,7 +5,7 @@ def amount_sum(amount):
         else:
             rounded_amount = round(amount, 0)
         return str(rounded_amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
+    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
     suffix_index = 0
 
     while amount >= 1000:
@@ -24,10 +24,10 @@ def amount_sum(amount):
 
 def ascension_cost(ascension, type):
     if ascension == 0:
-        Cost = (1000 ** 8)  * 100 + 1
+        Cost = (1000 ** 8)  * 10 + 1
     if ascension >= 1:
         if ascension <= 5:
-            Base = (1000 ** 8)  * 100 + 1
+            Base = (1000 ** 8)  * 10 + 1
             Cost = Base * (100 ** ascension)
 
     if type == "Max ascension":

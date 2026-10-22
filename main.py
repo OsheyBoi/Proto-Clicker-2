@@ -51,7 +51,7 @@ def amount_sum(amount):
         else:
             rounded_amount = round(amount, 0)
         return str(rounded_amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QDe"]
+    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
     suffix_index = 0
 
     while amount >= 1000:
@@ -516,7 +516,7 @@ while running:
 
     if current_tier ==  4:
         Tier_Xp = 1
-        Tier_Cm = 24    # x3
+        Tier_Cm = 40    # x5
         Tier_Cp = 1
         Tier_Rm = 4.5  # x2
         Auto_Click_Speed = 1
@@ -524,7 +524,7 @@ while running:
 
     if current_tier == 5 or current_tier == 6:
         Tier_Xp = 1
-        Tier_Cm = 48 # x2
+        Tier_Cm = 80 # x2
         Tier_Cp = 1
         Tier_Rm = 9 # x2
         Auto_Click_Speed = 1
@@ -533,54 +533,54 @@ while running:
 
     if current_tier == 7:
         Tier_Xp = 1
-        Tier_Cm = 48
+        Tier_Cm = 80
         Tier_Cp = 1
-        Tier_Rm = 9
+        Tier_Rm = 13.5 # x1.5
         Auto_Click_Speed = 1
         Tier_Click_Speed = 2.35 # x1.25
         Auto_Rebirth_Speed = 1
 
     if current_tier == 8:
         Tier_Xp = 4
-        Tier_Cm = 48
+        Tier_Cm = 80
         Tier_Cp = 1.01  # +0.01
-        Tier_Rm = 9
+        Tier_Rm = 13.5
         Auto_Click_Speed = 2 # x2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 
     if current_tier == 9:
         Tier_Xp = 4
-        Tier_Cm = 48
+        Tier_Cm = 80
         Tier_Cp = 1.02 # +0.01
-        Tier_Rm = 9
+        Tier_Rm = 13.5
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 
     if current_tier == 10:
         Tier_Xp = 4
-        Tier_Cm = 48
+        Tier_Cm = 80
         Tier_Cp = 1.03 # +0.01
-        Tier_Rm = 9
+        Tier_Rm = 13.5
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 
     if current_tier == 11:
         Tier_Xp = 4
-        Tier_Cm = 480 # x10
+        Tier_Cm = 800 # x10
         Tier_Cp = 1.04 # +0.01
-        Tier_Rm = 45 # x5
+        Tier_Rm = 67.5 # x5
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1
 
     if current_tier == 12:
         Tier_Xp = 4
-        Tier_Cm = 480
+        Tier_Cm = 800
         Tier_Cp = 1.05 # +0.01
-        Tier_Rm = 45
+        Tier_Rm = 67.5
         Auto_Click_Speed = 2
         Tier_Click_Speed = 2.35
         Auto_Rebirth_Speed = 1

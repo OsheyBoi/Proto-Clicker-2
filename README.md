@@ -36,12 +36,16 @@ QOL Features:
 ---
 Balancing:
 ---
-- Change Price Scaling On Base Clicks on T9+
-- T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
-- T8 Now Increases Power Rebirth max up to 25 (+10)
-- Changed Most Tier Prices
-- Boosted Xp Mult from CU5 and RU3 (1.1 -> 1.15)
-- Change Price balancing for CU3
+- **Massive Tier Overhaul**
+    - New/Stronger Tier Boosts
+    - Change Price Scaling On Base Clicks on T9+
+    - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
+    - T8 Now Increases Power Rebirth max up to 25 (+10)
+    - Changed Most Tier Prices
+
+- **Upgrades Changes**
+  - Boosted Xp Mult from CU5 and RU3 (1.1 -> 1.15)
+  - Change Price balancing for CU3
 
 ----
 Bug Fixes:
@@ -50,6 +54,11 @@ Bug Fixes:
  - Text Not Being Lined up correctly in Shop 
  - Fixed RU2 getting a cost increased for no reason
  - Fixed RU3 being reset on Tier
+
+----
+Other:
+----
+ - Added More Suffixes
 
 
 -------------
