@@ -24,9 +24,9 @@ def amount_sum(amount):
 def CU1_CostAmount(upgrade,tier,Type):
     if tier <= 8:
         if upgrade == 0:
-            cost = 10
+            cost = 5
         else:
-            cost = (10 + int(upgrade ** 1.05 * 3.3)) ** 1.05
+            cost = (5 + int(upgrade ** 1.05 * 3.325)) ** 1.06
     elif tier >= 8:
         if upgrade == 0:
             cost = 1000
