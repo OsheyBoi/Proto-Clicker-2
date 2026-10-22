@@ -36,7 +36,7 @@ QOL Features:
 ---
 Balancing:
 ---
-- **Massive Tier Overhaul**
+- ***Massive Tier Overhaul***
     - New/Stronger Tier Boosts
     - Change Price Scaling On Base Clicks on T9+
     - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
