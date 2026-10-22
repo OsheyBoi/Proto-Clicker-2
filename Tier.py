@@ -71,11 +71,11 @@ def tier_info (Tier):
 
 def tier_cost(tier, type):
     if tier == 0:
-        # 1 Thousand
-        Cost = 1000
+        #500
+        Cost = 500
 
     elif tier == 1:
-        #100 Thousand
+        #50 Thousand
         Cost = 100000
 
     elif tier == 2:
