@@ -461,7 +461,7 @@ while running:
 ################################################################################
 #    Xp system
 ################################################################################
-    Xp_needed =  int(15* (1.4 ** levels ))
+    Xp_needed =  int(15* (1.41 ** levels ))
     Xp_needed_sum = amount_sum(Xp_needed)
 
     total_xp_for_past_levels = 0
@@ -474,7 +474,7 @@ while running:
         levels += 1
         Xp_Current_Level = 0
     if current_tier >= 3:
-        Click_Xp_Mult = 1.1 ** levels
+        Click_Xp_Mult = 1.15 ** levels
         Xp_AR = font1.render("Level " + str(levels) + "\n(" +str(Xp_Current_Level_sum) + "/" + str(Xp_needed_sum) + ")", True, (0, 0, 0))
     if current_tier <= 2:
         Xp_AR = font2.render("Unlock At T3",True, (0, 0, 0))
@@ -701,13 +701,13 @@ while running:
 #
     if Auto_Click_Speed == 2:
         if ascension_Auto_Click_Speed == 1 and Last_Speed != 3:
-            pygame.time.set_timer(AUTOClick_EVENT, 200)
+            pygame.time.set_timer(AUTOClick_EVENT, 50)
             Last_Speed = 3
         elif ascension_Auto_Click_Speed == 0 and Last_Speed != 2:
-            pygame.time.set_timer(AUTOClick_EVENT,500)
+            pygame.time.set_timer(AUTOClick_EVENT,100)
             Last_Speed = 2
     elif Auto_Click_Speed == 1 and Last_Speed != 1:
-        pygame.time.set_timer(AUTOClick_EVENT, 1000)
+        pygame.time.set_timer(AUTOClick_EVENT, 333)
         Last_Speed = 1
 
 #####################
@@ -787,7 +787,7 @@ while running:
         if event.type == AUTOClick_EVENT:
             if current_tier >= 3:
                     clicks += CPC
-                    Xp += 0.25
+                    Xp += 0.5
 
         if event.type == pygame.QUIT:
             running = False

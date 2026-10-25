@@ -30,7 +30,7 @@ def tier_info (Tier):
          text = " \n Tier 2: Cost: (" + tier_cost(Tier,"Suffix") + ")\n - Unlock Click Upgrade 4 \n - 2x Clicks \n - 1.5x Rebirths \n - 1.5x Faster Button Cooldown"
          return text
     elif Tier == 2:
-         text = " \n Tier 3: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Xp (1 / Click) (25% on Auto Click) \n - Auto Click (Base = 1 cps) \n - 2x Clicks \n - 1.5x Rebirths "
+         text = " \n Tier 3: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Xp (1 / Click) (50% on Auto Click) \n - Auto Click (Base = 3 cps) \n - 2x Clicks \n - 1.5x Rebirths "
          return text
     elif Tier == 3:
          text = " \n Tier 4: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Click Upgrade 5 \n - 5x Clicks \n - 2x Rebirths \n - 1.25x Faster Button Cooldown"
@@ -45,7 +45,7 @@ def tier_info (Tier):
          text = " \n Tier 7: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Powerful Clicks Effect: +0.2x / Cap: +10 \n (+ Price Increase) \n - x1.25 Faster Button Cooldown"
          return text
     elif Tier == 7:
-         text = " \n Tier 8: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - 4x Xp \n Power Rebirth: +10 Max \n More Rebirths +5 Max \n - 1.01^ Clicks \n - 2x Faster Autoclicker. "
+         text = " \n Tier 8: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - 4x Xp \n Power Rebirth: +10 Max \n More Rebirths +5 Max \n - 1.01^ Clicks \n - 3.33x Faster Autoclicker. "
          return text
     elif Tier == 8:
          text = " \n Tier 9: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: x5 / Cap: +80  \n (+ Price Increase) \n - 1.01^ - 1.02^ Clicks"

@@ -30,9 +30,13 @@ New Features:
 QOL Features:
 ---
 - Buy Max For Rebirth Upgrades
-- Auto Rebirth now gives 10% instead of 1%
 - Game now Shows a saving icon when saving
-
+- **Better Automation**
+  - Auto Rebirth now gives 10% instead of 1%
+  - Way Faster Auto Click Speed 
+    - Base (1cps -> 3cps))
+    - Tier 8 (2cps -> 10cps))
+    - #3 (Tree) (5cps -> 20cps))
 ---
 Balancing:
 ---
@@ -46,6 +50,11 @@ Balancing:
 - **Upgrades Changes**
   - Boosted Xp Mult from CU5 and RU3 (1.1 -> 1.15)
   - Change Price balancing for CU3
+
+- **Xp Changes**
+    - Xp Multi 1.1 -> 1.15
+    - Slightly Increased Xp Needed to Level Up
+    - Doubled Auto Click Xp Gain
 
 ----
 Bug Fixes:
@@ -62,17 +71,17 @@ Other:
 
 
 -------------
-More Planed Updates (if I Continue to Update the game):
+More (Content) Planed Updates (if I Continue to Update the game):
 --------
-**Version 5.0**:
+**Update 1**:
 - The Sacrifice Upgrade Tree (#7 -> #12)
 - Tiers 13 - 15
 
-**Version 6.0**:
+**Update 2**:
 - Recreation Tiers 1 -> 5
 - Application Version of the Game
 
-**Version 7.0**:
+**Update 3**:
 - Recreation Tiers 6 -> 10
 - Final Reset (End of the game)
 
