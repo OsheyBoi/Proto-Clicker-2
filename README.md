@@ -42,6 +42,8 @@ Balancing:
 ---
 - ***Massive Tier Overhaul***
     - New/Stronger Tier Boosts
+    - T4 Now also give 1.25x XP 
+    - T5 Now also gives 2x Xp
     - Change Price Scaling On Base Clicks on T9+
     - T9 and T12 Base Click Boost Boosted (T9: +2 -> +5 |T12: +5 -> +10)
     - T8 Now Increases Power Rebirth max up to 25 (+10)

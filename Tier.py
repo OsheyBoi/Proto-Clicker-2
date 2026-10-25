@@ -33,13 +33,13 @@ def tier_info (Tier):
          text = " \n Tier 3: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Xp (1 / Click) (50% on Auto Click) \n - Auto Click (Base = 3 cps) \n - 2x Clicks \n - 1.5x Rebirths "
          return text
     elif Tier == 3:
-         text = " \n Tier 4: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Click Upgrade 5 \n - 5x Clicks \n - 2x Rebirths \n - 1.25x Faster Button Cooldown"
+         text = " \n Tier 4: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Click Upgrade 5 \n - 5x Clicks \n - 2x Rebirths \n - 1.25x Xp \n - 1.25x Faster Button Cooldown"
          return text
     elif Tier == 4:
-         text = " \n Tier 5: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (10% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Effect: +0.05 / Cap: +5  \n - Playtime Boost Clicks (Permanent)"
+         text = " \n Tier 5: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Unlock Rebirth Upgrade 3 \n - Auto Rebirth (10% RPS) \n - 2x Clicks/Rebirths \n - Powerful Clicks Effect: +0.05 / Cap: +5  \n  - Playtime Boost Clicks (Permanent)"
          return text
     elif Tier == 5:
-         text = " \n Tier 6: Cost: (" + tier_cost(Tier,"Suffix") + ") \n Rebirths Boost Clicks \n Rebirths Boost themself \n Clicks Power 2 +10 Max / +0.05x \n (+ Price Increase) \n - 1.5x Rebirths"
+         text = " \n Tier 6: Cost: (" + tier_cost(Tier,"Suffix") + ") \n Rebirths Boost Clicks \n Rebirths Boost themself \n Clicks Power 2 +10 Max / +0.05x \n (+ Price Increase) \n - 1.5x Rebirths \n - 2x XP"
          return text
     elif Tier == 6:
          text = " \n Tier 7: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Powerful Clicks Effect: +0.2x / Cap: +10 \n (+ Price Increase) \n - x1.25 Faster Button Cooldown"

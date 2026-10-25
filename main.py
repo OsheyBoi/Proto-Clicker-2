@@ -515,15 +515,24 @@ while running:
         Tier_Click_Speed = 1.5
 
     if current_tier ==  4:
-        Tier_Xp = 1
+        Tier_Xp = 1.25 # x1.25
         Tier_Cm = 40    # x5
         Tier_Cp = 1
         Tier_Rm = 4.5  # x2
         Auto_Click_Speed = 1
         Tier_Click_Speed = 1.875  # x1.25
 
-    if current_tier == 5 or current_tier == 6:
-        Tier_Xp = 1
+    if current_tier == 5:
+        Tier_Xp = 1.25
+        Tier_Cm = 80 # x2
+        Tier_Cp = 1
+        Tier_Rm = 9 # x2
+        Auto_Click_Speed = 1
+        Tier_Click_Speed = 1.875
+        Auto_Rebirth_Speed = 1
+
+    if current_tier == 6:
+        Tier_Xp = 2.5 # x2
         Tier_Cm = 80 # x2
         Tier_Cp = 1
         Tier_Rm = 9 # x2
@@ -532,7 +541,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 7:
-        Tier_Xp = 1
+        Tier_Xp = 2.5
         Tier_Cm = 80
         Tier_Cp = 1
         Tier_Rm = 13.5 # x1.5
@@ -541,7 +550,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 8:
-        Tier_Xp = 4
+        Tier_Xp = 10 # x4
         Tier_Cm = 80
         Tier_Cp = 1.01  # +0.01
         Tier_Rm = 13.5
@@ -550,7 +559,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 9:
-        Tier_Xp = 4
+        Tier_Xp = 10
         Tier_Cm = 80
         Tier_Cp = 1.02 # +0.01
         Tier_Rm = 13.5
@@ -559,7 +568,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 10:
-        Tier_Xp = 4
+        Tier_Xp = 10
         Tier_Cm = 80
         Tier_Cp = 1.03 # +0.01
         Tier_Rm = 13.5
@@ -568,7 +577,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 11:
-        Tier_Xp = 4
+        Tier_Xp = 10
         Tier_Cm = 800 # x10
         Tier_Cp = 1.04 # +0.01
         Tier_Rm = 67.5 # x5
@@ -577,7 +586,7 @@ while running:
         Auto_Rebirth_Speed = 1
 
     if current_tier == 12:
-        Tier_Xp = 4
+        Tier_Xp = 10
         Tier_Cm = 800
         Tier_Cp = 1.05 # +0.01
         Tier_Rm = 67.5
