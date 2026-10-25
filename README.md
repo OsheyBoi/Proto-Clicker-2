@@ -34,9 +34,9 @@ QOL Features:
 - **Better Automation**
   - Auto Rebirth now gives 10% instead of 1%
   - Way Faster Auto Click Speed 
-    - Base (1cps -> 3cps))
-    - Tier 8 (2cps -> 10cps))
-    - #3 (Tree) (5cps -> 20cps))
+    - Base (1cps -> 3cps) (3x More)
+    - Tier 8 (2cps -> 10cps) (5x More)
+    - #3 (Tree) (5cps -> 20cps)(4x More)
 ---
 Balancing:
 ---
