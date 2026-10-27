@@ -57,7 +57,7 @@ def tier_info (Tier):
          text = " \n Tier 11: Cost: (" + tier_cost(Tier,"Suffix") + ")\n - 10x Click \n - 5x Rebirths \n - Clicks Power 1.03 -> 1.04"
          return text
     elif Tier == 11:
-         text = " \n Tier 12: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: x5 \n - Base Power Cap: +900 \n - Clicks Power 1.04 -> 1.05 "
+         text = " \n Tier 12: Cost: (" + tier_cost(Tier,"Suffix") + ") \n - Base Power Effect: x5 \n - Base Power Cap: +900 \n - Clicks Power 1.04 -> 1.05  "
          return text
     elif Tier == 12:
          text = " \n You Have Reach Max Tier in V4.0 \n Tiers 13 - 15 are Coming Soon "

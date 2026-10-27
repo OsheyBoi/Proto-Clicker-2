@@ -485,7 +485,7 @@ while running:
 #s
     if current_tier ==  0:          #    Tier Base Upgrades
         Tier_Xp = 1                 #    Xp Mult
-        Tier_Cm = 1                 #    Clicks Multipler
+        Tier_Cm = 1                 #    Clicks Mult
         Tier_Cp = 1                 #    CLicks Power
         Tier_Rm = 1                 #    Rebirth Mult
         Auto_Click_Speed = 0
