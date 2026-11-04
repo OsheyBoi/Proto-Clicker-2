@@ -70,6 +70,7 @@ Bug Fixes:
 Other:
 ----
  - Added More Suffixes
+ - Add New Messages for debugging and error finding
 
 
 -------------

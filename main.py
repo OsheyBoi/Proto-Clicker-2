@@ -22,6 +22,7 @@ try:
     CONSOLE_AVAILABLE = True
     game_console.start() # Fire up the background thread immediately
     DEBUGGER_AVAILABLE = False
+    print("Loaded Debugger")
 except ImportError:
     debugger_active = 0
     debugger = None
@@ -29,6 +30,7 @@ except ImportError:
     DEBUGGER_AVAILABLE = None
     game_console = None
     CONSOLE_AVAILABLE = False
+    print("Debugger Not Found")
 
 from Prices import *
 from Tier import *
@@ -51,8 +53,8 @@ def amount_sum(amount):
         else:
             rounded_amount = round(amount, 0)
         return str(rounded_amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
-    suffix_index = 0
+    suffixes = ['Suffix Error','','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
+    suffix_index = 1
 
     while amount >= 1000:
         amount /= 1000
@@ -60,10 +62,12 @@ def amount_sum(amount):
     rounded_amount = 1
     if amount >= 0 and amount <= 9:
         rounded_amount = round(amount, 2)
-    if amount >= 10 and amount <= 99:
+    elif amount >= 10 and amount <= 99:
         rounded_amount = round(amount, 2)
-    if amount >= 100:
+    elif amount >= 100:
         rounded_amount = round(amount, 1)
+    if suffix_index >= 23:
+        suffix_index = 0
     Summed_Amount = str(rounded_amount) + suffixes[suffix_index]
     return str(Summed_Amount)
 
@@ -945,9 +949,6 @@ while running:
                                 RU1 = 0
                                 RU2 = 0
                             current_tier += 1
-
-
-
 
 
                 if menu_ui_7.collidepoint(mouse_pos) and Menu <= 9:

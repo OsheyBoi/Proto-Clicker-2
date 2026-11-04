@@ -5,8 +5,8 @@ def amount_sum(amount):
         else:
             rounded_amount = round(amount, 0)
         return str(rounded_amount)
-    suffixes = ['','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
-    suffix_index = 0
+    suffixes = ['Suffix Error','','K','M','B','T','Qd','Qn','Sx','Sp','Oc',"No",'De','UDe','DDe',"TDe","QdDe","QnDe","SxDe","SpDe","OcDe", "NoDe"]
+    suffix_index = 1
 
     while amount >= 1000:
         amount /= 1000
