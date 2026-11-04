@@ -1,13 +1,17 @@
 ![Alt text](https://github.com/OsheyBoi/Proto-Clicker-2/blob/main/images/Logos/logo_base.png)
 
+<div align="center">
+
 ![Static Badge](https://img.shields.io/badge/Public%20build-V3.0-darkgreen?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/build_in_Developmenrt-V4.0-blue?style=for-the-badge)
+
+</div>
 
 --------------
 V4.0 (The Events of Overhaul Changes) (November 6th)
 --------------
-NOTE: V4.0 will be a Relaunch  include new savefiles and LOTS of balancing and changes
---
+NOTE: V4.0 will be a Relaunch include new savefiles and LOTS of balancing and changes
+----
 New Features:
 --
  - ***Seasonal Events:*** 
