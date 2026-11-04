@@ -6,11 +6,10 @@
 --------------
 V4.0 (The Events of Overhaul Changes) (November 6th)
 --------------
-NOTE: V4.0 will be a Relaunch include new savefiles and LOTS of balancing and changes
+NOTE: V4.0 will be a Relaunch  include new savefiles and LOTS of balancing and changes
 --
 New Features:
 --
-
  - ***Seasonal Events:*** 
    - Halloween (from next year)
    - Christmas
@@ -71,6 +70,7 @@ Other:
 ----
  - Added More Suffixes
  - Add New Messages for debugging and error finding
+ - Change name from "Proto Clicker 2" -> "Proto Clicker 2.0"
 
 
 -------------
